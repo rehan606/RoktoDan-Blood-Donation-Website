@@ -1,6 +1,7 @@
 
 import { useOutletContext } from 'react-router';
 import Hero from '../components/HomeComponents/Hero'
+import WhyDonateBlood from '../components/HomeComponents/WhyDonateBlood';
 
 const Home = () => {
     const { language } = useOutletContext();
@@ -8,6 +9,7 @@ const Home = () => {
     return (
         <div>
             <Hero language={language} />
+            <WhyDonateBlood language={language} />
         </div>
     )
 }
