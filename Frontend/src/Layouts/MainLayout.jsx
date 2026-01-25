@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Outlet } from 'react-router'
 import MainLoader from '../components/Loader/MainLoader';
 import Navbar from '../components/Navbar/Navbar';
+import Footer from '../components/Footer/Footer';
 
 const MainLayout = () => {
 
@@ -20,8 +21,8 @@ const MainLayout = () => {
     return (
         <div className={language === "bn" ? "font-bn" : "font-en"}>
             <Navbar language={language} setLanguage={setLanguage} />
-            
             <Outlet context={{ language }}/>
+            <Footer language={language}  />
         </div>
     )
 }
