@@ -4,6 +4,7 @@ import Hero from '../components/HomeComponents/Hero'
 import WhyDonateBlood from '../components/HomeComponents/WhyDonateBlood';
 import Statistics from '../components/HomeComponents/Statistics';
 import HowItWorks from '../components/HomeComponents/HowItWorks';
+import DonorRegistration from '../components/HomeComponents/DonorRegistration';
 
 const Home = () => {
     const { language } = useOutletContext();
@@ -14,6 +15,8 @@ const Home = () => {
             <WhyDonateBlood language={language} />
             <Statistics language={language} />
             <HowItWorks language={language} />
+            <DonorRegistration language={language} />
+
         </div>
     )
 }
