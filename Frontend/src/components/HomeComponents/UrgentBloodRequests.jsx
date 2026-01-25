@@ -50,7 +50,7 @@ const UrgentBloodRequests = ({ language = "bn" }) => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-white via-red-50 to-white">
+    <section className="py-20 bg-linear-to-br from-white via-red-50 to-white">
       <div className="max-w-6xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
