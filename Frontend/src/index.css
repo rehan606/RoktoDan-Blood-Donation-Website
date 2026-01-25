@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+/* English Font */
+.font-en {
+  font-family: "Poppins", sans-serif;
+}
+
+/* Bangla Font */
+.font-bn {
+  font-family: "Tiro Bangla", serif;
+}
