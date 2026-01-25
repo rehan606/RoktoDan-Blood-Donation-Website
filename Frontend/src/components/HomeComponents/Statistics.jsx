@@ -33,7 +33,7 @@ const Statistics = ({ language }) => {
       );
     }, 30);
     return () => clearInterval(interval);
-  }, []);
+  }, [language]);
 
   return (
     <section className="py-16 bg-red-50">
