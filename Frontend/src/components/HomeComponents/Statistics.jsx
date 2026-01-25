@@ -33,7 +33,8 @@ const Statistics = ({ language }) => {
       );
     }, 30);
     return () => clearInterval(interval);
-  }, [language]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <section className="py-16 bg-red-50">

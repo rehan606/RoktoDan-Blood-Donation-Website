@@ -1,4 +1,6 @@
 import { FaFacebookF, FaPhoneAlt, FaHeart } from "react-icons/fa";
+import { Link } from "react-router";
+import { FaTint } from "react-icons/fa";
 
 const Footer = ({ language = "bn" }) => {
   const content = {
@@ -10,6 +12,15 @@ const Footer = ({ language = "bn" }) => {
       emergency: "জরুরি যোগাযোগ",
       hotline: "হটলাইন",
       rights: "সর্বস্বত্ব সংরক্ষিত",
+      useful: {
+        title: "প্রয়োজনীয় তথ্য",
+        items: [
+          "রক্তদানের শর্ত",
+          "রক্তদানের উপকারিতা",
+          "প্রশ্নোত্তর (FAQ)",
+          "গোপনীয়তা নীতি",
+        ],
+      },
     },
     en: {
       description:
@@ -19,6 +30,15 @@ const Footer = ({ language = "bn" }) => {
       emergency: "Emergency Contact",
       hotline: "Hotline",
       rights: "All rights reserved",
+      useful: {
+        title: "Useful Info",
+        items: [
+          "Eligibility Rules",
+          "Benefits of Donation",
+          "FAQ",
+          "Privacy Policy",
+        ],
+      },
     },
   };
 
@@ -26,11 +46,25 @@ const Footer = ({ language = "bn" }) => {
 
   return (
     <footer className="bg-linear-to-r from-red-600 via-red-700 to-red-800 text-white">
-      <div className="max-w-6xl mx-auto px-4 py-12 grid gap-10 md:grid-cols-3">
+      <div className="max-w-7xl mx-auto px-4 py-12 grid gap-10 md:grid-cols-4">
+        
         {/* About */}
         <div>
-          <h3 className="text-2xl font-bold mb-4">RoktoDan</h3>
-          <p className="text-sm text-red-100">{t.description}</p>
+          <Link to="/" className="flex items-center gap-1">
+            <FaTint className="text-white w-8 h-8" />
+            <div>
+              {language === "bn" ? (
+                <h1 className="text-xl md:text-2xl text-zinc-900 font-bold tracking-wide">
+                  রক্ত<span className="text-white">দান</span>
+                </h1>
+              ) : (
+                <h1 className="text-xl uppercase text-zinc-900 font-bold tracking-wide">
+                  Rokto<span className="text-white">Dan</span>
+                </h1>
+              )}
+            </div>
+          </Link>
+          <p className="text-sm text-red-100 mt-4">{t.description}</p>
         </div>
 
         {/* Quick Links */}
@@ -43,6 +77,21 @@ const Footer = ({ language = "bn" }) => {
                 className="hover:underline cursor-pointer"
               >
                 {link}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Useful Info (NEW COLUMN) */}
+        <div>
+          <h4 className="font-semibold mb-4">{t.useful.title}</h4>
+          <ul className="space-y-2 text-sm">
+            {t.useful.items.map((item, index) => (
+              <li
+                key={index}
+                className="hover:underline cursor-pointer"
+              >
+                {item}
               </li>
             ))}
           </ul>
@@ -63,7 +112,7 @@ const Footer = ({ language = "bn" }) => {
 
       {/* Bottom */}
       <div className="border-t border-red-500 text-center py-4 text-sm">
-        © {new Date().getFullYear()} RoktoDan. {t.rights}.  
+        © {new Date().getFullYear()} RoktoDan. {t.rights}.
         <span className="inline-flex items-center gap-1 ml-2">
           Made with <FaHeart className="text-red-300" /> for Humanity
         </span>

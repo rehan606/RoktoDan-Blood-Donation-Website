@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { MdBloodtype } from "react-icons/md";
+// import { MdBloodtype } from "react-icons/md";
+import {FaTint } from "react-icons/fa";
 
 const Navbar = ({ language, setLanguage }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +13,8 @@ const Navbar = ({ language, setLanguage }) => {
                 
                 {/* Logo */}
                 <Link to={'/'} className="flex items-center gap-1">
-                    <MdBloodtype className="text-red-600 text-3xl " />
+                    {/* <MdBloodtype className="text-red-600 text-3xl " /> */}
+                    <FaTint className="text-red-600 w-8 h-8 mx-auto " />
                     <div>
                         {language === "bn" ?
                             <h1 className="text-xl md:text-2xl text-zinc-700 font-bold tracking-wide">রক্ত<span className="text-red-600">দান</span>
