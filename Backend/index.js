@@ -3,7 +3,7 @@ import cors from 'cors';
 import dbConnect from "./config/mongodb.js";
 import "dotenv/config";
 
-import userRouter from './routes/userRouter.js';
+import donorRouter from './routes/donorRouter.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
   res.send('server is running');
 });
 
-app.use('/api/user', userRouter)
+app.use('/api/donor', donorRouter)
 
 
 

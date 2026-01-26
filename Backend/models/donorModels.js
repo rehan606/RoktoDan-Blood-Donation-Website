@@ -141,6 +141,6 @@ donorSchema.index({
 
 const donorModel=mongoose.models.donor || mongoose.model('donor',donorSchema);
 
-export default userModel;
+export default donorModel;
 
 // module.exports = mongoose.model("Donor", donorSchema);
