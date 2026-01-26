@@ -3,11 +3,12 @@ import { Outlet } from 'react-router'
 import MainLoader from '../components/Loader/MainLoader';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Footer/Footer';
+import { useLanguage } from '../context/LanguageContext';
 
 const MainLayout = () => {
 
     const [loading, setLoading] = useState(true);
-    const [language, setLanguage] = useState("bn");
+    const {language, setLanguage} = useLanguage("bn");
 
     // Simulate loading for demonstration purposes
     setTimeout(() => {

@@ -1,8 +1,9 @@
 import React from "react";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter,  } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import MainLayout from "./Layouts/MainLayout";
-import Home from "./Pages/Home";
+import Home from "./Pages/Home/Home";
+import Contact from "./Pages/Contact/Contact";
 
 const App = () => {
   
@@ -14,6 +15,10 @@ const App = () => {
         {
           path: '/', 
           element: <Home />
+        },
+        {
+          path: '/contact', 
+          element: <Contact />
         },
       ]
     },

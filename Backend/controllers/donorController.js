@@ -5,11 +5,26 @@ const donorLogin = async (req, res) => {};
 
 const donorRegister = async (req, res) => {
     try {
-        const {name, email, password,  phone, bloodGroup, district, upazila, union } = req.body;
+        // phone, bloodGroup, district, upazila, union
+        const {name, email, password,   } = req.body; 
+        
+        if (!name) {
+            return res.json({success: false, message: "User Name is required ",});
+        }
+
+        if (!email) {
+            return res.json({success: false, message: "Email is required ",});
+        }
+        if (!password) {
+            return res.json({success: false, message: "Password is required ",});
+        }
+        // if (!phone) {
+        //     return res.json({success: false, message: "phone  is required ",});
+        // }
 
         // Email Validation
         if(!validator.isEmail(email)) {
-            return res.json({success: flase, message: "Please Enter a Valid Email "});
+            return res.json({success: false, message: "Please Enter a Valid Email ",});
         }
         // Check User 
         const existingDonor = await donorModel.findOne({email});
@@ -18,15 +33,24 @@ const donorRegister = async (req, res) => {
         }
         // Password Validation
         if(password.length < 8){
-            return res.json({success: flase, message: "Password lenght should be ewual or grater then 8 "});
+            return res.json({success: false, message: "Password lenght should be ewual or grater then 8 "});
         }
         // Hashing user password
+
+        // ======== Register a New User in Database ========
+        const newDonor = new donorModel({
+            name, email, password
+        });
+
+        // ======== Save User in Database ========
+        await newDonor.save()
+
 
 
 
         res.json({
             success: true,
-            message: 'API is Connected successfully',
+            message: 'User registered successfully',
         })
     } catch (error) {
         console.log('Doner Register error', error);

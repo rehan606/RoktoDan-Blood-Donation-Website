@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 
 const donorSchema = new mongoose.Schema(
   {
@@ -12,7 +13,7 @@ const donorSchema = new mongoose.Schema(
 
     phone: {
       type: String,
-      required: true,
+      // required: true,
       unique: true,
       match: [/^(?:\+8801|01)[3-9]\d{8}$/, "Invalid Bangladeshi phone number"],
     },
@@ -31,11 +32,11 @@ const donorSchema = new mongoose.Schema(
     },
 
     // Blood Info
-    bloodGroup: {
-      type: String,
-      required: true,
-      enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
-    },
+    // bloodGroup: {
+    //   type: String,
+    //   required: true,
+    //   enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+    // },
 
     // Personal Details
     gender: {
@@ -53,43 +54,43 @@ const donorSchema = new mongoose.Schema(
     },
 
     // Address (Bangladesh Structure)
-    division: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+    // division: {
+    //   type: String,
+    //   required: true,
+    //   trim: true,
+    // },
 
-    district: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+    // district: {
+    //   type: String,
+    //   required: true,
+    //   trim: true,
+    // },
 
-    upazila: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+    // upazila: {
+    //   type: String,
+    //   required: true,
+    //   trim: true,
+    // },
 
     
-    union: {
-    type: String,
-    required: true,
-    enum: [
-        "Amanullah",
-        "Bauria",
-        "Gachhua",
-        "Harishpur",
-        "Kalapania",
-        "Magdhara",
-        "Maitbhanga",
-        "Musapur",
-        "Santoshpur",
-        "Dirgapar",
-        "Rohomotpur",
-        "Sarikait"
-        ],
-    },
+    // union: {
+    // type: String,
+    // required: true,
+    // enum: [
+    //     "Amanullah",
+    //     "Bauria",
+    //     "Gachhua",
+    //     "Harishpur",
+    //     "Kalapania",
+    //     "Magdhara",
+    //     "Maitbhanga",
+    //     "Musapur",
+    //     "Santoshpur",
+    //     "Dirgapar",
+    //     "Rohomotpur",
+    //     "Sarikait"
+    //     ],
+    // },
 
 
     address: {
