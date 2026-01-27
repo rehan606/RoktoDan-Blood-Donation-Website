@@ -4,6 +4,7 @@ import MainLoader from '../components/Loader/MainLoader';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Footer/Footer';
 import { useLanguage } from '../context/LanguageContext';
+import ScrollTop from '../components/ScrollTop/ScrollTop';
 
 const MainLayout = () => {
 
@@ -22,7 +23,9 @@ const MainLayout = () => {
     return (
         <div className={language === "bn" ? "font-bn" : "font-en"}>
             <Navbar language={language} setLanguage={setLanguage} />
+            
             <Outlet context={{ language }}/>
+            
             <Footer language={language}  />
         </div>
     )

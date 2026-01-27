@@ -10,6 +10,7 @@ import Eligibility from "./Pages/Eligibility/Eligibility";
 import DonationBenefits from "./Pages/DonationBenefits/DonationBenefits";
 import FAQ from "./Pages/FAQ/Faq";
 import PrivacyPolicy from "./Pages/PrivacyPolicy/PrivacyPolicy";
+import ScrollToTop from "./components/ScrollTop/ScrollToTop";
 
 const App = () => {
   
@@ -54,7 +55,11 @@ const App = () => {
     },
   ]);
 
-   return <RouterProvider router={router} />
+   return ( 
+    <> 
+      <RouterProvider router={router} />
+      <ScrollToTop />
+    </> )
 }
 
 export default App
