@@ -11,6 +11,7 @@ import DonationBenefits from "./Pages/DonationBenefits/DonationBenefits";
 import FAQ from "./Pages/FAQ/Faq";
 import PrivacyPolicy from "./Pages/PrivacyPolicy/PrivacyPolicy";
 import ScrollToTop from "./components/ScrollTop/ScrollToTop";
+import BecomeDonor from "./Pages/BecomeDonor/BecomeDonor";
 
 const App = () => {
   
@@ -50,6 +51,10 @@ const App = () => {
         {
           path: '/privacy-policy', 
           element: <PrivacyPolicy />
+        },
+        {
+          path: '/register-donor', 
+          element: <BecomeDonor />
         },
       ]
     },

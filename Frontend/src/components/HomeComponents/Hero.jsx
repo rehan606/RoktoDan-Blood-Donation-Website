@@ -1,4 +1,5 @@
 
+import { Link } from 'react-router';
 import HeroImage from '../../assets/images/Blood-collect-image.png';
 
 
@@ -28,13 +29,13 @@ const Hero = ({ language, }) => {
 
           {/* Buttons */}
           <div className="mt-6 flex flex-wrap gap-4">
-            <button className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded transition">
+            <Link to={'/register-donor'} className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded transition">
               {isBangla ? "রক্তদাতা হন" : "Become a Donor"}
-            </button>
+            </Link>
 
-            <button className="border border-red-600 text-red-600 hover:bg-red-50 px-6 py-3 rounded transition">
+            <Link to={'/request-blood'} className="border border-red-600 text-red-600 hover:bg-red-50 px-6 py-3 rounded transition">
               {isBangla ? "রক্তের অনুরোধ" : "Request Blood"}
-            </button>
+            </Link>
           </div>
         </div>
 
