@@ -19,7 +19,7 @@ const App = () => {
           element: <Home />
         },
         {
-          path: '/allDonors', 
+          path: '/all-donors', 
           element: <Donors />
         },
         {
@@ -27,7 +27,7 @@ const App = () => {
           element: <Contact />
         },
         {
-          path: '/bloodRequest', 
+          path: '/request-blood', 
           element: <RequestBlood />
         },
       ]

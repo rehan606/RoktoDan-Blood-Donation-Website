@@ -1,6 +1,6 @@
 import { FaFacebookF, FaPhoneAlt, FaHeart } from "react-icons/fa";
-import { Link } from "react-router";
 import { FaTint } from "react-icons/fa";
+import { Link } from "react-router";
 
 const Footer = ({ language = "bn" }) => {
   const content = {
@@ -8,35 +8,46 @@ const Footer = ({ language = "bn" }) => {
       description:
         "RoktoDan একটি সামাজিক উদ্যোগ যা সান্দ্বীপ উপজেলার মানুষের জন্য দ্রুত ও নির্ভরযোগ্য রক্ত সহায়তা নিশ্চিত করে।",
       quickLinks: "দ্রুত লিংক",
-      links: ["হোম", "রক্তদাতা", "জরুরি অনুরোধ", "যোগাযোগ"],
+      links: [
+        { label: "হোম", path: "/" },
+        { label: "রক্তদাতা", path: "/all-donors" },
+        { label: "জরুরি অনুরোধ", path: "/request-blood" },
+        { label: "যোগাযোগ", path: "/contact" },
+      ],
       emergency: "জরুরি যোগাযোগ",
       hotline: "হটলাইন",
       rights: "সর্বস্বত্ব সংরক্ষিত",
       useful: {
         title: "প্রয়োজনীয় তথ্য",
         items: [
-          "রক্তদানের শর্ত",
-          "রক্তদানের উপকারিতা",
-          "প্রশ্নোত্তর (FAQ)",
-          "গোপনীয়তা নীতি",
+          { label: "রক্তদানের শর্ত", path: "/eligibility" },
+          { label: "রক্তদানের উপকারিতা", path: "/benefits" },
+          { label: "প্রশ্নোত্তর (FAQ)", path: "/faq" },
+          { label: "গোপনীয়তা নীতি", path: "/privacy-policy" },
         ],
       },
     },
+
     en: {
       description:
         "RoktoDan is a social initiative ensuring fast and reliable blood support for the people of Sandwip Upazila.",
       quickLinks: "Quick Links",
-      links: ["Home", "Donors", "Urgent Requests", "Contact"],
+      links: [
+        { label: "Home", path: "/" },
+        { label: "Donors", path: "/allDonors" },
+        { label: "Urgent Requests", path: "/request-blood" },
+        { label: "Contact", path: "/contact" },
+      ],
       emergency: "Emergency Contact",
       hotline: "Hotline",
       rights: "All rights reserved",
       useful: {
         title: "Useful Info",
         items: [
-          "Eligibility Rules",
-          "Benefits of Donation",
-          "FAQ",
-          "Privacy Policy",
+          { label: "Eligibility Rules", path: "/eligibility" },
+          { label: "Benefits of Donation", path: "/benefits" },
+          { label: "FAQ", path: "/faq" },
+          { label: "Privacy Policy", path: "/privacy-policy" },
         ],
       },
     },
@@ -50,19 +61,17 @@ const Footer = ({ language = "bn" }) => {
         
         {/* About */}
         <div>
-          <Link to="/" className="flex items-center gap-1">
+          <Link to="/" className="flex items-center gap-2">
             <FaTint className="text-white w-8 h-8" />
-            <div>
-              {language === "bn" ? (
-                <h1 className="text-xl md:text-2xl text-zinc-900 font-bold tracking-wide">
-                  রক্ত<span className="text-white">দান</span>
-                </h1>
-              ) : (
-                <h1 className="text-xl uppercase text-zinc-900 font-bold tracking-wide">
-                  Rokto<span className="text-white">Dan</span>
-                </h1>
-              )}
-            </div>
+            {language === "bn" ? (
+              <h1 className="text-2xl font-bold tracking-wide">
+                রক্ত<span className="text-white">দান</span>
+              </h1>
+            ) : (
+              <h1 className="text-2xl font-bold tracking-wide uppercase">
+                Rokto<span className="text-white">Dan</span>
+              </h1>
+            )}
           </Link>
           <p className="text-sm text-red-100 mt-4">{t.description}</p>
         </div>
@@ -71,27 +80,31 @@ const Footer = ({ language = "bn" }) => {
         <div>
           <h4 className="font-semibold mb-4">{t.quickLinks}</h4>
           <ul className="space-y-2 text-sm">
-            {t.links.map((link, index) => (
-              <li
-                key={index}
-                className="hover:underline cursor-pointer"
-              >
-                {link}
+            {t.links.map((item, index) => (
+              <li key={index}>
+                <Link
+                  to={item.path}
+                  className="hover:underline hover:text-white transition"
+                >
+                  {item.label}
+                </Link>
               </li>
             ))}
           </ul>
         </div>
 
-        {/* Useful Info (NEW COLUMN) */}
+        {/* Useful Info */}
         <div>
           <h4 className="font-semibold mb-4">{t.useful.title}</h4>
           <ul className="space-y-2 text-sm">
             {t.useful.items.map((item, index) => (
-              <li
-                key={index}
-                className="hover:underline cursor-pointer"
-              >
-                {item}
+              <li key={index}>
+                <Link
+                  to={item.path}
+                  className="hover:underline hover:text-white transition"
+                >
+                  {item.label}
+                </Link>
               </li>
             ))}
           </ul>
@@ -103,10 +116,14 @@ const Footer = ({ language = "bn" }) => {
           <p className="flex items-center gap-2 text-sm">
             <FaPhoneAlt /> {t.hotline}: 999
           </p>
-          <p className="mt-3 text-sm">
-            <FaFacebookF className="inline mr-2" />
-            Facebook Page
-          </p>
+          <a
+            href="https://facebook.com"
+            target="_blank"
+            rel="noreferrer"
+            className="mt-3 inline-flex items-center gap-2 text-sm hover:underline"
+          >
+            <FaFacebookF /> Facebook Page
+          </a>
         </div>
       </div>
 

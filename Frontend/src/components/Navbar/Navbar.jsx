@@ -39,13 +39,13 @@ const Navbar = ({ language, setLanguage }) => {
                     }>
                         {language === "bn" ? "হোম" : "Home"}
                     </NavLink>
-                    <NavLink to={'/allDonors'} className={({ isActive }) => isActive
+                    <NavLink to={'/all-donors'} className={({ isActive }) => isActive
                         ? "text-red-500 font-semibold"
                         : "text-gray-700 hover:text-red-600 cursor-pointer"
                     }>
                         {language === "bn" ? "রক্তদাতা" : "Donors"}
                     </NavLink>
-                    <NavLink to={'/bloodRequest'} className={({ isActive }) => isActive
+                    <NavLink to={'/request-blood'} className={({ isActive }) => isActive
                         ? "text-red-500 font-semibold"
                         : "text-gray-700 hover:text-red-600 cursor-pointer"
                     }>
