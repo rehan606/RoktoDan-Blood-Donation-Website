@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLanguage } from "../../context/LanguageContext";
+import bgImage from "../../assets/images/bgImage.jpg";
 
 const BloodSearch = () => {
   const { language } = useLanguage();
@@ -27,22 +28,27 @@ const BloodSearch = () => {
   ];
 
   return (
-    <section className="bg-red-500/40 py-10">
+    <section className="bg-cover bg-center bg-no-repeat py-20" style={{backgroundImage: `url(${bgImage})`}}>
       <div className="max-w-5xl mx-auto px-4">
-        <div className="bg-white rounded-2xl shadow-md p-6">
-          <h2 className="text-2xl font-bold text-center mb-6">
+
+         <h2 className="text-3xl text-white font-bold text-center mb-6">
             {language === "bn" ? "রক্ত অনুসন্ধান করুন" : "Search Blood Donor"}
           </h2>
 
+        <div className="bg-white  rounded-2xl shadow-md p-6">
+          {/* <h2 className="text-2xl font-bold text-center mb-6">
+            {language === "bn" ? "রক্ত অনুসন্ধান করুন" : "Search Blood Donor"}
+          </h2> */}
+
           {/* Row Wise Fields */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Blood Group */}
             <div>
               <label className="block text-sm font-semibold mb-1">
                 {language === "bn" ? "রক্তের গ্রুপ" : "Blood Group"}
               </label>
               <select
-                className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-red-500 outline-none"
+                className="w-full border rounded-lg px-3 py-3 focus:ring-2 focus:ring-red-500 outline-none"
                 value={bloodGroup}
                 onChange={(e) => setBloodGroup(e.target.value)}
               >
@@ -63,11 +69,11 @@ const BloodSearch = () => {
                 {language === "bn" ? "ইউনিয়ন" : "Union"}
               </label>
               <select
-                className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-red-500 outline-none"
+                className="w-full border rounded-lg px-3 py-3 focus:ring-2 focus:ring-red-500 outline-none"
                 value={union}
                 onChange={(e) => setUnion(e.target.value)}
               >
-                <option value="">
+                <option className="p-4" value="">
                   {language === "bn" ? "ইউনিয়ন নির্বাচন করুন" : "Select Union"}
                 </option>
                 {unions.map((u) => (
@@ -77,14 +83,16 @@ const BloodSearch = () => {
                 ))}
               </select>
             </div>
+
+            {/* Button */}
+            <div className="mt-6 text-center">
+              <button className="bg-red-600 w-full hover:bg-red-500 text-white px-10 py-2.5 rounded-lg font-semibold transition cursor-pointer">
+                {language === "bn" ? "খুঁজুন" : "Search"}
+              </button>
+            </div>
           </div>
 
-          {/* Button */}
-          <div className="mt-6 text-center">
-            <button className="bg-red-600 hover:bg-red-700 text-white px-10 py-2 rounded-lg font-semibold transition">
-              {language === "bn" ? "খুঁজুন" : "Search"}
-            </button>
-          </div>
+          
         </div>
       </div>
     </section>
