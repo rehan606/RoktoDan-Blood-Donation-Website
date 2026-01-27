@@ -1,15 +1,21 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 // import { MdBloodtype } from "react-icons/md";
 import {FaTint } from "react-icons/fa";
 
 const Navbar = ({ language, setLanguage }) => {
     const [isOpen, setIsOpen] = useState(false);
 
+    // const navLinkClass = ({ isActive }) =>
+    //     isActive
+    //         ? "text-red-500 font-semibold border-b-2 border-red-500"
+    //         : "text-gray-700 hover:text-red-500";
+
+
     return (
         <nav className="bg-white text-zinc-800 sticky top-0 z-50 border-b shadow-md border-red-200">
-            <div className="max-w-7xl mx-auto px-4">
-                <div className="flex justify-between items-center h-20">
+            <div className="max-w-7xl mx-auto px-4 ">
+                <div className="flex justify-between items-center h-20 ">
                 
                 {/* Logo */}
                 <Link to={'/'} className="flex items-center gap-1">
@@ -26,26 +32,38 @@ const Navbar = ({ language, setLanguage }) => {
                 </Link>
 
                 {/* Desktop Menu */}
-                <ul className="hidden md:flex items-center gap-6 text-md uppercase">
-                    <Link to={'/'} className="hover:text-red-600 cursor-pointer ">
-                    {language === "bn" ? "হোম" : "Home"}
-                    </Link>
-                    <Link to={'/allDonors'} className="hover:text-red-600 cursor-pointer ">
-                    {language === "bn" ? "রক্তদাতা" : "Donors"}
-                    </Link>
-                    <Link to={'/bloodRequest'} className="hover:text-red-600 cursor-pointer ">
-                    {language === "bn" ? "রক্ত অনুরোধ" : "Request Blood"}
-                    </Link>
-                    <Link to={'/contact'} className="hover:text-red-600 cursor-pointer ">
-                    {language === "bn" ? "যোগাযোগ" : "Contact"}
-                    </Link>
+                <ul className="hidden md:flex items-center gap-6 text-md uppercase bg-red-500/40 pl-20 rounded-bl-full">
+                    <NavLink to={'/'} className={({ isActive }) => isActive
+                        ? "text-red-500 font-semibold"
+                        : "text-gray-700 hover:text-red-600 cursor-pointer"
+                    }>
+                        {language === "bn" ? "হোম" : "Home"}
+                    </NavLink>
+                    <NavLink to={'/allDonors'} className={({ isActive }) => isActive
+                        ? "text-red-500 font-semibold"
+                        : "text-gray-700 hover:text-red-600 cursor-pointer"
+                    }>
+                        {language === "bn" ? "রক্তদাতা" : "Donors"}
+                    </NavLink>
+                    <NavLink to={'/bloodRequest'} className={({ isActive }) => isActive
+                        ? "text-red-500 font-semibold"
+                        : "text-gray-700 hover:text-red-600 cursor-pointer"
+                    }>
+                        {language === "bn" ? "রক্ত অনুরোধ" : "Request Blood"}
+                    </NavLink>
+                    <NavLink to={'/contact'} className={({ isActive }) => isActive
+                        ? "text-red-500 font-semibold"
+                        : "text-gray-700 hover:text-red-600 cursor-pointer"
+                    }>
+                        {language === "bn" ? "যোগাযোগ" : "Contact"}
+                    </NavLink>
 
                     {/* Language Toggle */}
                     <button
                     onClick={() =>
                         setLanguage(language === "bn" ? "en" : "bn")
                     }
-                    className="border px-3 py-1 rounded hover:bg-white hover:text-red-600 transition"
+                    className="border px-3 py-1 rounded bg-white hover:text-red-600 transition"
                     >
                     {language === "bn" ? "EN" : "BN"}
                     </button>

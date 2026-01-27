@@ -5,6 +5,7 @@ import MainLayout from "./Layouts/MainLayout";
 import Home from "./Pages/Home/Home";
 import Contact from "./Pages/Contact/Contact";
 import RequestBlood from "./Pages/RequestBlood/RequestBlood";
+import Donors from "./Pages/Donors/Donors";
 
 const App = () => {
   
@@ -16,6 +17,10 @@ const App = () => {
         {
           path: '/', 
           element: <Home />
+        },
+        {
+          path: '/allDonors', 
+          element: <Donors />
         },
         {
           path: '/contact', 
