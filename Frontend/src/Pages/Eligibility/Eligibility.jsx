@@ -55,7 +55,7 @@ const Eligibility = () => {
         </p>
 
         {/* Conditions List */}
-        <ul className="space-y-4">
+        <ul className="space-y-4 border-t border-zinc-200 pt-10">
           {t.list.map((item, index) => (
             <li
               key={index}

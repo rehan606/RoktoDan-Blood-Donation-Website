@@ -8,6 +8,7 @@ import RequestBlood from "./Pages/RequestBlood/RequestBlood";
 import Donors from "./Pages/Donors/Donors";
 import Eligibility from "./Pages/Eligibility/Eligibility";
 import DonationBenefits from "./Pages/DonationBenefits/DonationBenefits";
+import FAQ from "./Pages/FAQ/Faq";
 
 const App = () => {
   
@@ -39,6 +40,14 @@ const App = () => {
         {
           path: '/benefits', 
           element: <DonationBenefits />
+        },
+        {
+          path: '/faq', 
+          element: <FAQ />
+        },
+        {
+          path: '/privacy-policy', 
+          element: <FAQ />
         },
       ]
     },

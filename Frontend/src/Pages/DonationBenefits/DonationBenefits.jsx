@@ -56,16 +56,18 @@ const DonationBenefits = () => {
                 </>
             ) : (
                 <>
-                <h1 className="text-3xl font-bold text-red-600 mb-4">
-                    🩸 Benefits of Blood Donation
-                </h1>
+                <div className="text-center md:w-[500px] mx-auto">
+                    <h1 className="text-3xl font-bold text-red-600 mb-4">
+                        🩸 Benefits of Blood Donation
+                    </h1>
 
-                <p className="text-gray-700 mb-6">
-                    Blood donation is a noble humanitarian act. A healthy person can
+                    <p className="text-gray-700 mb-6">
+                         Blood donation is a noble humanitarian act. A healthy person can
                     save lives by donating blood.
-                </p>
-
-                <ul className="space-y-4 text-gray-700">
+                    </p>
+                </div>
+                
+                <ul className="space-y-4 text-gray-700 border-t border-zinc-200 pt-10">
                     <li>
                     ✅ <strong>Saves Lives:</strong> One unit of blood can save up to
                     three lives.
