@@ -9,6 +9,7 @@ import Donors from "./Pages/Donors/Donors";
 import Eligibility from "./Pages/Eligibility/Eligibility";
 import DonationBenefits from "./Pages/DonationBenefits/DonationBenefits";
 import FAQ from "./Pages/FAQ/Faq";
+import PrivacyPolicy from "./Pages/PrivacyPolicy/PrivacyPolicy";
 
 const App = () => {
   
@@ -47,7 +48,7 @@ const App = () => {
         },
         {
           path: '/privacy-policy', 
-          element: <FAQ />
+          element: <PrivacyPolicy />
         },
       ]
     },
