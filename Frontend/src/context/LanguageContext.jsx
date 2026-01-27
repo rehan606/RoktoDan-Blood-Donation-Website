@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const LanguageContext = createContext(null);
 
 export const LanguageProvider = ({ children }) => {
@@ -12,6 +13,7 @@ export const LanguageProvider = ({ children }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useLanguage = () => {
   const context = useContext(LanguageContext);
   if (!context) {

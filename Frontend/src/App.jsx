@@ -4,6 +4,7 @@ import { RouterProvider } from "react-router/dom";
 import MainLayout from "./Layouts/MainLayout";
 import Home from "./Pages/Home/Home";
 import Contact from "./Pages/Contact/Contact";
+import RequestBlood from "./Pages/RequestBlood/RequestBlood";
 
 const App = () => {
   
@@ -19,6 +20,10 @@ const App = () => {
         {
           path: '/contact', 
           element: <Contact />
+        },
+        {
+          path: '/bloodRequest', 
+          element: <RequestBlood />
         },
       ]
     },
