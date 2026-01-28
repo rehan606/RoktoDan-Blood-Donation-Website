@@ -2,14 +2,14 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router";
 // import { MdBloodtype } from "react-icons/md";
 import {FaTint } from "react-icons/fa";
+import UserButton from "../Buttons/UserButton"
+// import useAuth from "../../Hooks/useAuth";
 
 const Navbar = ({ language, setLanguage }) => {
     const [isOpen, setIsOpen] = useState(false);
 
-    // const navLinkClass = ({ isActive }) =>
-    //     isActive
-    //         ? "text-red-500 font-semibold border-b-2 border-red-500"
-    //         : "text-gray-700 hover:text-red-500";
+    // const {user} = useAuth();
+
 
 
     return (
@@ -32,7 +32,7 @@ const Navbar = ({ language, setLanguage }) => {
                 </Link>
 
                 {/* Desktop Menu */}
-                <ul className="hidden md:flex items-center gap-6 text-md uppercase bg-red-500/40 pl-20 rounded-bl-full">
+                <ul className="hidden md:flex items-center gap-6 text-md uppercase  ">
                     <NavLink to={'/'} className={({ isActive }) => isActive
                         ? "text-red-500 font-semibold"
                         : "text-gray-700 hover:text-red-600 cursor-pointer"
@@ -67,6 +67,11 @@ const Navbar = ({ language, setLanguage }) => {
                     >
                     {language === "bn" ? "EN" : "BN"}
                     </button>
+
+                    {/* Profile Button  */}
+                    <UserButton /> 
+                    
+                    
                 </ul>
 
                 {/* Mobile Button */}
