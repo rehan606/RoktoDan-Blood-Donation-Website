@@ -12,6 +12,7 @@ import FAQ from "./Pages/FAQ/Faq";
 import PrivacyPolicy from "./Pages/PrivacyPolicy/PrivacyPolicy";
 import ScrollToTop from "./components/ScrollTop/ScrollToTop";
 import BecomeDonor from "./Pages/BecomeDonor/BecomeDonor";
+import AuthProvider from "./context/AuthContext/AuthProvider";
 
 const App = () => {
   
@@ -62,7 +63,9 @@ const App = () => {
 
    return ( 
     <> 
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
       <ScrollToTop />
     </> )
 }
