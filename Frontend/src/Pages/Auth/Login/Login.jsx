@@ -5,8 +5,9 @@ import { useLanguage } from "../../../context/LanguageContext";
 import { loginText } from "../../../utils/loginText"
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
 
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../firebase/firebase.init";
+import LoginWithGoogle from "../../../components/Buttons/LoginWithGoogle";
 
 
 const Login = () => {
@@ -30,19 +31,7 @@ const Login = () => {
         });
     };
 
-    // 🔴 Google Login
-    const handleGoogleLogin = () => {
-        const provider = new GoogleAuthProvider();
 
-        signInWithPopup(auth, provider)
-        .then((result) => {
-            console.log("Google User:", result.user);
-            navigate("/");
-        })
-        .catch((error) => {
-            console.error(error.message);
-        });
-    };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-red-50 px-4">
@@ -59,21 +48,7 @@ const Login = () => {
                 </div>
 
                 {/* Google Login */}
-                <button
-                onClick={handleGoogleLogin}
-                className="w-full flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition mb-4 cursor-pointer"
-                >
-                    <FaGoogle className="text-red-500" />
-                    <span className="text-sm font-medium">
-                        {language === "bn" ? "Google দিয়ে লগইন করুন" : "Login with Google"}
-                    </span>
-                </button>
-
-                <div className="flex items-center my-4">
-                    <div className="flex-1 h-px bg-gray-300"></div>
-                    <span className="px-3 text-xs text-gray-500">OR</span>
-                    <div className="flex-1 h-px bg-gray-300"></div>
-                </div>
+                <LoginWithGoogle />
 
                 {/* Form */}
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

@@ -3,10 +3,11 @@ import { Link, Navigate } from "react-router";
 import { useLanguage } from "../../../context/LanguageContext";
 import useAuth from "../../../Hooks/useAuth";
 
-import { FaGoogle } from "react-icons/fa";
+
 import { registerText } from "../../../utils/registerText";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "../../../firebase/firebase.init";
+// import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+// import { auth } from "../../../firebase/firebase.init";
+import LoginWithGoogle from "../../../components/Buttons/LoginWithGoogle";
 
 const Register = () => {
     const {register, handleSubmit, formState: { errors }, } = useForm();
@@ -14,20 +15,6 @@ const Register = () => {
     const t = registerText[language];
     const {createUser } = useAuth();
 
-
-    // 🔴 Google Login
-    const handleGoogleLogin = () => {
-        const provider = new GoogleAuthProvider();
-
-        signInWithPopup(auth, provider)
-        .then((result) => {
-            console.log("Google User:", result.user);
-            Navigate("/");
-        })
-        .catch((error) => {
-            console.error(error.message);
-        });
-    };
 
 
     const onSubmit = (data) => {
@@ -56,21 +43,7 @@ const Register = () => {
                 </div>
 
                 {/* Google Login */}
-                <button
-                onClick={handleGoogleLogin}
-                className="w-full flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition mb-4 cursor-pointer"
-                >
-                    <FaGoogle className="text-red-500" />
-                    <span className="text-sm font-medium">
-                        {language === "bn" ? "Google দিয়ে লগইন করুন" : "Login with Google"}
-                    </span>
-                </button>
-
-                <div className="flex items-center my-4">
-                    <div className="flex-1 h-px bg-gray-300"></div>
-                    <span className="px-3 text-xs text-gray-500">OR</span>
-                    <div className="flex-1 h-px bg-gray-300"></div>
-                </div>
+                <LoginWithGoogle />
 
 
 
