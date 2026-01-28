@@ -13,6 +13,7 @@ import PrivacyPolicy from "./Pages/PrivacyPolicy/PrivacyPolicy";
 import ScrollToTop from "./components/ScrollTop/ScrollToTop";
 import BecomeDonor from "./Pages/BecomeDonor/BecomeDonor";
 import AuthProvider from "./context/AuthContext/AuthProvider";
+import Register from "./Pages/Auth/Register/Register";
 
 const App = () => {
   
@@ -56,6 +57,10 @@ const App = () => {
         {
           path: '/register-donor', 
           element: <BecomeDonor />
+        },
+        {
+          path: '/register', 
+          element: <Register />
         },
       ]
     },
