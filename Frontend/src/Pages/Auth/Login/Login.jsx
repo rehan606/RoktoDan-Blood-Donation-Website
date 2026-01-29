@@ -8,6 +8,7 @@ import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../firebase/firebase.init";
 import LoginWithGoogle from "../../../components/Buttons/LoginWithGoogle";
+import Swal from "sweetalert2";
 
 
 const Login = () => {
@@ -23,6 +24,16 @@ const Login = () => {
     const onSubmit = (data) => {
         signInWithEmailAndPassword(auth, data.email, data.password)
         .then((result) => {
+            Swal.fire({
+            position: "center",
+            icon: "success",
+            title:
+                language === "bn"
+                  ? "সফলভাবে লগইন হয়েছে"
+                  : "Logged in successfully",
+            showConfirmButton: false,
+            timer: 1500
+            });
             console.log("Logged in:", result.user);
             navigate("/"); // or dashboard
         })

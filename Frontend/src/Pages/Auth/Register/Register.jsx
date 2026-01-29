@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link, Navigate } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import { useLanguage } from "../../../context/LanguageContext";
 import useAuth from "../../../Hooks/useAuth";
 
@@ -8,12 +8,14 @@ import { registerText } from "../../../utils/registerText";
 // import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 // import { auth } from "../../../firebase/firebase.init";
 import LoginWithGoogle from "../../../components/Buttons/LoginWithGoogle";
+import Swal from "sweetalert2";
 
 const Register = () => {
     const {register, handleSubmit, formState: { errors }, } = useForm();
     const { language } = useLanguage();
     const t = registerText[language];
     const {createUser } = useAuth();
+    const navigate = useNavigate();
 
 
 
@@ -21,7 +23,18 @@ const Register = () => {
         console.log("Register Data:", data);
         createUser(data.email, data.password)
         .then(result => {
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title:
+                    language === "bn"
+                        ? "সফলভাবে রেজিস্টার হয়েছে"
+                        : "Register successfully",
+                showConfirmButton: false,
+                timer: 1500
+            });
             console.log(result.user)
+            navigate("/");
         })
         .catch(error => {
             console.error(error);

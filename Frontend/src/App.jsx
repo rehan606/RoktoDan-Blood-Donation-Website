@@ -15,6 +15,7 @@ import BecomeDonor from "./Pages/BecomeDonor/BecomeDonor";
 import AuthProvider from "./context/AuthContext/AuthProvider";
 import Register from "./Pages/Auth/Register/Register";
 import Login from "./Pages/Auth/Login/Login";
+import DashboardLayout from "./Layouts/DashboardLayout";
 
 const App = () => {
   
@@ -67,6 +68,15 @@ const App = () => {
           path: '/login', 
           element: <Login />
         },
+      ]
+    },
+    {
+    path: "/dashboard",
+      element: <DashboardLayout />, 
+      children:[
+        {
+          
+        }
       ]
     },
   ]);

@@ -3,12 +3,13 @@ import React from 'react'
 import { auth } from '../../firebase/firebase.init';
 import { FaGoogle } from "react-icons/fa";
 import { useLanguage } from '../../context/LanguageContext';
-// import { useNavigate } from "react-router";
+import { useNavigate } from "react-router";
+import Swal from 'sweetalert2';
 // import useAuth from '../../Hooks/useAuth';
 
 const LoginWithGoogle = () => {
     const { language } = useLanguage();
-    // const navigate = useNavigate();   
+    const navigate = useNavigate();   
     // const {signInWithGoogle} = useAuth();
 
     // 🔴 Google Login
@@ -18,8 +19,18 @@ const LoginWithGoogle = () => {
 
         signInWithPopup(auth, provider)
         .then((result) => {
+            Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title:
+                            language === "bn"
+                              ? "সফলভাবে লগইন হয়েছে"
+                              : "Logged in successfully",
+                        showConfirmButton: false,
+                        timer: 1500
+                        });
             console.log("Google User:", result.user);
-            // navigate("/");
+            navigate("/");
         })
         .catch((error) => {
             console.error(error.message);
