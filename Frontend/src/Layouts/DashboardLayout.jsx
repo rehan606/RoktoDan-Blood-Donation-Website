@@ -1,6 +1,6 @@
-import { NavLink, Outlet } from "react-router";
+import { Link, NavLink, Outlet } from "react-router";
 import { useState } from "react";
-import {FaHome,FaUsers,FaTint,FaPlusCircle,FaChartBar,FaCog,FaBars, FaSignOutAlt, FaUserCircle,FaHourglassHalf, FaCheckCircle, } from "react-icons/fa";
+import {FaHome,FaUsers,FaTint,FaPlusCircle,FaChartBar,FaCog,FaBars, FaSignOutAlt, FaUserCircle,FaHourglassHalf, FaCheckCircle, FaHistory, FaBell, FaCogs, FaUser, } from "react-icons/fa";
 
 import { PieChart,  Pie, Cell, BarChart, Bar, XAxis,YAxis,Tooltip, ResponsiveContainer,} from "recharts";
 import useAuth from "../Hooks/useAuth";
@@ -10,13 +10,14 @@ import { useLanguage } from "../context/LanguageContext";
 const DashboardLayout = () => {
     const { user, logOut } = useAuth();
     const { language, setLanguage } = useLanguage();
-
+    
     // default role → admin
     const role = "admin";
+    
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
-    const menus = [
+    const adminMenus = [
         {
         name: language === "bn" ? "ড্যাশবোর্ড" : "Dashboard",
         to: "/dashboard",
@@ -49,6 +50,39 @@ const DashboardLayout = () => {
         },
     ];
 
+    const userMenus = [
+    {
+        name: language === "bn" ? "ড্যাশবোর্ড" : "Dashboard",
+        to: "/dashboard",
+        icon: <FaHome />,
+    },
+    {
+        name: language === "bn" ? "আমার প্রোফাইল" : "My Profile",
+        to: "/dashboard/profile",
+        icon: <FaUser />,
+    },
+    {
+        name: language === "bn" ? "রক্তের অনুরোধ" : "Blood Requests",
+        to: "/dashboard/requests",
+        icon: <FaTint />,
+    },
+    {
+        name: language === "bn" ? "দান ইতিহাস" : "Donation History",
+        to: "/dashboard/history",
+        icon: <FaHistory />,
+    },
+    {
+        name: language === "bn" ? "নোটিফিকেশন" : "Notifications",
+        to: "/dashboard/notifications",
+        icon: <FaBell />,
+    },
+    {
+        name: language === "bn" ? "সেটিংস" : "Settings",
+        to: "/dashboard/settings",
+        icon: <FaCogs />,
+    },
+    ];
+    const menus = role === "admin" ? adminMenus : userMenus;
     // ---- Cards Data ----
     const cards = [
         {
@@ -102,33 +136,35 @@ const DashboardLayout = () => {
                 sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
                 }`}
             >
-                <div className="p-4 flex  items-center justify-center gap-2 text-xl font-bold border-b border-blue-900">
-                    <FaTint className="text-red-600 w-8 h-8  " />
-                    <div>
-
-                    {language === "bn"? <h2>রক্তদান</h2> : <h2>RoktoDaan</h2> }
-                    </div>
+                <div className="p-4  text-xl font-bold border-b border-blue-900">
+                    <Link to="/" className="cursor-pointer flex  items-center justify-center gap-2 hover:scale-110 transition-all duration-300">
+                        <FaTint className="text-red-600 w-8 h-8  " />
+                        <div>
+                            {language === "bn"? <h2>রক্তদান</h2> : <h2>RoktoDaan</h2> }
+                        </div>
+                    </Link>
                 
                 </div>
 
                 <nav className="flex-1 p-4 space-y-2 ">
-                {menus.map((menu) => (
-                    <NavLink
-                    key={menu.to}
-                    to={menu.to}
-                    onClick={() => setSidebarOpen(false)}
-                    className={({ isActive }) =>
-                        `flex items-center gap-3 px-4 py-2 rounded-lg transition ${
-                        isActive
-                            ? "bg-[#0b1c2d] text-white"
-                            : "hover:bg-[#0b1c2d]"
-                        }`
-                    }
-                    >
-                    {menu.icon}
-                    {menu.name}
-                    </NavLink>
-                ))}
+                    
+                    {menus.map((menu) => (
+                        <NavLink
+                        key={menu.to}
+                        to={menu.to}
+                        onClick={() => setSidebarOpen(false)}
+                        className={({ isActive }) =>
+                            `flex items-center gap-3 px-4 py-2 rounded-lg transition ${
+                            isActive
+                                ? "bg-[#0b1c2d] text-white"
+                                : "hover:bg-[#0b1c2d]"
+                            }`
+                        }
+                        >
+                        {menu.icon}
+                        {menu.name}
+                        </NavLink>
+                    ))}
                 </nav>
 
                 {/* User section bottom */}
