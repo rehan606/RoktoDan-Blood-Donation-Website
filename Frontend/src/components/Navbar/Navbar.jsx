@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { Link, NavLink } from "react-router";
-// import { MdBloodtype } from "react-icons/md";
+import { Link,  NavLink } from "react-router";
 import {FaTint } from "react-icons/fa";
 import UserButton from "../Buttons/UserButton"
-// import useAuth from "../../Hooks/useAuth";
+import useAuth from "../../Hooks/useAuth";
 
 const Navbar = ({ language, setLanguage }) => {
     const [isOpen, setIsOpen] = useState(false);
 
-    // const {user} = useAuth();
+    const {user, } = useAuth();
+    
 
 
 
@@ -32,7 +32,7 @@ const Navbar = ({ language, setLanguage }) => {
                 </Link>
 
                 {/* Desktop Menu */}
-                <ul className="hidden md:flex items-center gap-6 text-md uppercase  ">
+                <ul className="hidden md:flex items-center gap-4 text-md uppercase  ">
                     <NavLink to={'/'} className={({ isActive }) => isActive
                         ? "text-red-500 font-semibold"
                         : "text-gray-700 hover:text-red-600 cursor-pointer"
@@ -58,18 +58,22 @@ const Navbar = ({ language, setLanguage }) => {
                         {language === "bn" ? "যোগাযোগ" : "Contact"}
                     </NavLink>
 
-                    {/* Language Toggle */}
-                    <button
-                    onClick={() =>
-                        setLanguage(language === "bn" ? "en" : "bn")
-                    }
-                    className="border px-3 py-1 rounded bg-white hover:text-red-600 transition"
-                    >
-                    {language === "bn" ? "EN" : "BN"}
-                    </button>
+                    <div className="flex items-center gap-3">
 
-                    {/* Profile Button  */}
-                    <UserButton /> 
+                        {/* Profile Button  */}
+                        { !user? ( <Link to={'/login'} className="bg-red-500 text-white py-2 px-4 rounded-md border hover:bg-white hover:text-red-500 hover:border-red-500 transition-all duration-300  ">Login</Link> ) : (<UserButton />) }
+                        
+                        {/* Language Toggle */}
+                        <button
+                        onClick={() =>
+                            setLanguage(language === "bn" ? "en" : "bn")
+                        }
+                        className="border px-3 py-2 rounded bg-white text-red-600 transition hover:bg-red-500 hover:text-white cursor-pointer"
+                        >
+                        {language === "bn" ? "EN" : "BN"}
+                        </button>
+                    </div>
+
                     
                     
                 </ul>
