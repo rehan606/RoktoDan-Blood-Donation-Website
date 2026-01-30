@@ -16,6 +16,7 @@ import AuthProvider from "./context/AuthContext/AuthProvider";
 import Register from "./Pages/Auth/Register/Register";
 import Login from "./Pages/Auth/Login/Login";
 import DashboardLayout from "./Layouts/DashboardLayout";
+import PrivateRoute from "./Routes/PrivateRoute";
 
 const App = () => {
   
@@ -72,7 +73,7 @@ const App = () => {
     },
     {
     path: "/dashboard",
-      element: <DashboardLayout />, 
+      element: <PrivateRoute> <DashboardLayout /> </PrivateRoute>, 
       children:[
         {
           
