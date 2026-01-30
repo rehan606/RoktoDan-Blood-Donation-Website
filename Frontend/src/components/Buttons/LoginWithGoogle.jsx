@@ -5,11 +5,13 @@ import { FaGoogle } from "react-icons/fa";
 import { useLanguage } from '../../context/LanguageContext';
 import { useNavigate } from "react-router";
 import Swal from 'sweetalert2';
+import useAxios from '../../Hooks/useAxios';
 // import useAuth from '../../Hooks/useAuth';
 
 const LoginWithGoogle = () => {
     const { language } = useLanguage();
     const navigate = useNavigate();   
+    const axiosInstance = useAxios();
     // const {signInWithGoogle} = useAuth();
 
     // 🔴 Google Login
@@ -18,7 +20,21 @@ const LoginWithGoogle = () => {
         const provider = new GoogleAuthProvider();
 
         signInWithPopup(auth, provider)
-        .then((result) => {
+        .then(async (result) => {
+
+            const user = result.user;
+
+            // Update user in Database
+            const userInfo = {
+                email: user.email,
+                role: 'user', // default role
+                created_at : new Date().toISOString(),
+                last_log_in : new Date().toISOString()
+            }
+
+            const res = await axiosInstance.post('/users', userInfo);
+            console.log('User update info', res.data)
+
             Swal.fire({
                         position: "center",
                         icon: "success",
