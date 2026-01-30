@@ -30,6 +30,24 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+
+    const db = client.db('roktodan');
+    const userCollection = db.collection('users');
+
+
+    // Set User in Database 
+    app.post('/users', async(req, res) => {
+      const email = req.body.email;
+      const userExists = await userCollection.findOne({ email })
+      if (userExists){
+        return res.status(200).send({ message: 'User Already Exists', inserted: false });
+      }
+      const user = req.body;
+      const result = await userCollection.insertOne(user);
+      res.send(result);
+    })
+
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");

@@ -28,8 +28,16 @@ const Register = () => {
         .then(result => {
             
             console.log(result.user)
-            // Update user info in Database 
-            // upadate user profile in firebase 
+            // ======= Update user info in Database =======
+            const userInfo = {
+                email: data.email,
+                role: 'user', // default role
+                created_at : new Date().toISOString(),
+                last_log_in : new Date().toISOString()
+            }
+
+
+            // ======= upadate user profile in firebase =======
             const userProfile = {
                 displayName : data.name,
                 photoURL : profilePicture,
@@ -52,6 +60,7 @@ const Register = () => {
                 showConfirmButton: false,
                 timer: 1500
             });
+
             navigate("/");
         })
         .catch(error => {
