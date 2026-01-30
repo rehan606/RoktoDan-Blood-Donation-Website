@@ -3,17 +3,25 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000;
 const { MongoClient, ServerApiVersion } = require('mongodb');
-require('dotenv').config()
+require('dotenv').config();
+const admin = require("firebase-admin");
 
 // DB connect
 
 
-// Middleware
+// ========= Middleware =========
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Driver
+// ========= Firebase Admin Configure File =========
+const serviceAccount = require("./firebase-admin-key.json");
 
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+
+  // ========= MongoDB Driver =========
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.jwii9.mongodb.net/?appName=Cluster0`;
 
@@ -35,7 +43,25 @@ async function run() {
     const userCollection = db.collection('users');
 
 
-    // Set User in Database 
+    // ========= Custom Middleware =========
+    const verifyToken = async (req, res, next) => {
+
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).send({ message: 'unAuthorized access'})
+      }
+      const token = authHeader.split(' ')[1];
+      if(!token) {
+        return res.status(401).send({ message: 'unAuthorized access'})
+      }
+
+      // Verify The Token 
+
+
+      next();
+    }
+
+    // ========= Set User in Database =========
     // app.post('/users', async(req, res) => {
     //   const email = req.body.email;
     //   const userExists = await userCollection.findOne({ email })
@@ -47,7 +73,7 @@ async function run() {
     //   res.send(result);
     // })
 
-    app.post('/users', async (req, res) => {
+    app.post('/users', verifyToken, async (req, res) => {
       try {
         const user = req.body;
 
