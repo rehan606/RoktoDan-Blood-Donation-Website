@@ -11,6 +11,7 @@ import { registerText } from "../../../utils/registerText";
 import LoginWithGoogle from "../../../components/Buttons/LoginWithGoogle";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import useAxios from "../../../Hooks/useAxios";
 
 const Register = () => {
     const {register, handleSubmit, formState: { errors }, } = useForm();
@@ -19,53 +20,57 @@ const Register = () => {
     const {createUser, updateUserProfile } = useAuth();
     const navigate = useNavigate();
     const [profilePicture, setProfilePicture] = useState('');
+    const axiosInstance = useAxios();
 
 
     // Submit FOrm 
     const onSubmit = (data) => {
         console.log("Register Data:", data);
         createUser(data.email, data.password)
-        .then(result => {
-            
-            console.log(result.user)
-            // ======= Update user info in Database =======
-            const userInfo = {
-                email: data.email,
-                role: 'user', // default role
-                created_at : new Date().toISOString(),
-                last_log_in : new Date().toISOString()
-            }
+            .then( async (result) => {
+                
+                console.log(result.user)
+                // ======= Update user info in Database =======
+                const userInfo = {
+                    email: data.email,
+                    role: 'user', // default role
+                    created_at : new Date().toISOString(),
+                    last_log_in : new Date().toISOString()
+                }
+
+                const userRes = await axiosInstance.post('/users', userInfo);
+                console.log(userRes.data);
 
 
-            // ======= upadate user profile in firebase =======
-            const userProfile = {
-                displayName : data.name,
-                photoURL : profilePicture,
-            }
-            updateUserProfile(userProfile)
-            .then(() => {
-                console.log('Profile name and Pic Updated')
+                // ======= upadate user profile in firebase =======
+                const userProfile = {
+                    displayName : data.name,
+                    photoURL : profilePicture,
+                }
+                updateUserProfile(userProfile)
+                .then(() => {
+                    console.log('Profile name and Pic Updated')
+                })
+                .catch(error =>{
+                    console.log(error)
+                })
+
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title:
+                        language === "bn"
+                            ? "সফলভাবে রেজিস্টার হয়েছে"
+                            : "Register successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+                navigate("/");
             })
-            .catch(error =>{
-                console.log(error)
+            .catch(error => {
+                console.error(error);
             })
-
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title:
-                    language === "bn"
-                        ? "সফলভাবে রেজিস্টার হয়েছে"
-                        : "Register successfully",
-                showConfirmButton: false,
-                timer: 1500
-            });
-
-            navigate("/");
-        })
-        .catch(error => {
-            console.error(error);
-        })
     };
 
     // Upload Image 
