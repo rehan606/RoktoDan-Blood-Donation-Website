@@ -61,7 +61,7 @@ const Navbar = ({ language, setLanguage }) => {
                     <div className="flex items-center gap-3">
 
                         {/* Profile Button  */}
-                        { !user? ( <Link to={'/login'} className="bg-red-500 text-white py-2 px-4 rounded-md border hover:bg-white hover:text-red-500 hover:border-red-500 transition-all duration-300  ">Login</Link> ) : (<UserButton />) }
+                        { !user? ( <Link to={'/login'} className="bg-red-500 text-white py-2 px-4 rounded-md border hover:bg-white hover:text-red-500 hover:border-red-500 transition-all duration-300  "> {language === "bn" ? "লগইন" : "Login"}</Link> ) : (<UserButton />) }
                         
                         {/* Language Toggle */}
                         <button
