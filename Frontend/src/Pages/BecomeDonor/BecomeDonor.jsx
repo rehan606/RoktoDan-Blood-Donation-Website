@@ -6,12 +6,17 @@ import { useLanguage } from "../../context/LanguageContext";
 import useAuth from "../../Hooks/useAuth";
 import useUnions from "../../Hooks/useUnions";
 import useBloodGroups from "../../Hooks/useBloodGroups";
+import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const BecomeDonor = () => {
   const { language } = useLanguage();
   const { user } = useAuth();
   const { unions, } = useUnions();
   const {bloodGroups, } = useBloodGroups();
+  const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
 
   
 
@@ -37,17 +42,43 @@ const BecomeDonor = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const donorPayload = {
+    const donorData = {
       ...formData,
       role: "donor",
+      status: "pending",
       createdAt: new Date(),
     };
 
     if (formData.donorType === "new") {
-      delete donorPayload.lastDonationDate;
+      delete donorData.lastDonationDate;
     }
 
-    console.log("Donor Payload:", donorPayload);
+    console.log("Donor Application:", donorData);
+
+    // ========= Send data in Database =========
+    axiosSecure.post('/donors', donorData)
+    .then(res => {
+      if(res.data.insertedId){
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title:
+              language === "bn"
+                  ? " আবেদন সফলভাবে জমা হয়েছে"
+                  : "Application Submitted!",
+          text: 
+              language === "bn"
+                  ? "আপনার আবেদন অনুমোদনের অপেক্ষায় আছে।"
+                  : "Your application is pending approval.",
+          showConfirmButton: true,
+          
+        });
+      }
+    })
+
+    
+
+    navigate("/");
     // POST to backend: /donors
   };
 
@@ -59,12 +90,12 @@ const BecomeDonor = () => {
     <div className="min-h-screen bg-gray-50 py-10 px-4">
       <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg ">
         {/* Header */}
-        <div className="text-center mb-8 bg-linear-to-br from-red-500 via-white to-red-500 py-10 rounded-2xl">
+        <div className="text-center mb-8 bg-radial-[at_50%_75%] from-white via-red-400 to-red-500 to-90% py-10 rounded-2xl">
           <FaTint className="text-red-600 text-4xl mx-auto mb-2" />
           <h1 className="text-3xl font-bold text-red-600">
             {language === "bn" ? "রক্তদাতা হন" : "Become a Blood Donor"}
           </h1>
-          <p className="text-gray-600 mt-2">
+          <p className="text-gray-800 mt-2">
             {language === "bn"
               ? "আপনার একটি সিদ্ধান্তই বাঁচাতে পারে একটি জীবন"
               : "Your single decision can save a life"}
@@ -205,7 +236,7 @@ const BecomeDonor = () => {
                 {language === "bn" ? "ইউনিয়ন" : "Union"}
               </label>
               <div className="relative flex items-center">
-                <RiUserLocationFill className="absolute left-3 top-3 text-gray-400" />
+                <RiUserLocationFill className="absolute left-3  text-gray-400" />
                 <select
                   name="union"
                   required
@@ -233,7 +264,7 @@ const BecomeDonor = () => {
             type="submit"
             className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-semibold"
           >
-            {language === "bn" ? "নিবন্ধন করুন" : "Register as Donor"}
+            {language === "bn" ? "আবেদন করুন" : "Submit Application"}
           </button>
         </form>
       </div>

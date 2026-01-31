@@ -53,6 +53,7 @@ async function run() {
 
     const db = client.db('roktoDan');
     const userCollection = db.collection('users');
+    const donorsCollection = db.collection('donors');
 
 
     // ========= Custom Middleware =========
@@ -75,9 +76,6 @@ async function run() {
       } catch (error) {
         return res.status(403).send({ message: 'forbidden access'})
       }
-
-
-      
     }
 
     // ========= Set User in Database =========
@@ -91,6 +89,8 @@ async function run() {
     //   const result = await userCollection.insertOne(user);
     //   res.send(result);
     // })
+
+    // ========= Set User in Database =========
 
     app.post('/users', verifyToken, async (req, res) => {
       try {
@@ -114,6 +114,61 @@ async function run() {
         res.status(500).send({ message: "Internal Server Error" });
       }
     });
+
+    // ========= Set Donors Application in Database =========
+
+
+    // ---------------- 90 DAYS HELPER ----------------
+    const isEligibleAfter90Days = (lastDonationDate) => {
+      const today = new Date();
+      const lastDate = new Date(lastDonationDate);
+
+      const diffTime = today - lastDate;
+      const diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+      return diffDays >= 90;
+    };
+
+    // ---------------- /donors POST API ----------------
+    app.post("/donors", async (req, res) => {
+      try {
+        const donorData = req.body;
+
+        let isAvailable = true;
+
+        // old donor হলে 90 days check
+        if (donorData.donorType === "old" && donorData.lastDonationDate) {
+          isAvailable = isEligibleAfter90Days(donorData.lastDonationDate);
+        }
+
+        const donorPayload = {
+          ...donorData,
+          role: "donor",
+          isAvailable,
+          createdAt: new Date(),
+        };
+
+        // new donor হলে lastDonationDate remove
+        if (donorData.donorType === "new") {
+          delete donorPayload.lastDonationDate;
+        }
+
+        const result = await donorsCollection.insertOne(donorPayload);
+
+        res.status(201).json({
+          success: true,
+          message: "Donor added successfully",
+          donorId: result.insertedId,
+          donor: donorPayload,
+        });
+      } catch (error) {
+        res.status(500).json({
+          success: false,
+          message: error.message,
+        });
+      }
+    });
+
 
 
 
