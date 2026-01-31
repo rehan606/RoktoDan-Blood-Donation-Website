@@ -17,6 +17,8 @@ import Register from "./Pages/Auth/Register/Register";
 import Login from "./Pages/Auth/Login/Login";
 import DashboardLayout from "./Layouts/DashboardLayout";
 import PrivateRoute from "./Routes/PrivateRoute";
+import PendingDonors from "./Pages/Dashboard/Donors/PendingDonors";
+import ActiveDonors from "./Pages/Dashboard/Donors/ActiveDonors";
 
 const App = () => {
   
@@ -76,8 +78,13 @@ const App = () => {
       element: <PrivateRoute> <DashboardLayout /> </PrivateRoute>, 
       children:[
         {
-          
-        }
+          path: '/dashboard/active-donors', 
+          element: <ActiveDonors />
+        },
+        {
+          path: '/dashboard/pending-donors', 
+          element: <PendingDonors />
+        },
       ]
     },
   ]);

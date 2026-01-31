@@ -1,6 +1,6 @@
 import { Link, NavLink, Outlet } from "react-router";
 import { useState } from "react";
-import {FaHome,FaUsers,FaTint,FaPlusCircle,FaChartBar,FaCog,FaBars, FaSignOutAlt, FaUserCircle, FaHistory, FaBell, FaCogs, FaUser, } from "react-icons/fa";
+import {FaHome,FaUsers,FaTint,FaPlusCircle,FaChartBar,FaCog,FaBars, FaSignOutAlt, FaUserCircle, FaHistory, FaBell, FaCogs, FaUser, FaUserClock, FaUserCheck, } from "react-icons/fa";
 
 
 import useAuth from "../Hooks/useAuth";
@@ -27,7 +27,17 @@ const DashboardLayout = () => {
         {
         name: language === "bn" ? "সব দাতা" : "All Donors",
         to: "/dashboard/donors",
-        icon: <FaUsers />,
+        icon: <FaUserCheck />,
+        },
+        {
+        name: language === "bn" ? "সক্রিয় দাতা" : "Active Donors",
+        to: "/dashboard/active-donors",
+        icon: <FaUserClock />,
+        },
+        {
+        name: language === "bn" ? "অপেক্ষামান দাতা " : "Pending Donors",
+        to: "/dashboard/pending-donors",
+        icon: <FaUserClock />,
         },
         {
         name: language === "bn" ? "নতুন দাতা যোগ" : "Add Donor",
