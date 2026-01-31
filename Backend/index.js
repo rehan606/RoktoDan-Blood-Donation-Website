@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 // ========= Firebase Admin Configure File =========
-const serviceAccount = require("./firebase-admin-key.json");
+
 
 admin.initializeApp({
   credential: admin.credential.cert({
@@ -25,6 +25,7 @@ admin.initializeApp({
 });
 
 
+// const serviceAccount = require("./firebase-admin-key.json");
 // admin.initializeApp({
 //   credential: admin.credential.cert(serviceAccount)
 // });
@@ -67,9 +68,16 @@ async function run() {
       }
 
       // Verify The Token 
+      try {
+        const decoded = await admin.auth.verifyIdToken(token);
+        req.decoded = decoded;
+        next();
+      } catch (error) {
+        return res.status(403).send({ message: 'forbidden access'})
+      }
 
 
-      next();
+      
     }
 
     // ========= Set User in Database =========
