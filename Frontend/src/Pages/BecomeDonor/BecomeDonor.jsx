@@ -4,10 +4,16 @@ import { RiUserLocationFill } from "react-icons/ri";
 import { FaLocationDot } from "react-icons/fa6";
 import { useLanguage } from "../../context/LanguageContext";
 import useAuth from "../../Hooks/useAuth";
+import useUnions from "../../Hooks/useUnions";
+import useBloodGroups from "../../Hooks/useBloodGroups";
 
 const BecomeDonor = () => {
   const { language } = useLanguage();
   const { user } = useAuth();
+  const { unions, } = useUnions();
+  const {bloodGroups, } = useBloodGroups();
+
+  
 
   const [formData, setFormData] = useState({
     donorType: "old", // new | old (default old)
@@ -21,25 +27,7 @@ const BecomeDonor = () => {
     available: true, // backend auto-calc করবে চাইলে
   });
 
-  const unions = [
-    { bn: "আমানউল্লাহ", en: "Amanullah" },
-    { bn: "আজিমপুর", en: "Azimpur" },
-    { bn: "বাউরিয়া", en: "Bauria" },
-    { bn: "দীর্ঘাপাড়", en: "Dirghapar" },
-    { bn: "গাছুয়া", en: "Gachhua" },
-    { bn: "হারামিয়া", en: "Haramia" },
-    { bn: "হরিশপুর", en: "Harispur" },
-    { bn: "কালাপানিয়া", en: "Kalapania" },
-    { bn: "মগধরা", en: "Magdhara" },
-    { bn: "মাইটভাঙ্গা", en: "Maitbhanga" },
-    { bn: "মুসাপুর", en: "Musapur" },
-    { bn: "রহমতপুর", en: "Rahmatpur" },
-    { bn: "সন্তোষপুর", en: "Santoshpur" },
-    { bn: "সারিকাইত", en: "Sarikait" },
-    { bn: "উড়িরচর", en: "Urirchar" },
-  ];
-
-  const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -63,11 +51,15 @@ const BecomeDonor = () => {
     // POST to backend: /donors
   };
 
+  // if (loading) {
+  //   return <p>Loading...</p>;
+  // }
+
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4">
       <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg ">
         {/* Header */}
-        <div className="text-center mb-8 bg-linear-to-lr from-red-500 via-white to-red-500 py-10 rounded-2xl">
+        <div className="text-center mb-8 bg-linear-to-br from-red-500 via-white to-red-500 py-10 rounded-2xl">
           <FaTint className="text-red-600 text-4xl mx-auto mb-2" />
           <h1 className="text-3xl font-bold text-red-600">
             {language === "bn" ? "রক্তদাতা হন" : "Become a Blood Donor"}
@@ -79,7 +71,7 @@ const BecomeDonor = () => {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5 px-8">
+        <form onSubmit={handleSubmit} className="space-y-5 px-8 pb-10">
           {/* Donor Type */}
           <div>
             <label className="block text-sm font-medium mb-2">
@@ -165,8 +157,8 @@ const BecomeDonor = () => {
                     : "Select Blood Group"}
                 </option>
                 {bloodGroups.map((bg) => (
-                  <option key={bg} value={bg}>
-                    {bg}
+                  <option key={bg.value} value={bg.value}>
+                    {bg.label}
                   </option>
                 ))}
               </select>
