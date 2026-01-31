@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useLanguage } from "../../../context/LanguageContext";
 import { loginText } from "../../../utils/loginText"
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
@@ -15,6 +15,9 @@ const Login = () => {
     const { language } = useLanguage();
     const t = loginText[language];
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -35,7 +38,7 @@ const Login = () => {
             timer: 1500
             });
             console.log("Logged in:", result.user);
-            navigate("/"); // or dashboard
+            navigate(from, { replace: true }); // or dashboard
         })
         .catch((error) => {
             console.error(error.message);

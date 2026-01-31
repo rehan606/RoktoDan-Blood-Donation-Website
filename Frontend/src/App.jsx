@@ -35,7 +35,7 @@ const App = () => {
         },
         {
           path: '/contact', 
-          element: <Contact />
+          element: <PrivateRoute> <Contact /> </PrivateRoute> 
         },
         {
           path: '/request-blood', 
@@ -59,7 +59,7 @@ const App = () => {
         },
         {
           path: '/register-donor', 
-          element: <BecomeDonor />
+          element: <PrivateRoute> <BecomeDonor /> </PrivateRoute>,
         },
         {
           path: '/register', 
