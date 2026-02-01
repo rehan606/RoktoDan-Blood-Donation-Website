@@ -27,12 +27,12 @@ const DashboardLayout = () => {
         {
         name: language === "bn" ? "সব দাতা" : "All Donors",
         to: "/dashboard/donors",
-        icon: <FaUserCheck />,
+        icon: <FaUsers />,
         },
         {
         name: language === "bn" ? "সক্রিয় দাতা" : "Active Donors",
         to: "/dashboard/active-donors",
-        icon: <FaUserClock />,
+        icon: <FaUserCheck />,
         },
         {
         name: language === "bn" ? "অপেক্ষামান দাতা " : "Pending Donors",
@@ -197,7 +197,7 @@ const DashboardLayout = () => {
 
                 
                 </header>
-                    {role === "admin"? <AdminHome/> : "" }
+                    {/* {!role === "admin"? <AdminHome/> : "" } */}
                 
                     
                 

@@ -170,6 +170,29 @@ async function run() {
     });
 
 
+    // ---------------- GET PENDING DONORS ----------------
+    app.get("/donors/pending", async (req, res) => {
+      try {
+        const pendingDonors = await donorsCollection
+          .find({ status: "pending" })
+          .sort({ createdAt: -1 }) // newest first
+          .toArray();
+
+        res.json({
+          success: true,
+          count: pendingDonors.length,
+          donors: pendingDonors,
+        });
+      } catch (error) {
+        res.status(500).json({
+          success: false,
+          message: error.message,
+        });
+      }
+    });
+
+
+
 
 
     // Send a ping to confirm a successful connection
