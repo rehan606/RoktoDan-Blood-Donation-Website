@@ -19,6 +19,10 @@ import DashboardLayout from "./Layouts/DashboardLayout";
 import PrivateRoute from "./Routes/PrivateRoute";
 import PendingDonors from "./Pages/Dashboard/Donors/PendingDonors";
 import ActiveDonors from "./Pages/Dashboard/Donors/ActiveDonors";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+// Create a client
+const queryClient = new QueryClient()
 
 const App = () => {
   
@@ -91,10 +95,12 @@ const App = () => {
 
    return ( 
     <> 
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
-      <ScrollToTop />
+     <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
+        <ScrollToTop />
+      </QueryClientProvider>
     </> )
 }
 
