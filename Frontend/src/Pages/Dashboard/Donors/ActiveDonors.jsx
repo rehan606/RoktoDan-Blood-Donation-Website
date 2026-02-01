@@ -188,14 +188,17 @@ const ActiveDonors = () => {
                         </h3>
                     </div>
 
-                    {Object.entries(selectedDonor).map(
-                    ([key, value]) =>
-                        key !== "_id" && (
-                        <p key={key}>
-                            <b>{key}:</b> {String(value)}
-                        </p>
-                        )
-                    )}
+                    <div className="space-y-2 text-sm text-zinc-800 bg-zinc-200 p-8 rounded-md shadow-md border-2 border-zinc-300">
+
+                        {Object.entries(selectedDonor).map(
+                        ([key, value]) =>
+                            key !== "_id" && (
+                            <p key={key}>
+                                <b>{key}:</b> {String(value)}
+                            </p>
+                            )
+                        )}
+                    </div>
 
                     <button
                     onClick={() => setSelectedDonor(null)}
