@@ -5,6 +5,8 @@ const port = process.env.PORT || 5000;
 const { MongoClient, ServerApiVersion } = require('mongodb');
 require('dotenv').config();
 const admin = require("firebase-admin");
+const { ObjectId } = require("mongodb");
+
 
 // DB connect
 
@@ -188,6 +190,7 @@ async function run() {
     // Approve donor
     app.patch("/donors/approve/:id", async (req, res) => {
       const id = req.params.id;
+      console.log("Approve API called, id:", id);
 
       try {
         const result = await donorsCollection.updateOne(
@@ -199,6 +202,8 @@ async function run() {
             },
           }
         );
+
+        console.log("Update result:", result);
 
         res.send(result);
       } catch (error) {

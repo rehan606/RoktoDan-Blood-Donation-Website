@@ -66,11 +66,11 @@ const PendingDonors = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold mb-6">Pending Donors</h2>
+      <h2 className="text-2xl font-bold mb-6">Pending Donors : ( {pendingDonors.length} ) </h2>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full border rounded-lg">
-          <thead className="bg-gray-100">
+        <table className="min-w-full border-collapse border border-gray-400 rounded-lg bg-white text-zinc-900">
+          <thead className="bg-gray-100 text-red-500">
             <tr>
               <th className="p-3 border">Name</th>
               <th className="p-3 border">Blood Group</th>
@@ -84,31 +84,33 @@ const PendingDonors = () => {
             {pendingDonors.map((donor) => (
               <tr key={donor._id} className="text-center">
                 <td className="p-2 border">{donor.name}</td>
-                <td className="p-2 border">{donor.bloodGroup}</td>
+                <td className="p-2 border font-semibold text-red-500">{donor.bloodGroup}</td>
                 <td className="p-2 border">{donor.phone}</td>
                 <td className="p-2 border">{donor.union}</td>
 
-                <td className="p-2 border flex justify-center gap-2">
-                  <button
-                    onClick={() => setSelectedDonor(donor)}
-                    className="p-2 bg-blue-600 text-white rounded"
-                  >
-                    <FaEye />
-                  </button>
+                <td className="p-2 border  ">
+                    <div className="flex justify-center gap-2">
+                        <button
+                            onClick={() => setSelectedDonor(donor)}
+                            className="p-2 bg-blue-600 text-white rounded cursor-pointer"
+                        >
+                            <FaEye />
+                        </button>
 
-                  <button
-                    onClick={() => handleApprove(donor._id)}
-                    className="px-3 py-1 bg-green-600 text-white rounded"
-                  >
-                    Approve
-                  </button>
+                        <button
+                            onClick={() => handleApprove(donor._id)}
+                            className="px-3 py-1 bg-green-600 text-white rounded cursor-pointer"
+                        >
+                            Approve
+                        </button>
 
-                  <button
-                    onClick={() => handleReject(donor._id)}
-                    className="px-3 py-1 bg-red-600 text-white rounded"
-                  >
-                    Reject
-                  </button>
+                        <button
+                            onClick={() => handleReject(donor._id)}
+                            className="px-3 py-1 bg-red-600 text-white rounded cursor-pointer"
+                        >
+                            Reject
+                        </button>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -120,25 +122,33 @@ const PendingDonors = () => {
       {selectedDonor && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg w-full max-w-md">
-            <h3 className="text-xl font-bold mb-4">Donor Details</h3>
 
-            <p><b>Name:</b> {selectedDonor.name}</p>
-            <p><b>Blood Group:</b> {selectedDonor.bloodGroup}</p>
-            <p><b>Phone:</b> {selectedDonor.phone}</p>
-            <p><b>Upazila:</b> {selectedDonor.upazila}</p>
-            <p><b>Union:</b> {selectedDonor.union}</p>
-            <p><b>Donor Type:</b> {selectedDonor.donorType}</p>
+            <div className="bg-red-500 px-8 py-6 rounded-md text-center mb-4">
+                <h3 className="text-2xl font-semibold  text-white-">
+                Donor Details
+                </h3>
+            </div>
 
-            {selectedDonor.lastDonationDate && (
-              <p>
-                <b>Last Donation:</b>{" "}
-                {new Date(selectedDonor.lastDonationDate).toDateString()}
-              </p>
-            )}
+            <div className="space-y-2 text-sm text-zinc-800 bg-zinc-200 p-8 rounded-md shadow-md border-2 border-zinc-300">
+
+                <p><b>Name:</b> {selectedDonor.name}</p>
+                <p><b>Blood Group:</b> {selectedDonor.bloodGroup}</p>
+                <p><b>Phone:</b> {selectedDonor.phone}</p>
+                <p><b>Upazila:</b> {selectedDonor.upazila}</p>
+                <p><b>Union:</b> {selectedDonor.union}</p>
+                <p><b>Donor Type:</b> {selectedDonor.donorType}</p>
+
+                {selectedDonor.lastDonationDate && (
+                <p>
+                    <b>Last Donation:</b>{" "}
+                    {new Date(selectedDonor.lastDonationDate).toDateString()}
+                </p>
+                )}
+            </div>
 
             <button
               onClick={() => setSelectedDonor(null)}
-              className="mt-4 w-full bg-gray-700 text-white py-2 rounded"
+              className="mt-4 w-full bg-red-500 hover:bg-red-700 text-white py-2 rounded"
             >
               Close
             </button>
