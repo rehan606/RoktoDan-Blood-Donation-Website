@@ -101,9 +101,13 @@ const ActiveDonors = () => {
                     : "Select Blood Group"}
                 </option>
 
-                {bloodGroups.map((bg) => (
-                    <option key={bg.value} value={bg.value} className="text-zinc-800 ">
-                    {language === "bn" ? bg.bn : bg.en}
+                {bloodGroups.map((bg, idx) => (
+                    <option 
+                    key={idx} 
+                    value={language === "bn" ? bg.value : bg.value} 
+                    className="text-zinc-500 font-semibold"
+                    >
+                    {language === "bn" ? bg.value : bg.value}
                     </option>
                 ))}
                 </select>
