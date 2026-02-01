@@ -171,25 +171,64 @@ async function run() {
 
 
     // ---------------- GET PENDING DONORS ----------------
+
     app.get("/donors/pending", async (req, res) => {
       try {
         const pendingDonors = await donorsCollection
           .find({ status: "pending" })
-          .sort({ createdAt: -1 }) // newest first
+          .sort({ createdAt: -1 })
           .toArray();
 
-        res.json({
-          success: true,
-          count: pendingDonors.length,
-          donors: pendingDonors,
-        });
+        res.send(pendingDonors);
       } catch (error) {
-        res.status(500).json({
-          success: false,
-          message: error.message,
-        });
+        res.status(500).send({ message: "Failed to fetch pending donors" });
       }
     });
+
+    // Approve donor
+    app.patch("/donors/approve/:id", async (req, res) => {
+      const id = req.params.id;
+
+      try {
+        const result = await donorsCollection.updateOne(
+          { _id: new ObjectId(id) },
+          {
+            $set: {
+              status: "approved",
+              approvedAt: new Date(),
+            },
+          }
+        );
+
+        res.send(result);
+      } catch (error) {
+        res.status(500).send({ message: "Approve failed" });
+      }
+    });
+
+    // Reject donor
+    app.patch("/donors/reject/:id", async (req, res) => {
+      const id = req.params.id;
+
+      try {
+        const result = await donorsCollection.updateOne(
+          { _id: new ObjectId(id) },
+          {
+            $set: {
+              status: "rejected",
+              rejectedAt: new Date(),
+            },
+          }
+        );
+
+        res.send(result);
+      } catch (error) {
+        res.status(500).send({ message: "Reject failed" });
+      }
+    });
+
+
+
 
 
 
