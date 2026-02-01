@@ -197,7 +197,7 @@ async function run() {
           { _id: new ObjectId(id) },
           {
             $set: {
-              status: "approved",
+              status: "active",
               approvedAt: new Date(),
             },
           }
@@ -231,6 +231,43 @@ async function run() {
         res.status(500).send({ message: "Reject failed" });
       }
     });
+
+    // Get active donors
+    app.get("/donors/active", async (req, res) => {
+      try {
+        const activeDonors = await donorsCollection
+          .find({ status: "active" })
+          .sort({ approvedAt: -1 })
+          .toArray();
+
+        res.send(activeDonors);
+      } catch (error) {
+        res.status(500).send({ message: "Failed to fetch active donors" });
+      }
+    });
+
+    // Deactivate donor
+    app.patch("/donors/deactivate/:id", async (req, res) => {
+      const id = req.params.id;
+
+      try {
+        const result = await donorsCollection.updateOne(
+          { _id: new ObjectId(id) },
+          {
+            $set: {
+              status: "deactivated",
+              deactivatedAt: new Date(),
+            },
+          }
+        );
+
+        res.send(result);
+      } catch (error) {
+        res.status(500).send({ message: "Deactivation failed" });
+      }
+    });
+
+
 
 
 
