@@ -6,63 +6,63 @@ import { useState } from "react";
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 
 const PendingDonors = () => {
-  const [selectedDonor, setSelectedDonor] = useState(null);
-  const axiosSecure = useAxiosSecure();
+    const [selectedDonor, setSelectedDonor] = useState(null);
+    const axiosSecure = useAxiosSecure();
 
-  // Fetch pending donors
-  const {
-    data: pendingDonors = [],
-    isPending,
-    refetch,
-  } = useQuery({
-    queryKey: ["pendingDonors"],
-    queryFn: async () => {
-      const res = await axiosSecure.get("/donors/pending");
-      return res.data;
-    },
-  });
-
-  // Approve
-  const handleApprove = async (id) => {
-    const result = await Swal.fire({
-      title: "Approve donor?",
-      text: "This donor will be marked as approved",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#16a34a",
-      cancelButtonColor: "#dc2626",
-      confirmButtonText: "Yes, approve",
+    // Fetch pending donors
+    const {
+        data: pendingDonors = [],
+        isPending,
+        refetch,
+    } = useQuery({
+        queryKey: ["pendingDonors"],
+        queryFn: async () => {
+        const res = await axiosSecure.get("/donors/pending");
+        return res.data;
+        },
     });
 
-    if (result.isConfirmed) {
-      await axiosSecure.patch(`/donors/approve/${id}`);
-      Swal.fire("Approved!", "Donor approved successfully", "success");
-      refetch();
+    // Approve
+    const handleApprove = async (id) => {
+        const result = await Swal.fire({
+        title: "Approve donor?",
+        text: "This donor will be marked as approved",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#16a34a",
+        cancelButtonColor: "#dc2626",
+        confirmButtonText: "Yes, approve",
+        });
+
+        if (result.isConfirmed) {
+        await axiosSecure.patch(`/donors/approve/${id}`);
+        Swal.fire("Approved!", "Donor approved successfully", "success");
+        refetch();
+        }
+    };
+
+    // Reject
+    const handleReject = async (id) => {
+        const result = await Swal.fire({
+        title: "Reject donor?",
+        text: "This donor will be rejected",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#dc2626",
+        cancelButtonColor: "#6b7280",
+        confirmButtonText: "Yes, reject",
+        });
+
+        if (result.isConfirmed) {
+        await axiosSecure.patch(`/donors/reject/${id}`);
+        Swal.fire("Rejected!", "Donor rejected", "success");
+        refetch();
+        }
+    };
+
+    if (isPending) {
+        return <p className="text-center py-10">Loading pending donors...</p>;
     }
-  };
-
-  // Reject
-  const handleReject = async (id) => {
-    const result = await Swal.fire({
-      title: "Reject donor?",
-      text: "This donor will be rejected",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#dc2626",
-      cancelButtonColor: "#6b7280",
-      confirmButtonText: "Yes, reject",
-    });
-
-    if (result.isConfirmed) {
-      await axiosSecure.patch(`/donors/reject/${id}`);
-      Swal.fire("Rejected!", "Donor rejected", "success");
-      refetch();
-    }
-  };
-
-  if (isPending) {
-    return <p className="text-center py-10">Loading pending donors...</p>;
-  }
 
   return (
     <div className="p-6">
