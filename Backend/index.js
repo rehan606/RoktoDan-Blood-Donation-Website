@@ -8,15 +8,15 @@ const admin = require("firebase-admin");
 const { ObjectId } = require("mongodb");
 
 
-// DB connect
-
+// Admin Middleware
+// import verifyJWT from "./middlewares/verifyJWT.js";
+// import verifyAdmin from "./middlewares/verifyAdmin.js";
 
 // ========= Middleware =========
 app.use(cors());
 app.use(express.json());
 
 // ========= Firebase Admin Configure File =========
-
 
 admin.initializeApp({
   credential: admin.credential.cert({
@@ -188,30 +188,7 @@ async function run() {
     });
 
     // Approve donor
-    // app.patch("/donors/approve/:id", async (req, res) => {
-    //   const id = req.params.id;
-    //   console.log("Approve API called, id:", id);
-
-    //   try {
-    //     const result = await donorsCollection.updateOne(
-    //       { _id: new ObjectId(id) },
-    //       {
-    //         $set: {
-    //           status: "active", 
-    //           approvedAt: new Date(),
-    //         },
-    //       }
-    //     );
-
-    //     console.log("Update result:", result);
-
-    //     res.send(result);
-    //   } catch (error) {
-    //     res.status(500).send({ message: "Approve failed" });
-    //   }
-    // });
-
-
+  
     app.patch("/donors/approve/:id", verifyToken, async (req, res) => {
       const donorId = req.params.id;
 
@@ -310,6 +287,56 @@ async function run() {
       }
     });
 
+
+
+    // ---------------------- MAKE ADMIN -----------------------
+
+    // Search Users by Email
+    app.get('/users/search', async (req, res) => {
+      const { query } = req.query;
+
+      if (!query) {
+        return res.send([]);
+      }
+
+      const users = await userCollection
+        .find({
+          email: {
+            $regex: `^${query}`, // email starts with query
+            $options: "i",       // case-insensitive
+          },
+        })
+        .project({
+          email: 1,
+          role: 1,
+          created_at: 1,
+          last_log_in: 1,
+        })
+        .limit(10)
+        .toArray();
+
+      res.send(users);
+    });
+
+
+
+
+    // Update User Role
+    app.patch('/users/role/:id', async (req, res) => {
+      const { role } = req.body;
+      const id = req.params.id;
+
+      if (!["admin", "user"].includes(role)) {
+        return res.status(400).send({ message: "Invalid role" });
+      }
+
+      const result = await userCollection.updateOne(
+        { _id: new ObjectId(id) },
+        { $set: { role } }
+      );
+
+      res.send(result);
+    });  
 
 
 

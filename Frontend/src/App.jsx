@@ -20,6 +20,7 @@ import PrivateRoute from "./Routes/PrivateRoute";
 import PendingDonors from "./Pages/Dashboard/Donors/PendingDonors";
 import ActiveDonors from "./Pages/Dashboard/Donors/ActiveDonors";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import MakeAdmin from "./Pages/Dashboard/Admin/MakeAdmin/MakeAdmin";
 
 // Create a client
 const queryClient = new QueryClient()
@@ -88,6 +89,10 @@ const App = () => {
         {
           path: '/dashboard/pending-donors', 
           element: <PendingDonors />
+        },
+        {
+          path: '/dashboard/make-admin', 
+          element: <MakeAdmin />
         },
       ]
     },

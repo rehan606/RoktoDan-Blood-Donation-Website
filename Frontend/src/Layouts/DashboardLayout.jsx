@@ -40,8 +40,8 @@ const DashboardLayout = () => {
         icon: <FaUserClock />,
         },
         {
-        name: language === "bn" ? "নতুন দাতা যোগ" : "Add Donor",
-        to: "/dashboard/add-donor",
+        name: language === "bn" ? "নতুন দাতা যোগ" : "Make Admin",
+        to: "/dashboard/make-admin",
         icon: <FaPlusCircle />,
         },
         {
