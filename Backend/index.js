@@ -188,28 +188,71 @@ async function run() {
     });
 
     // Approve donor
-    app.patch("/donors/approve/:id", async (req, res) => {
-      const id = req.params.id;
-      console.log("Approve API called, id:", id);
+    // app.patch("/donors/approve/:id", async (req, res) => {
+    //   const id = req.params.id;
+    //   console.log("Approve API called, id:", id);
 
-      try {
-        const result = await donorsCollection.updateOne(
-          { _id: new ObjectId(id) },
-          {
-            $set: {
-              status: "active",
-              approvedAt: new Date(),
-            },
-          }
-        );
+    //   try {
+    //     const result = await donorsCollection.updateOne(
+    //       { _id: new ObjectId(id) },
+    //       {
+    //         $set: {
+    //           status: "active", 
+    //           approvedAt: new Date(),
+    //         },
+    //       }
+    //     );
 
-        console.log("Update result:", result);
+    //     console.log("Update result:", result);
 
-        res.send(result);
-      } catch (error) {
-        res.status(500).send({ message: "Approve failed" });
+    //     res.send(result);
+    //   } catch (error) {
+    //     res.status(500).send({ message: "Approve failed" });
+    //   }
+    // });
+
+
+    app.patch("/donors/approve/:id", verifyToken, async (req, res) => {
+      const donorId = req.params.id;
+
+      // 1️⃣ donor খুঁজে বের করি
+      const donor = await donorsCollection.findOne({
+        _id: new ObjectId(donorId),
+      });
+
+      if (!donor) {
+        return res.status(404).send({ message: "Donor not found" });
       }
+
+      // 2️⃣ donor status update
+      const donorUpdate = await donorsCollection.updateOne(
+        { _id: new ObjectId(donorId) },
+        {
+          $set: {
+            status: "active",
+            approvedAt: new Date(),
+          },
+        }
+      );
+
+      // 3️⃣ user role update
+      const userUpdate = await userCollection.updateOne(
+        { email: donor.email },
+        {
+          $set: {
+            role: "donor",
+            updatedAt: new Date(),
+          },
+        }
+      );
+
+      res.send({
+        message: "Donor approved & user role updated",
+        donorUpdate,
+        userUpdate,
+      });
     });
+
 
     // Reject donor
     app.patch("/donors/reject/:id", async (req, res) => {

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import { FaEye } from "react-icons/fa";
+import { FaEye,  FaUserSlash } from "react-icons/fa";
+import { BiSolidUserCheck } from "react-icons/bi";
 import { useState } from "react";
 
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
@@ -99,16 +100,16 @@ const PendingDonors = () => {
 
                         <button
                             onClick={() => handleApprove(donor._id)}
-                            className="px-3 py-1 bg-green-600 text-white rounded cursor-pointer"
+                            className="px-3 py-1 bg-green-600 text-white text-2xl rounded cursor-pointer"
                         >
-                            Approve
+                           <BiSolidUserCheck />
                         </button>
 
                         <button
                             onClick={() => handleReject(donor._id)}
                             className="px-3 py-1 bg-red-600 text-white rounded cursor-pointer"
                         >
-                            Reject
+                            <FaUserSlash />
                         </button>
                   </div>
                 </td>
@@ -132,6 +133,7 @@ const PendingDonors = () => {
             <div className="space-y-2 text-sm text-zinc-800 bg-zinc-200 p-8 rounded-md shadow-md border-2 border-zinc-300">
 
                 <p><b>Name:</b> {selectedDonor.name}</p>
+                <p><b>Email:</b> {selectedDonor.email}</p>
                 <p><b>Blood Group:</b> {selectedDonor.bloodGroup}</p>
                 <p><b>Phone:</b> {selectedDonor.phone}</p>
                 <p><b>Upazila:</b> {selectedDonor.upazila}</p>
