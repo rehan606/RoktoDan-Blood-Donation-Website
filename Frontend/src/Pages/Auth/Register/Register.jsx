@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router";
+import { Link, Navigate, useLocation, useNavigate } from "react-router";
 import { useLanguage } from "../../../context/LanguageContext";
 import useAuth from "../../../Hooks/useAuth";
 import axios from 'axios';
@@ -18,9 +18,11 @@ const Register = () => {
     const { language } = useLanguage();
     const t = registerText[language];
     const {createUser, updateUserProfile } = useAuth();
-    const navigate = useNavigate();
     const [profilePicture, setProfilePicture] = useState('');
     const axiosInstance = useAxios();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
 
     // Submit FOrm 
@@ -50,6 +52,7 @@ const Register = () => {
                 updateUserProfile(userProfile)
                 .then(() => {
                     console.log('Profile name and Pic Updated')
+                    navigate(from);
                 })
                 .catch(error =>{
                     console.log(error)
@@ -66,7 +69,9 @@ const Register = () => {
                     timer: 1500
                 });
 
-                navigate("/");
+                navigate('/')
+
+                // navigate(from, { replace: true }); // or dashboard
             })
             .catch(error => {
                 console.error(error);
@@ -183,7 +188,7 @@ const Register = () => {
                     {/* Submit */}
                     <button
                         type="submit"
-                        className="w-full bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700"
+                        className="w-full bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700 cursor-pointer"
                     >
                         {t.registerBtn}
                     </button>

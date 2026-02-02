@@ -15,43 +15,92 @@ const LoginWithGoogle = () => {
     // const {signInWithGoogle} = useAuth();
 
     // 🔴 Google Login
+
     const handleGoogleLogin = () => {
-        // signInWithGoogle()
-        const provider = new GoogleAuthProvider();
+  const provider = new GoogleAuthProvider();
 
-        signInWithPopup(auth, provider)
-        .then(async (result) => {
+  signInWithPopup(auth, provider)
+    .then(async (result) => {
+      const user = result.user;
 
-            const user = result.user;
+      // 🔑 Firebase ID Token
+      const token = await user.getIdToken();
 
-            // Update user in Database
-            const userInfo = {
-                email: user.email,
-                role: 'user', // default role
-                created_at : new Date().toISOString(),
-                last_log_in : new Date().toISOString()
-            }
+      const userInfo = {
+        email: user.email,
+        role: "user",
+        created_at: new Date().toISOString(),
+        last_log_in: new Date().toISOString(),
+      };
 
-            const res = await axiosInstance.post('/users', userInfo);
-            console.log('User update info', res.data)
+      // 🔴 token পাঠানো হচ্ছে
+      const res = await axiosInstance.post(
+        "/users",
+        userInfo,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-            Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title:
-                            language === "bn"
-                              ? "সফলভাবে লগইন হয়েছে"
-                              : "Logged in successfully",
-                        showConfirmButton: false,
-                        timer: 1500
-                        });
-            console.log("Google User:", result.user);
-            navigate("/");
-        })
-        .catch((error) => {
-            console.error(error.message);
-        });
-    };
+      console.log("User saved:", res.data);
+
+      Swal.fire({
+        icon: "success",
+        title:
+          language === "bn"
+            ? "সফলভাবে লগইন হয়েছে"
+            : "Logged in successfully",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+
+      navigate("/");
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
+
+    // const handleGoogleLogin = () => {
+    //     // signInWithGoogle()
+    //     const provider = new GoogleAuthProvider();
+
+    //     signInWithPopup(auth, provider)
+    //     .then(async (result) => {
+
+    //         const user = result.user;
+
+    //         // Update user in Database
+    //         const userInfo = {
+    //             email: user.email,
+    //             role: 'user', // default role
+    //             created_at : new Date().toISOString(),
+    //             last_log_in : new Date().toISOString()
+    //         }
+
+    //         const res = await axiosInstance.post('/users', userInfo);
+    //         console.log('User update info', res.data)
+
+    //         Swal.fire({
+    //             position: "center",
+    //             icon: "success",
+    //             title:
+    //                 language === "bn"
+    //                     ? "সফলভাবে লগইন হয়েছে"
+    //                     : "Logged in successfully",
+    //             showConfirmButton: false,
+    //             timer: 1500
+    //         });
+    //         console.log("Google User:", result.user);
+    //         navigate("/");
+    //     })
+    //     .catch((error) => {
+    //         console.error(error.message);
+    //     });
+    // };
 
 
     return (

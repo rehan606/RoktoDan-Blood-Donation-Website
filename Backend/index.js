@@ -65,18 +65,18 @@ async function run() {
       if (!authHeader) {
         return res.status(401).send({ message: 'unAuthorized access'})
       }
-      const token = authHeader.split(' ')[1];
-      if(!token) {
-        return res.status(401).send({ message: 'unAuthorized access'})
-      }
+      const token = authHeader.split(" ")[1];
+      // if(!token) {
+      //   return res.status(401).send({ message: 'unAuthorized access'})
+      // }
 
       // Verify The Token 
       try {
-        const decoded = await admin.auth.verifyIdToken(token);
-        req.decoded = decoded;
+        const decoded = await admin.auth().verifyIdToken(token);
+        req.user = decoded;
         next();
       } catch (error) {
-        return res.status(403).send({ message: 'forbidden access'})
+        return res.status(401).send({ message: 'Invalid Token'});
       }
     }
 

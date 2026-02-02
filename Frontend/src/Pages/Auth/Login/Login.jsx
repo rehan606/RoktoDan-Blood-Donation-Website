@@ -126,7 +126,7 @@ const Login = () => {
                     {/* Submit */}
                     <button
                         type="submit"
-                        className="w-full bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700 transition"
+                        className="w-full bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700 transition cursor-pointer"
                     >
                         {t.loginBtn}
                     </button>
@@ -135,7 +135,7 @@ const Login = () => {
                 {/* Footer */}
                 <p className="text-center text-sm text-gray-600 mt-4">
                 {t.registerText}{" "}
-                    <Link to="/register" className="text-red-600 font-medium hover:underline">
+                    <Link state={{ from }} to="/register"  className="text-red-600 font-medium hover:underline">
                         {t.register}
                     </Link>
                 </p>

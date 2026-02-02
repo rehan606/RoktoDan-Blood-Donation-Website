@@ -85,7 +85,7 @@ const ActiveDonors = () => {
     return (
         <div className="p-6">
             <h2 className="text-2xl font-bold mb-4">
-                {language === "bn" ? "একটিভ ডোনার" : "Active Donors"}
+                {language === "bn" ? "একটিভ ডোনার" : "Active Donors"} : ( { filteredDonors.length } )
             </h2>
 
             {/* 🔍 Search Filters */}
@@ -138,43 +138,43 @@ const ActiveDonors = () => {
             {/* 📋 Table */}
             <div className="overflow-x-auto">
                 <table className="min-w-full border rounded-lg">
-                <thead className="bg-gray-100 text-zinc-800 ">
-                    <tr>
-                    <th className="p-2 border">Name</th>
-                    <th className="p-2 border">Blood</th>
-                    <th className="p-2 border">Phone</th>
-                    <th className="p-2 border">Union</th>
-                    <th className="p-2 border">Action</th>
-                    </tr>
-                </thead>
+                    <thead className="bg-gray-100 text-zinc-800 ">
+                        <tr>
+                            <th className="p-2 border">Name</th>
+                            <th className="p-2 border">Blood</th>
+                            <th className="p-2 border">Phone</th>
+                            <th className="p-2 border">Union</th>
+                            <th className="p-2 border">Action</th>
+                        </tr>
+                    </thead>
 
-                <tbody>
-                    {filteredDonors.map((donor) => (
-                    <tr key={donor._id} className="text-center bg-white text-zinc-800 ">
-                        <td className="border p-2">{donor.name}</td>
-                        <td className="border p-2 text-red-500 font-semibold">{donor.bloodGroup}</td>
-                        <td className="border p-2">{donor.phone}</td>
-                        <td className="border p-2">{donor.union}</td>
-                        <td className="border p-2 ">
-                            <div className="flex justify-center gap-2">
-                                <button
-                                    onClick={() => setSelectedDonor(donor)}
-                                    className="bg-blue-600 p-2 text-white rounded"
-                                >
-                                    <FaEye />
-                                </button>
+                    <tbody>
+                        {filteredDonors.map((donor) => (
+                        <tr key={donor._id} className="text-center bg-white text-zinc-800 ">
+                            <td className="border p-2">{donor.name}</td>
+                            <td className="border p-2 text-red-500 font-semibold">{donor.bloodGroup}</td>
+                            <td className="border p-2">{donor.phone}</td>
+                            <td className="border p-2">{donor.union}</td>
+                            <td className="border p-2 ">
+                                <div className="flex justify-center gap-2">
+                                    <button
+                                        onClick={() => setSelectedDonor(donor)}
+                                        className="bg-blue-600 p-2 text-white rounded"
+                                    >
+                                        <FaEye />
+                                    </button>
 
-                                <button
-                                    onClick={() => handleDeactivate(donor._id)}
-                                    className="bg-red-600 p-2 text-white rounded"
-                                >
-                                    <FaUserSlash />
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    ))}
-                </tbody>
+                                    <button
+                                        onClick={() => handleDeactivate(donor._id)}
+                                        className="bg-red-600 p-2 text-white rounded"
+                                    >
+                                        <FaUserSlash />
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        ))}
+                    </tbody>
                 </table>
             </div>
 
