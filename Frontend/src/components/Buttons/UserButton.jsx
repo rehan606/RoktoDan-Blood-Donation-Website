@@ -97,7 +97,7 @@ const UserButton = () => {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={toggleDropdown}
-        className="flex items-center gap-2 p-1 rounded-full border border-red-500 hover:bg-gray-200 transition"
+        className="flex items-center gap-2 p-1 rounded-full border border-red-500 hover:bg-gray-200 transition cursor-pointer"
       >
         {user?.photoURL ? (
           <img

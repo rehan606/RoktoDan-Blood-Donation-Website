@@ -190,7 +190,7 @@ async function run() {
 
     // ---------------- GET PENDING DONORS ----------------
 
-    app.get("/donors/pending", verifyToken, verifyAdmin, async (req, res) => {
+    app.get("/donors/pending", verifyToken,  async (req, res) => {
       try {
         const pendingDonors = await donorsCollection
           .find({ status: "pending" })
@@ -374,6 +374,9 @@ async function run() {
         return res.status(500).send({ message: 'Faild to get role'});
       }
     })
+
+    // --------------------- MongoDB Aggregate for Admin Dashboard -------------------------
+    
 
 
 

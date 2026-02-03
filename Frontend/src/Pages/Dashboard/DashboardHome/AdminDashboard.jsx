@@ -1,9 +1,11 @@
 import React from 'react'
-import { useLanguage } from '../../../../context/LanguageContext';
+import { useLanguage } from '../../../context/LanguageContext';
 import { FaCheckCircle, FaHourglassHalf, FaTint, FaUsers, } from 'react-icons/fa';
 import { PieChart,  Pie, Cell, BarChart, Bar, XAxis,YAxis,Tooltip, ResponsiveContainer,} from "recharts";
 
-const AdminHome = () => {
+
+
+const AdminDashboard = () => {
     const { language,  } = useLanguage();
     // ---- Cards Data ----
     const cards = [
@@ -71,6 +73,7 @@ const AdminHome = () => {
                 </div>
 
 
+
                 {/* ===== Charts ===== */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {/* Pie Chart */}
@@ -122,4 +125,4 @@ const AdminHome = () => {
     )
 }
 
-export default AdminHome
+export default AdminDashboard

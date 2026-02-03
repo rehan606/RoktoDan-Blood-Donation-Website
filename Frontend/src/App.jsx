@@ -23,6 +23,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import MakeAdmin from "./Pages/Dashboard/Admin/MakeAdmin/MakeAdmin";
 import Forbidden from "./Pages/Dashboard/ForbiddenPage/Forbidden";
 import AdminRoute from "./Routes/AdminRoute";
+import DeshboardHome from "./Pages/Dashboard/DashboardHome/DeshboardHome";
 
 // Create a client
 const queryClient = new QueryClient()
@@ -88,6 +89,10 @@ const App = () => {
     path: "/dashboard",
       element: <PrivateRoute> <DashboardLayout /> </PrivateRoute>, 
       children:[
+        {
+          index: true,
+          element: <DeshboardHome />
+        },
         {
           path: '/dashboard/active-donors', 
           element: <AdminRoute> <ActiveDonors /> </AdminRoute> 

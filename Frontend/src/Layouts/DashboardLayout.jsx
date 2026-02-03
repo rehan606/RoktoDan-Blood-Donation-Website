@@ -5,19 +5,25 @@ import {FaHome,FaUsers,FaTint,FaPlusCircle,FaChartBar,FaCog,FaBars, FaSignOutAlt
 
 import useAuth from "../Hooks/useAuth";
 import { useLanguage } from "../context/LanguageContext";
-import AdminHome from "../Pages/Dashboard/Admin/Home/AdminHome";
+import AdminHome from "../Pages/Dashboard/DashboardHome/AdminDashboard";
 import useUserRole from "../Hooks/useUserRole";
 
 // ================= Dashboard Layout =================
 const DashboardLayout = () => {
     const { user, logOut } = useAuth();
     const { language, setLanguage } = useLanguage();
-
     const { role, roleLoading } = useUserRole();
-    console.log(role)
-    
-
     const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    // if (roleLoading) {
+    //     return (
+    //         <div className="min-h-screen flex items-center justify-center bg-[#0b1c2d] text-white">
+    //         <span className="loading loading-spinner loading-lg"></span>
+    //         </div>
+    //     );
+    // }
+
+
 
     const adminMenus = [
         {
@@ -94,7 +100,8 @@ const DashboardLayout = () => {
         icon: <FaCogs />,
     },
     ];
-    const menus = !roleLoading && role === "admin" ? adminMenus : userMenus;
+    
+    const menus = role === "admin" ? adminMenus : userMenus;
   
 
 
@@ -106,9 +113,9 @@ const DashboardLayout = () => {
                 sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
                 }`}
             >
-                <div className="p-4  text-xl font-bold border-b border-blue-900">
+                <div className="p-4  text-xl font-bold border-b rounded-b-3xl bg-[#112336]">
                     <Link to="/" className="cursor-pointer flex  items-center justify-center gap-2 hover:scale-110 transition-all duration-300">
-                        <FaTint className="text-red-600 w-8 h-8  " />
+                        <FaTint className="text-white w-8 h-8  " />
                         <div>
                             {language === "bn"? <h2>রক্তদান</h2> : <h2>RoktoDaan</h2> }
                         </div>
@@ -138,7 +145,7 @@ const DashboardLayout = () => {
                 </nav>
 
                 {/* User section bottom */}
-                <div className="p-4 border-t border-blue-900">
+                <div className="p-4 rounded-t-3xl bg-[#112336] border-t ">
                     <div className="flex items-center gap-3 mb-3">
                         {user?.photoURL ? (
                         <img
@@ -151,7 +158,7 @@ const DashboardLayout = () => {
                         )}
                         <div className="text-sm">
                         <p className="font-semibold">{user?.displayName || "Admin"}</p>
-                        <p className="text-xs text-gray-400">Admin</p>
+                        <p className="text-xs text-gray-400">{role}</p>
                         </div>
                     </div>
 
@@ -193,12 +200,12 @@ const DashboardLayout = () => {
                     className="border px-3 py-2 rounded-md text-[#0b1c2d]  bg-white hover:bg-[#0b1c2d] transition  hover:text-white cursor-pointer"
                     >
                     {language === "bn" ? "English" : "বাংলা"}
-                    {/* {language === "bn" ? "EN" : "BN"} */}
+                    
                     </button>
 
                 
                 </header>
-                    {/* {!role === "admin"? <AdminHome/> : "" } */}
+                
                 
                     
                 
