@@ -6,14 +6,15 @@ import {FaHome,FaUsers,FaTint,FaPlusCircle,FaChartBar,FaCog,FaBars, FaSignOutAlt
 import useAuth from "../Hooks/useAuth";
 import { useLanguage } from "../context/LanguageContext";
 import AdminHome from "../Pages/Dashboard/Admin/Home/AdminHome";
+import useUserRole from "../Hooks/useUserRole";
 
 // ================= Dashboard Layout =================
 const DashboardLayout = () => {
     const { user, logOut } = useAuth();
     const { language, setLanguage } = useLanguage();
-    
-    // default role → admin
-    const role = "admin";
+
+    const { role, loading } = useUserRole();
+    console.log(role)
     
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -93,7 +94,7 @@ const DashboardLayout = () => {
         icon: <FaCogs />,
     },
     ];
-    const menus = role === "admin" ? adminMenus : userMenus;
+    const menus = !loading && role === "admin" ? adminMenus : userMenus;
   
 
 
