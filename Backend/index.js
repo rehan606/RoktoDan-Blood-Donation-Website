@@ -174,7 +174,7 @@ async function run() {
 
     // ---------------- GET PENDING DONORS ----------------
 
-    app.get("/donors/pending", async (req, res) => {
+    app.get("/donors/pending", verifyToken, async (req, res) => {
       try {
         const pendingDonors = await donorsCollection
           .find({ status: "pending" })
@@ -317,8 +317,6 @@ async function run() {
 
       res.send(users);
     });
-
-
 
 
     // Update User Role
