@@ -90,11 +90,11 @@ const App = () => {
       children:[
         {
           path: '/dashboard/active-donors', 
-          element: <ActiveDonors />
+          element: <AdminRoute> <ActiveDonors /> </AdminRoute> 
         },
         {
           path: '/dashboard/pending-donors', 
-          element: <PendingDonors />
+          element: <AdminRoute>  <PendingDonors /> </AdminRoute>
         },
         {
           path: '/dashboard/make-admin', 
