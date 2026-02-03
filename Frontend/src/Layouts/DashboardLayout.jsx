@@ -13,7 +13,7 @@ const DashboardLayout = () => {
     const { user, logOut } = useAuth();
     const { language, setLanguage } = useLanguage();
 
-    const { role, loading } = useUserRole();
+    const { role, roleLoading } = useUserRole();
     console.log(role)
     
 
@@ -94,7 +94,7 @@ const DashboardLayout = () => {
         icon: <FaCogs />,
     },
     ];
-    const menus = !loading && role === "admin" ? adminMenus : userMenus;
+    const menus = !roleLoading && role === "admin" ? adminMenus : userMenus;
   
 
 

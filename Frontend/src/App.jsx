@@ -21,6 +21,8 @@ import PendingDonors from "./Pages/Dashboard/Donors/PendingDonors";
 import ActiveDonors from "./Pages/Dashboard/Donors/ActiveDonors";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import MakeAdmin from "./Pages/Dashboard/Admin/MakeAdmin/MakeAdmin";
+import Forbidden from "./Pages/Dashboard/ForbiddenPage/Forbidden";
+import AdminRoute from "./Routes/AdminRoute";
 
 // Create a client
 const queryClient = new QueryClient()
@@ -76,6 +78,10 @@ const App = () => {
           path: '/login', 
           element: <Login />
         },
+        {
+          path: '/forbidden', 
+          element: <Forbidden />
+        },
       ]
     },
     {
@@ -92,7 +98,7 @@ const App = () => {
         },
         {
           path: '/dashboard/make-admin', 
-          element: <MakeAdmin />
+          element: <AdminRoute> <MakeAdmin /> </AdminRoute>
         },
       ]
     },
