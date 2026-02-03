@@ -354,7 +354,7 @@ async function run() {
 
 
     // Get user by role
-    app.get('/users/role/:email', verifyToken, verifyAdmin, async (req, res) =>{
+    app.get('/users/role/:email', verifyToken,  async (req, res) =>{
       try {
         const email = req.params.email;
 
