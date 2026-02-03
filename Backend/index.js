@@ -59,6 +59,8 @@ async function run() {
 
 
     // ========= Custom Middleware =========
+
+    // ---------Verify Firebase Token -------------
     const verifyToken = async (req, res, next) => {
 
       const authHeader = req.headers.authorization;
@@ -66,19 +68,33 @@ async function run() {
         return res.status(401).send({ message: 'unAuthorized access'})
       }
       const token = authHeader.split(" ")[1];
-      // if(!token) {
-      //   return res.status(401).send({ message: 'unAuthorized access'})
-      // }
+      if(!token) {
+        return res.status(401).send({ message: 'unAuthorized access'})
+      }
 
       // Verify The Token 
       try {
         const decoded = await admin.auth().verifyIdToken(token);
-        req.user = decoded;
+        req.decoded = decoded;
         next();
       } catch (error) {
-        return res.status(401).send({ message: 'Invalid Token'});
+        return res.status(401).send({ message: 'Forbidden access'});
       }
     }
+
+    // ---------- Varify Admin ---------------
+    const verifyAdmin = async (req, res, next) => {
+      const email = req.decoded?.email;
+      const query = { email }
+      const user = await userCollection.findOne( query );
+
+
+      if (!user || user?.role !== 'admin') {
+        return res.status(403).send({ message: "Forbidden access" });
+      }
+
+      next();
+    };
 
     // ========= Set User in Database =========
     // app.post('/users', async(req, res) => {
@@ -174,7 +190,7 @@ async function run() {
 
     // ---------------- GET PENDING DONORS ----------------
 
-    app.get("/donors/pending", verifyToken, async (req, res) => {
+    app.get("/donors/pending", verifyToken, verifyAdmin, async (req, res) => {
       try {
         const pendingDonors = await donorsCollection
           .find({ status: "pending" })
@@ -189,7 +205,7 @@ async function run() {
 
     // Approve donor
   
-    app.patch("/donors/approve/:id", verifyToken, async (req, res) => {
+    app.patch("/donors/approve/:id", verifyToken, verifyAdmin, async (req, res) => {
       const donorId = req.params.id;
 
       // 1️⃣ donor খুঁজে বের করি
@@ -232,7 +248,7 @@ async function run() {
 
 
     // Reject donor
-    app.patch("/donors/reject/:id", async (req, res) => {
+    app.patch("/donors/reject/:id", verifyToken, verifyAdmin, async (req, res) => {
       const id = req.params.id;
 
       try {
@@ -253,7 +269,7 @@ async function run() {
     });
 
     // Get active donors
-    app.get("/donors/active", async (req, res) => {
+    app.get("/donors/active", verifyToken, verifyAdmin, async (req, res) => {
       try {
         const activeDonors = await donorsCollection
           .find({ status: "active" })
@@ -267,7 +283,7 @@ async function run() {
     });
 
     // Deactivate donor
-    app.patch("/donors/deactivate/:id", async (req, res) => {
+    app.patch("/donors/deactivate/:id", verifyToken, verifyAdmin, async (req, res) => {
       const id = req.params.id;
 
       try {
@@ -292,7 +308,7 @@ async function run() {
     // ---------------------- MAKE ADMIN -----------------------
 
     // Search Users by Email
-    app.get('/users/search', async (req, res) => {
+    app.get('/users/search', verifyToken, verifyAdmin, async (req, res) => {
       const { query } = req.query;
 
       if (!query) {
@@ -320,7 +336,7 @@ async function run() {
 
 
     // Update User Role
-    app.patch('/users/role/:id', async (req, res) => {
+    app.patch('/users/role/:id', verifyToken, verifyAdmin, async (req, res) => {
       const { role } = req.body;
       const id = req.params.id;
 
@@ -338,7 +354,7 @@ async function run() {
 
 
     // Get user by role
-    app.get('/users/role/:email', async (req, res) =>{
+    app.get('/users/role/:email', verifyToken, verifyAdmin, async (req, res) =>{
       try {
         const email = req.params.email;
 
