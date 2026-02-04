@@ -1,210 +1,215 @@
 import { useForm } from "react-hook-form";
-import { Link, Navigate, useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useLanguage } from "../../../context/LanguageContext";
 import useAuth from "../../../Hooks/useAuth";
-import axios from 'axios';
-
+import axios from "axios";
 
 import { registerText } from "../../../utils/registerText";
-// import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-// import { auth } from "../../../firebase/firebase.init";
 import LoginWithGoogle from "../../../components/Buttons/LoginWithGoogle";
 import Swal from "sweetalert2";
 import { useState } from "react";
-import useAxios from "../../../Hooks/useAxios";
 
 const Register = () => {
-    const {register, handleSubmit, formState: { errors }, } = useForm();
-    const { language } = useLanguage();
-    const t = registerText[language];
-    const {createUser, updateUserProfile } = useAuth();
-    const [profilePicture, setProfilePicture] = useState('');
-    const axiosInstance = useAxios();
-    const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
+  const { language } = useLanguage();
+  const t = registerText[language];
+  const { createUser, updateUserProfile } = useAuth();
+  const [profilePicture, setProfilePicture] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
-    // Submit FOrm 
-    const onSubmit = (data) => {
-        console.log("Register Data:", data);
-        createUser(data.email, data.password)
-            .then( async (result) => {
-                
-                console.log(result.user)
-                // ======= Update user info in Database =======
-                const userInfo = {
-                    email: data.email,
-                    role: 'user', // default role
-                    created_at : new Date().toISOString(),
-                    last_log_in : new Date().toISOString()
-                }
+  // Submit Form
+  const onSubmit = (data) => {
+    console.log("Register Data:", data);
 
-                const userRes = await axiosInstance.post('/users', userInfo);
-                console.log(userRes.data);
+    createUser(data.email, data.password)
+      .then(async (result) => {
+        console.log(result.user);
 
+        // 🔐 Firebase ID Token নাও
+        const token = await result.user.getIdToken();
 
-                // ======= upadate user profile in firebase =======
-                const userProfile = {
-                    displayName : data.name,
-                    photoURL : profilePicture,
-                }
-                updateUserProfile(userProfile)
-                .then(() => {
-                    console.log('Profile name and Pic Updated')
-                    navigate(from);
-                })
-                .catch(error =>{
-                    console.log(error)
-                })
+        // ======= User Info for MongoDB =======
+        const userInfo = {
+          email: data.email,
+          role: "user",
+          created_at: new Date().toISOString(),
+          last_log_in: new Date().toISOString(),
+        };
 
-                Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title:
-                        language === "bn"
-                            ? "সফলভাবে রেজিস্টার হয়েছে"
-                            : "Register successfully",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+        // ✅ MongoDB তে user save (token সহ)
+        const userRes = await axios.post(
+          "http://localhost:5000/users",
+          userInfo,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-                navigate('/')
+        console.log("User saved to DB:", userRes.data);
 
-                // navigate(from, { replace: true }); // or dashboard
-            })
-            .catch(error => {
-                console.error(error);
-            })
-    };
+        // ======= Update Firebase Profile =======
+        const userProfile = {
+          displayName: data.name,
+          photoURL: profilePicture,
+        };
 
-    // Upload Image 
-    const handleImageUpload = async(e) =>{
-        const image = e.target.files[0];
-        console.log(image)
-        const formData = new FormData();
-        formData.append("image", image);
-        const imageUploadUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_upload_key}`
-        const res = await axios.post(imageUploadUrl, formData)
+        await updateUserProfile(userProfile);
+        console.log("Profile Updated");
 
-        setProfilePicture(res.data.data.url);
-    }
+        // 🎉 Success Alert
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title:
+            language === "bn"
+              ? "সফলভাবে রেজিস্টার হয়েছে"
+              : "Register successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
 
-    return (
-        <div className="min-h-screen flex items-center justify-center bg-red-50 px-4 py-10">
-            <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Registration Failed",
+          text: error.message,
+        });
+      });
+  };
 
-                {/* Header */}
-                <div className="text-center mb-6">
-                    <h1 className="text-3xl font-bold text-red-600">
-                        {t.title}
-                    </h1>
-                    <p className="text-sm text-gray-600">
-                        {t.subtitle}
-                    </p>
-                </div>
+  // Upload Image
+  const handleImageUpload = async (e) => {
+    const image = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", image);
 
-                {/* Google Login */}
-                <LoginWithGoogle />
+    const imageUploadUrl = `https://api.imgbb.com/1/upload?key=${
+      import.meta.env.VITE_image_upload_key
+    }`;
 
+    const res = await axios.post(imageUploadUrl, formData);
+    setProfilePicture(res.data.data.url);
+  };
 
-
-                {/* Form */}
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-
-                    {/* Name */}
-                    <div>
-                        <label className="block text-sm font-medium">
-                        {t.nameLabel}
-                        </label>
-                        <input
-                        className="mt-1 w-full px-4 py-2 border rounded-lg"
-                        placeholder={t.namePlaceholder}
-                        {...register("name", {
-                            required: t.errors.nameRequired,
-                        })}
-                        />
-                        {errors.name && (
-                        <p className="text-xs text-red-500 mt-1">
-                            {errors.name.message}
-                        </p>
-                        )}
-                    </div>
-
-                    {/* Email */}
-                    <div>
-                        <label className="block text-sm font-medium">
-                        {t.emailLabel}
-                        </label>
-                        <input
-                        type="email"
-                        className="mt-1 w-full px-4 py-2 border rounded-lg"
-                        placeholder={t.emailPlaceholder}
-                        {...register("email", {
-                            required: t.errors.emailRequired,
-                            pattern: {
-                            value: /^\S+@\S+$/i,
-                            message: t.errors.emailInvalid,
-                            },
-                        })}
-                        />
-                        {errors.email && (
-                        <p className="text-xs text-red-500 mt-1">
-                            {errors.email.message}
-                        </p>
-                        )}
-                    </div>
-
-                    {/* Password */}
-                    <div>
-                        <label className="block text-sm font-medium">
-                        {t.passwordLabel}
-                        </label>
-                        <input
-                        type="password"
-                        className="mt-1 w-full px-4 py-2 border rounded-lg"
-                        placeholder={t.passwordPlaceholder}
-                        {...register("password", {
-                            required: t.errors.passwordRequired,
-                            minLength: {
-                            value: 6,
-                            message: t.errors.passwordLength,
-                            },
-                        })}
-                        />
-                        {errors.password && (
-                        <p className="text-xs text-red-500 mt-1">
-                            {errors.password.message}
-                        </p>
-                        )}
-                    </div>
-
-                    {/* Upload images  */}
-                    <div>
-                        <label className="label">{t.imageLabel}</label>
-                        <input type="file" onChange={handleImageUpload} className="mt-1 w-full px-4 py-2 border border-dashed border-gray-600 rounded-lg cursor-pointer" placeholder={t.imagePlaceholder} />
-                    </div>
-
-                    {/* Submit */}
-                    <button
-                        type="submit"
-                        className="w-full bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700 cursor-pointer"
-                    >
-                        {t.registerBtn}
-                    </button>
-                </form>
-
-                {/* Footer */}
-                <p className="text-center text-sm text-gray-600 mt-4">
-                {t.loginText}{" "}
-                    <Link to="/login" className="text-red-600 font-medium hover:underline">
-                        {t.login}
-                    </Link>
-                </p>
-
-            </div>
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-red-50 px-4 py-10">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+        {/* Header */}
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold text-red-600">{t.title}</h1>
+          <p className="text-sm text-gray-600">{t.subtitle}</p>
         </div>
-    );
+
+        {/* Google Login */}
+        <LoginWithGoogle />
+
+        {/* Form */}
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          {/* Name */}
+          <div>
+            <label className="block text-sm font-medium">{t.nameLabel}</label>
+            <input
+              className="mt-1 w-full px-4 py-2 border rounded-lg"
+              placeholder={t.namePlaceholder}
+              {...register("name", { required: t.errors.nameRequired })}
+            />
+            {errors.name && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.name.message}
+              </p>
+            )}
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="block text-sm font-medium">{t.emailLabel}</label>
+            <input
+              type="email"
+              className="mt-1 w-full px-4 py-2 border rounded-lg"
+              placeholder={t.emailPlaceholder}
+              {...register("email", {
+                required: t.errors.emailRequired,
+                pattern: {
+                  value: /^\S+@\S+$/i,
+                  message: t.errors.emailInvalid,
+                },
+              })}
+            />
+            {errors.email && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.email.message}
+              </p>
+            )}
+          </div>
+
+          {/* Password */}
+          <div>
+            <label className="block text-sm font-medium">
+              {t.passwordLabel}
+            </label>
+            <input
+              type="password"
+              className="mt-1 w-full px-4 py-2 border rounded-lg"
+              placeholder={t.passwordPlaceholder}
+              {...register("password", {
+                required: t.errors.passwordRequired,
+                minLength: {
+                  value: 6,
+                  message: t.errors.passwordLength,
+                },
+              })}
+            />
+            {errors.password && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
+
+          {/* Upload Image */}
+          <div>
+            <label className="label">{t.imageLabel}</label>
+            <input
+              type="file"
+              onChange={handleImageUpload}
+              className="mt-1 w-full px-4 py-2 border border-dashed border-gray-600 rounded-lg cursor-pointer"
+            />
+          </div>
+
+          {/* Submit */}
+          <button
+            type="submit"
+            className="w-full bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700"
+          >
+            {t.registerBtn}
+          </button>
+        </form>
+
+        {/* Footer */}
+        <p className="text-center text-sm text-gray-600 mt-4">
+          {t.loginText}{" "}
+          <Link
+            to="/login"
+            className="text-red-600 font-medium hover:underline"
+          >
+            {t.login}
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
 };
 
 export default Register;
