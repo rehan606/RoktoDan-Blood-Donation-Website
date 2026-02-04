@@ -29,7 +29,7 @@ const BecomeDonor = () => {
     lastDonationDate: "",
     upazila: "Sandwip",
     union: "",
-    available: true, // backend auto-calc করবে চাইলে
+    available: true, 
   });
 
   
@@ -73,13 +73,11 @@ const BecomeDonor = () => {
           showConfirmButton: true,
           
         });
+        navigate("/");
       }
     })
 
-    
-
-    navigate("/");
-    // POST to backend: /donors
+    // navigate("/");
   };
 
   // if (loading) {

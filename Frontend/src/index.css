@@ -7,5 +7,10 @@
 
 /* Bangla Font */
 .font-bn {
+  /* font-family: "Hind Siliguri", sans-serif; */
   font-family: "Tiro Bangla", serif;
 }
+
+/* *{
+  border: 1px solid red;
+} */

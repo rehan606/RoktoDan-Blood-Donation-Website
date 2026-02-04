@@ -1,11 +1,23 @@
 import { useState } from "react";
 import { useLanguage } from "../../context/LanguageContext";
+import useAuth from "../../Hooks/useAuth";
+import useUnions from "../../Hooks/useUnions";
+import useBloodGroups from "../../Hooks/useBloodGroups";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
+import useAxios from "../../Hooks/useAxios";
 
 const RequestBlood = () => {
     const { language } = useLanguage();
+    const { user } = useAuth()
+    const { unions } = useUnions()
+    const { bloodGroups } = useBloodGroups()
+    const navigate = useNavigate();
+    const axiosInstance = useAxios()
 
     const [formData, setFormData] = useState({
         name: "",
+        email: user?.email || "",
         age: "",
         bloodGroup: "",
         union: "",
@@ -13,35 +25,48 @@ const RequestBlood = () => {
         message: "",
     });
 
-    const bloodGroups = ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"];
-
-    const unions = [
-        { id: 1, bn: "আমানউল্লাহ ইউনিয়ন", en: "Amanullah Union" },
-        { id: 2, bn: "আজিমপুর ইউনিয়ন", en: "Azimpur Union" },
-        { id: 3, bn: "বাউরিয়া ইউনিয়ন", en: "Bauria Union" },
-        { id: 4, bn: "দীঘাপাড় ইউনিয়ন", en: "Digghapar Union" },
-        { id: 5, bn: "গাছুয়া ইউনিয়ন", en: "Gachhua Union" },
-        { id: 6, bn: "হারামিয়া ইউনিয়ন", en: "Haramia Union" },
-        { id: 7, bn: "হরিসপুর ইউনিয়ন", en: "Harispur Union" },
-        { id: 8, bn: "কালাপানিয়া ইউনিয়ন", en: "Kalapania Union" },
-        { id: 9, bn: "মাগধারা ইউনিয়ন", en: "Magdhara Union" },
-        { id: 10, bn: "মাইতভাঙ্গা ইউনিয়ন", en: "Maitbhanga Union" },
-        { id: 11, bn: "মুসাপুর ইউনিয়ন", en: "Musapur Union" },
-        { id: 12, bn: "রহমতপুর ইউনিয়ন", en: "Rahmatpur Union" },
-        { id: 13, bn: "সন্তোষপুর ইউনিয়ন", en: "Santoshpur Union" },
-        { id: 14, bn: "সারিকাইত ইউনিয়ন", en: "Sarikait Union" },
-        { id: 15, bn: "উড়িরচর ইউনিয়ন", en: "Urirchar Union" },
-    ];
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData); // future: API call
+
+        const requestBlood = {
+            ...formData,
+            role: "user",
+            createdAt: new Date(),
+        };
+
+        console.log('Request Application', requestBlood);
+
+        // ========= Send data in Database =========
+        axiosInstance.post('blood-request', requestBlood )
+        .then(res => {
+            if (res.data.insertedId) {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title:
+                        language === "bn"
+                            ? " আবেদন সফলভাবে জমা হয়েছে"
+                            : "Application Submitted!",
+                    // text: 
+                    //     language === "bn"
+                    //         ? "আপনার আবেদন অনুমোদনের অপেক্ষায় আছে।"
+                    //         : "Your application is pending approval.",
+                    showConfirmButton: true,
+                    
+                });
+                navigate("/");
+            }
+        })
+        
     };
 
+    
     return (
         <section className="bg-gray-50 min-h-screen py-10 px-4">
             <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-2xl p-6">
@@ -112,8 +137,8 @@ const RequestBlood = () => {
                                     : "Select Blood Group"}
                                 </option>
                                 {bloodGroups.map((bg) => (
-                                <option key={bg} value={bg}>
-                                    {bg}
+                                <option key={bg.lebel} value={bg.value}>
+                                    {bg.value}
                                 </option>
                                 ))}
                             </select>
@@ -144,21 +169,40 @@ const RequestBlood = () => {
                             </select>
                         </div>
                     </div>
+                    
+                    {/* Phone and Email  */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {/* Phone */}
+                        <div>
+                            <label className="text-sm font-semibold">
+                            {language === "bn" ? "যোগাযোগ নম্বর" : "Contact Number"}
+                            </label>
+                            <input
+                            type="number"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            required
+                            placeholder="01XXXXXXXXX"
+                            className="w-full border rounded-lg px-4 py-2 mt-1 focus:ring-2 focus:ring-red-500 outline-none"
+                            />
+                        </div>
 
-                    {/* Phone */}
-                    <div>
-                        <label className="text-sm font-semibold">
-                        {language === "bn" ? "যোগাযোগ নম্বর" : "Contact Number"}
-                        </label>
-                        <input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        required
-                        placeholder="01XXXXXXXXX"
-                        className="w-full border rounded-lg px-4 py-2 mt-1 focus:ring-2 focus:ring-red-500 outline-none"
-                        />
+                        {/* Email  */}
+                        <div>
+                            <div>
+                                <label className="text-sm font-semibold ">
+                                {language === "bn" ? "ইমেইল" : "Email"}
+                                </label>
+                                <input
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                disabled
+                                className="w-full  bg-gray-200 border rounded-lg px-4 py-2 mt-1 focus:ring-2 focus:ring-red-500 outline-none"
+                                />
+                            </div>
+                        </div>
                     </div>
 
                     {/* Message */}

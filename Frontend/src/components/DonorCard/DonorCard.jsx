@@ -1,9 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
+import { useLanguage } from "../../context/LanguageContext";
 
 const DonorCard = ({ donor }) => {
   const [open, setOpen] = useState(false);
   const [details, setDetails] = useState(null);
+  const {language} = useLanguage();
 
   const handleOpenModal = async () => {
     const res = await axios.get(
@@ -47,7 +49,8 @@ const DonorCard = ({ donor }) => {
           onClick={handleOpenModal}
           className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg font-semibold"
         >
-          বিস্তারিত দেখুন
+            { language === "bn" ?  "বিস্তারিত দেখুন" : "See More Details" }
+            
         </button>
       </div>
 
@@ -80,9 +83,11 @@ const DonorCard = ({ donor }) => {
                   : "text-red-600"
               }`}
             >
+              
+              
               {donor.isAvailable
-                ? "এই মুহূর্তে রক্ত দিতে পারবেন"
-                : "এখনো রক্ত দেওয়ার সময় হয়নি"}
+                ? <span>{ language === "bn" ?  "এই মুহূর্তে রক্ত দিতে পারবেন " : "He can donate blood right now." }</span>
+                : <span>{ language === "bn" ?  "এখনো রক্ত দেওয়ার সময় হয়নি " : "It's not time to donate blood yet." } </span> }
             </p>
 
             {donor.isAvailable && (
@@ -90,7 +95,8 @@ const DonorCard = ({ donor }) => {
                 href={`tel:${donor.phone}`}
                 className="block mt-4 text-center bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg"
               >
-                Call Donor
+                { language === "bn" ? "কল করুন" : "Call Donor"}
+                
               </a>
             )}
           </div>

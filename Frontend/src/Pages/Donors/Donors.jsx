@@ -33,7 +33,6 @@ const Donors = () => {
       
     },
   });
-  console.log('Donors', donors)
 
   return (
     <section className="bg-gray-50 px-4 py-10">
@@ -52,7 +51,7 @@ const Donors = () => {
                 {language === "bn" ? "রক্তের গ্রুপ" : "Blood Group"}
               </label>
               <select
-                className="w-full border rounded-lg px-3 py-2 mt-1"
+                className="w-full  border rounded-lg px-3 py-2 mt-1 "
                 value={filters.bloodGroup}
                 onChange={(e) =>
                   setFilters({ ...filters, bloodGroup: e.target.value })
@@ -92,18 +91,12 @@ const Donors = () => {
               </select>
             </div>
 
-            {/* Button  */}
             {/* Button */}
             <button className="bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
               {language === "bn" ? "খুঁজুন" : "Search"}
             </button>
 
-            {/* Info */}
-            {/* <div className="text-sm text-gray-500">
-              {language === "bn"
-                ? "ফিল্টার পরিবর্তন করলেই ফলাফল আপডেট হবে"
-                : "Results update automatically"}
-            </div> */}
+            
           </div>
         </div>
 

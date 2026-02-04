@@ -55,6 +55,7 @@ async function run() {
     const db = client.db('roktoDan');
     const userCollection = db.collection('users');
     const donorsCollection = db.collection('donors');
+    const bloodCollection = db.collection('request-blood')
 
 
     // ========= Custom Middleware =========
@@ -441,7 +442,38 @@ async function run() {
       }
     });
 
+    // --------------------------------------------------------------------------------------------------
+    
+    // --------------------- Blood Requests ------------------------
+    app.post('/blood-request', async (req, res) => {
+      try {
+        const requestBlood = req.body;
 
+        const requestPayload = {
+          ...requestBlood,
+          role: "user",
+          createdAt: new Date(),
+        };
+
+        const result = await bloodCollection.insertOne(requestPayload);
+        
+        res.status(201).json({
+          success: true,
+          message: "Request send successfully",
+          requestId: result.insertedId,
+          request: donorPayload,
+        });
+
+      } catch ( error ) {
+
+      console.error("❌ User insert error:", error);
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+
+      }
+    })
 
     // --------------------- MongoDB Aggregate for Admin Dashboard -------------------------
     

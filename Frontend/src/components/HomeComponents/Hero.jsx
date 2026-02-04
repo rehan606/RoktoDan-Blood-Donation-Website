@@ -3,19 +3,30 @@ import { Link } from 'react-router';
 import HeroImage from '../../assets/images/Blood-collect-image.png';
 
 
+
 const Hero = ({ language, }) => {
   const isBangla = language === "bn";
 
   return (
     <section
-      className={`min-h-[90vh] flex items-center bg-linear-to-br from-red-600/30 via-white to-red-400/30
+      className={`min-h-[90vh] flex items-center bg-linear-to-br from-red-600/50 via-white to-red-600/40
       ${isBangla ? "font-bn" : "font-en"}`}
     >
       <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
 
         {/* Text Content */}
         <div>
-          <h1 className="text-4xl md:text-6xl font-bold leading-tight text-red-600">
+          
+          <div className='w-1/3 flex items-center gap-2 bg-linear-to-br from-red-600/30 via-white to-red-400/30 px-4 py-2 border border-red-500 rounded-full'>
+            <div className='bg-red-500 w-4 h-4 rounded-full'></div>
+            
+            <span className="">{isBangla
+                ? "সন্দ্বীপের মানুষের জন্য "
+                : "Be a hero"}
+            </span>
+          </div>
+
+          <h1 className="text-4xl md:text-7xl font-black leading-none text-red-600 mt-4 ">
             {isBangla
               ? "রক্ত দিন, জীবন বাঁচান"
               : "Donate Blood, Save Lives"}
