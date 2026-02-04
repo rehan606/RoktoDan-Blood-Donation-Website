@@ -92,12 +92,18 @@ const Donors = () => {
               </select>
             </div>
 
+            {/* Button  */}
+            {/* Button */}
+            <button className="bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
+              {language === "bn" ? "খুঁজুন" : "Search"}
+            </button>
+
             {/* Info */}
-            <div className="text-sm text-gray-500">
+            {/* <div className="text-sm text-gray-500">
               {language === "bn"
                 ? "ফিল্টার পরিবর্তন করলেই ফলাফল আপডেট হবে"
                 : "Results update automatically"}
-            </div>
+            </div> */}
           </div>
         </div>
 
