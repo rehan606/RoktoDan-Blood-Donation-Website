@@ -15,13 +15,13 @@ const DashboardLayout = () => {
     const { role, roleLoading } = useUserRole();
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
-    // if (roleLoading) {
-    //     return (
-    //         <div className="min-h-screen flex items-center justify-center bg-[#0b1c2d] text-white">
-    //         <span className="loading loading-spinner loading-lg"></span>
-    //         </div>
-    //     );
-    // }
+    if (roleLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-[#0b1c2d] text-white">
+            <span className="loading loading-spinner loading-lg"></span>
+            </div>
+        );
+    }
 
 
 

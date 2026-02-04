@@ -9,8 +9,7 @@ const { ObjectId } = require("mongodb");
 
 
 // Admin Middleware
-// import verifyJWT from "./middlewares/verifyJWT.js";
-// import verifyAdmin from "./middlewares/verifyAdmin.js";
+
 
 // ========= Middleware =========
 app.use(cors());
@@ -96,17 +95,7 @@ async function run() {
       next();
     };
 
-    // ========= Set User in Database =========
-    // app.post('/users', async(req, res) => {
-    //   const email = req.body.email;
-    //   const userExists = await userCollection.findOne({ email })
-    //   if (userExists){
-    //     return res.status(200).send({ message: 'User Already Exists', inserted: false });
-    //   }
-    //   const user = req.body;
-    //   const result = await userCollection.insertOne(user);
-    //   res.send(result);
-    // })
+    // ----------------------------------------------------------------------
 
     // ========= Set User in Database =========
 
@@ -374,6 +363,85 @@ async function run() {
         return res.status(500).send({ message: 'Faild to get role'});
       }
     })
+
+    // --------------------------------------------------------------------------------------------------
+
+
+    // ------------------------- Display Donors in Frontend Donors page --------------------------
+
+    app.get('/donors', async (req, res) => {
+      try {
+        const { bloodGroup, union } = req.query;
+
+        const query = {
+          status: "active",
+        };
+
+        if (bloodGroup) {
+          query.bloodGroup = bloodGroup;
+        }
+
+        if (union) {
+          query.union = union;
+        }
+
+        let donors = await donorsCollection.find(query).toArray();
+
+        const today = new Date();
+
+        for (let donor of donors) {
+          if (donor.lastDonationDate) {
+            const lastDate = new Date(donor.lastDonationDate);
+            const diffInMonths =
+              (today.getFullYear() - lastDate.getFullYear()) * 12 +
+              (today.getMonth() - lastDate.getMonth());
+
+            const shouldBeAvailable = diffInMonths >= 3;
+
+            // 🔁 Auto update database if needed
+            if (donor.isAvailable !== shouldBeAvailable) {
+              await donorCollection.updateOne(
+                { _id: donor._id },
+                {
+                  $set: {
+                    isAvailable: shouldBeAvailable,
+                  },
+                }
+              );
+              donor.isAvailable = shouldBeAvailable;
+            }
+          }
+        }
+
+        res.send(donors);
+      } catch (error) {
+        console.error("❌ Donor fetch error:", error);
+        res.status(500).send({ message: "Internal Server Error" });
+      }
+    });
+
+
+    // --------------------- Single Donor Details ------------------------
+    app.get('/donors/:id', async (req, res) => {
+      try {
+        const { id } = req.params;
+
+        const donor = await donorCollection.findOne({
+          _id: new ObjectId(id),
+        });
+
+        if (!donor) {
+          return res.status(404).send({ message: "Donor not found" });
+        }
+
+        res.send(donor);
+      } catch (error) {
+        console.error("❌ Single donor fetch error:", error);
+        res.status(500).send({ message: "Internal Server Error" });
+      }
+    });
+
+
 
     // --------------------- MongoDB Aggregate for Admin Dashboard -------------------------
     

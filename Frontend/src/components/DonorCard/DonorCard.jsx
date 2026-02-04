@@ -1,45 +1,103 @@
-import React from 'react'
+import { useState } from "react";
+import axios from "axios";
 
-const DonorCard = ({donor}) => {
-    return (
-        <div>
-            <div
-                key={donor.id}
-                className=" bg-white rounded-2xl shadow-lg p-6 border-l-4 border-red-500"
-                >
-                {/* Urgent badge */}
-                <div className='flex items-center justify-between mb-6'>
-                    <h3 className="text-2xl font-bold text-red-600 ">
-                        {donor.bloodGroup}
-                    </h3>
+const DonorCard = ({ donor }) => {
+  const [open, setOpen] = useState(false);
+  const [details, setDetails] = useState(null);
 
-                    <span className=" bg-red-600 text-white text-xs px-3 py-1 rounded-full">
-                        {donor.status}
-                    </span>
+  const handleOpenModal = async () => {
+    const res = await axios.get(
+      `/donors/${donor._id}`
+    );
+    setDetails(res.data);
+    setOpen(true);
+  };
 
-                </div>
-                <p className="text-gray-700">
-                    <strong>{donor.title}:</strong> {donor.name}
-                </p>
+  return (
+    <>
+      {/* Card */}
+      <div className="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-red-500">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-2xl font-bold text-red-600">
+            {donor.bloodGroup}
+          </h3>
 
-                <p className="text-gray-700">
-                    <strong>{donor.address}:</strong> {donor.union}
-                </p>
-
-                <p className="text-gray-700">
-                    <strong>{donor.number}:</strong> {donor.phone}
-                </p>
-
-                <a
-                    href={`tel:${donor.phone}`}
-                    className="mt-4 inline-block w-full text-center bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg font-semibold transition"
-                >
-                    {donor.donate}
-                </a>
-            </div>
-
+          <span
+            className={`text-xs px-3 py-1 rounded-full text-white ${
+              donor.isAvailable ? "bg-green-600" : "bg-gray-500"
+            }`}
+          >
+            {donor.isAvailable
+              ? "Available"
+              : "Not Available"}
+          </span>
         </div>
-    )
-}
 
-export default DonorCard
+        <p className="text-gray-700">
+          <strong>Name:</strong> {donor.name}
+        </p>
+        <p className="text-gray-700">
+          <strong>Union:</strong> {donor.union}
+        </p>
+        <p className="text-gray-700">
+          <strong>Phone:</strong> {donor.phone}
+        </p>
+
+        <button
+          onClick={handleOpenModal}
+          className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg font-semibold"
+        >
+          বিস্তারিত দেখুন
+        </button>
+      </div>
+
+      {/* Modal */}
+      {open && details && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl p-6 w-full max-w-md relative">
+            <button
+              onClick={() => setOpen(false)}
+              className="absolute top-2 right-3 text-xl"
+            >
+              ✕
+            </button>
+
+            <h3 className="text-xl font-bold text-red-600 mb-4">
+              Donor Details
+            </h3>
+
+            <p><strong>Name:</strong> {donor.name}</p>
+            <p><strong>Email:</strong> {donor.email}</p>
+            <p><strong>Phone:</strong> {donor.phone}</p>
+            <p><strong>Blood Group:</strong> {donor.bloodGroup}</p>
+            <p><strong>Union:</strong> {donor.union}</p>
+            <p><strong>Last Donation:</strong> {donor.lastDonationDate}</p>
+
+            <p
+              className={`mt-3 font-semibold ${
+                donor.isAvailable
+                  ? "text-green-600"
+                  : "text-red-600"
+              }`}
+            >
+              {donor.isAvailable
+                ? "এই মুহূর্তে রক্ত দিতে পারবেন"
+                : "এখনো রক্ত দেওয়ার সময় হয়নি"}
+            </p>
+
+            {donor.isAvailable && (
+              <a
+                href={`tel:${donor.phone}`}
+                className="block mt-4 text-center bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg"
+              >
+                Call Donor
+              </a>
+            )}
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default DonorCard;
