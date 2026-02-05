@@ -447,33 +447,58 @@ async function run() {
     // --------------------- Blood Requests ------------------------
     app.post('/blood-request', async (req, res) => {
       try {
-        const requestBlood = req.body;
+        const {
+          name,
+          email,
+          age,
+          bloodGroup,
+          union,
+          phone,
+          message,
+          role,
+        } = req.body;
+
+        // 🔐 Basic validation
+        if (!email || !role) {
+          return res.status(400).json({
+            success: false,
+            message: "Email and role are required",
+          });
+        }
 
         const requestPayload = {
-          ...requestBlood,
-          role: "user",
+          name,
+          email,        // 🔑 ownership
+          age,
+          bloodGroup,
+          union,
+          phone,
+          message,
+
+          role,         // "user" | "donor"
+          status: "pending", // optional but useful
           createdAt: new Date(),
         };
 
         const result = await bloodCollection.insertOne(requestPayload);
-        
+
         res.status(201).json({
           success: true,
-          message: "Request send successfully",
-          requestId: result.insertedId,
-          request: donorPayload,
+          message: "Request sent successfully",
+          insertedId: result.insertedId,
+          request: requestPayload,
         });
 
-      } catch ( error ) {
-
-      console.error("❌ User insert error:", error);
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-
+      } catch (error) {
+        console.error("❌ Blood request insert error:", error);
+        res.status(500).json({
+          success: false,
+          message: error.message,
+        });
       }
-    })
+    });
+
+    
 
     // --------------------- MongoDB Aggregate for Admin Dashboard -------------------------
     

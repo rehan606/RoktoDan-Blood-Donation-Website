@@ -6,6 +6,7 @@ import useBloodGroups from "../../Hooks/useBloodGroups";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import useAxios from "../../Hooks/useAxios";
+import useUserRole from "../../Hooks/useUserRole";
 
 const RequestBlood = () => {
     const { language } = useLanguage();
@@ -14,6 +15,9 @@ const RequestBlood = () => {
     const { bloodGroups } = useBloodGroups()
     const navigate = useNavigate();
     const axiosInstance = useAxios()
+    const { role, roleLoading} = useUserRole();
+
+
 
     const [formData, setFormData] = useState({
         name: "",
@@ -34,37 +38,47 @@ const RequestBlood = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if (roleLoading || !role) {
+            Swal.fire({
+            icon: "warning",
+            title: "Please wait",
+            text: "User role is loading",
+            });
+            return;
+        }
+
         const requestBlood = {
             ...formData,
-            role: "user",
+            email: user.email, 
+            role,              
             createdAt: new Date(),
         };
 
-        console.log('Request Application', requestBlood);
+        axiosInstance.post("blood-request", requestBlood)
+            .then(res => {
+                console.log("Response =>", res.data);
 
-        // ========= Send data in Database =========
-        axiosInstance.post('blood-request', requestBlood )
-        .then(res => {
-            if (res.data.insertedId) {
-                Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title:
-                        language === "bn"
-                            ? " আবেদন সফলভাবে জমা হয়েছে"
+                if (res.data.success) {
+                    Swal.fire({
+                        icon: "success",
+                        title: language === "bn"
+                            ? "আবেদন সফলভাবে জমা হয়েছে"
                             : "Application Submitted!",
-                    // text: 
-                    //     language === "bn"
-                    //         ? "আপনার আবেদন অনুমোদনের অপেক্ষায় আছে।"
-                    //         : "Your application is pending approval.",
-                    showConfirmButton: true,
-                    
+                    }).then(() => {
+                        navigate("/");
+                    });
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: "Something went wrong",
                 });
-                navigate("/");
-            }
-        })
-        
+            });
     };
+
 
     
     return (
@@ -227,10 +241,20 @@ const RequestBlood = () => {
                     {/* Button */}
                     <button
                         type="submit"
-                        className="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg font-semibold transition"
-                    >
-                        {language === "bn" ? "অনুরোধ পাঠান" : "Submit Request"}
+                        disabled={roleLoading}
+                        className={`w-full py-2 rounded-lg font-semibold transition
+                            ${roleLoading
+                            ? "bg-gray-400 cursor-not-allowed"
+                            : "bg-red-600 hover:bg-red-700 text-white"
+                            }`}
+                        >
+                        {roleLoading ? 
+                            language === "bn" ? "লোড হচ্ছে..." : "Loading..." 
+                            : 
+                            language === "bn" ? "অনুরোধ পাঠান" : "Submit Request"
+                        }
                     </button>
+
                 </form>
             </div>
         </section>
