@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { FaEye, FaUserSlash } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import useAxiosSecure from '../../../Hooks/useAxiosSecure';
-import { useLanguage } from "../../../context/LanguageContext";
+import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
+import { useLanguage } from "../../../../context/LanguageContext";
 
 const ActiveDonors = () => {
     const [bloodGroups, setBloodGroups] = useState([]);

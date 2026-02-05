@@ -53,7 +53,7 @@ const DashboardLayout = () => {
         },
         {
         name: language === "bn" ? "রক্তের অনুরোধ" : "Blood Requests",
-        to: "/dashboard/requests",
+        to: "/dashboard/request-blood-posts",
         icon: <FaTint />,
         },
         {

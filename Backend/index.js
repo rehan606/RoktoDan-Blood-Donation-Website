@@ -6,6 +6,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 require('dotenv').config();
 const admin = require("firebase-admin");
 const { ObjectId } = require("mongodb");
+// import { ObjectId } from "mongodb";
 
 
 // Admin Middleware
@@ -364,6 +365,63 @@ async function run() {
         return res.status(500).send({ message: 'Faild to get role'});
       }
     })
+
+    // --------------------- BLOOD REQUEST POST -----------------------
+
+    // Admin: Get blood requests with pagination
+    app.get("/dashboard/blood-requests", async (req, res) => {
+      try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+
+        const skip = (page - 1) * limit;
+
+        const total = await bloodCollection.countDocuments();
+
+        const requests = await bloodCollection
+          .find()
+          .sort({ createdAt: -1 })
+          .skip(skip)
+          .limit(limit)
+          .toArray();
+
+        res.send({
+          success: true,
+          total,
+          totalPages: Math.ceil(total / limit),
+          currentPage: page,
+          data: requests,
+        });
+      } catch (error) {
+        res.status(500).send({
+          success: false,
+          message: error.message,
+        });
+      }
+    });
+
+
+    // ----------------------- DELETE: Blood request (Admin only)-------------------------
+    
+
+    app.delete("/dashboard/blood-requests/:id", async (req, res) => {
+      try {
+        const id = req.params.id;
+
+        const result = await bloodCollection.deleteOne({
+          _id: new ObjectId(id),
+        });
+
+        res.send({
+          success: result.deletedCount > 0,
+        });
+      } catch (error) {
+        res.status(500).send({
+          success: false,
+          message: error.message,
+        });
+      }
+    });
 
     // --------------------------------------------------------------------------------------------------
 

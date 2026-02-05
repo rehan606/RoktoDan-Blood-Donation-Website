@@ -17,13 +17,15 @@ import Register from "./Pages/Auth/Register/Register";
 import Login from "./Pages/Auth/Login/Login";
 import DashboardLayout from "./Layouts/DashboardLayout";
 import PrivateRoute from "./Routes/PrivateRoute";
-import PendingDonors from "./Pages/Dashboard/Donors/PendingDonors";
-import ActiveDonors from "./Pages/Dashboard/Donors/ActiveDonors";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import MakeAdmin from "./Pages/Dashboard/Admin/MakeAdmin/MakeAdmin";
 import Forbidden from "./Pages/Dashboard/ForbiddenPage/Forbidden";
 import AdminRoute from "./Routes/AdminRoute";
 import DeshboardHome from "./Pages/Dashboard/DashboardHome/DeshboardHome";
+import ActiveDonors from "./Pages/Dashboard/Admin/ActiveDonors/ActiveDonors";
+import PendingDonors from "./Pages/Dashboard/Admin/PendingDonors/PendingDonors";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import BloodRequestPosts from "./Pages/Dashboard/Admin/BloodRequestPosts/BloodRequestPosts";
 
 // Create a client
 const queryClient = new QueryClient()
@@ -104,6 +106,14 @@ const App = () => {
         {
           path: '/dashboard/make-admin', 
           element: <AdminRoute> <MakeAdmin /> </AdminRoute>
+        },
+        {
+          path: '/dashboard/make-admin', 
+          element: <ActiveDonors />
+        },
+        {
+          path: '/dashboard/request-blood-posts', 
+          element: <BloodRequestPosts />
         },
       ]
     },

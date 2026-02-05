@@ -4,7 +4,7 @@ import { FaEye,  FaUserSlash } from "react-icons/fa";
 import { BiSolidUserCheck } from "react-icons/bi";
 import { useState } from "react";
 
-import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
 
 const PendingDonors = () => {
     const [selectedDonor, setSelectedDonor] = useState(null);
@@ -70,7 +70,7 @@ const PendingDonors = () => {
       <h2 className="text-2xl font-bold mb-6">Pending Donors : ( {pendingDonors.length} ) </h2>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full border-collapse border border-gray-400 rounded-lg bg-white text-zinc-900">
+        <table className="min-w-full border-collapse border text-center border-gray-400 rounded-lg bg-white text-zinc-900">
           <thead className="bg-gray-100 text-red-500">
             <tr>
               <th className="p-3 border">Name</th>
