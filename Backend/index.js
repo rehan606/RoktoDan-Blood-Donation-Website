@@ -27,15 +27,10 @@ admin.initializeApp({
 });
 
 
-// const serviceAccount = require("./firebase-admin-key.json");
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount)
-// });
 
 
 
-
-  // ========= MongoDB Driver =========
+// ========= MongoDB Driver =========
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.jwii9.mongodb.net/?appName=Cluster0`;
 
@@ -101,7 +96,31 @@ async function run() {
 
     // ========= Set User in Database =========
 
-    app.post('/users', verifyToken, async (req, res) => {
+    // app.post('/users', verifyToken, async (req, res) => {
+    //   try {
+    //     const user = req.body;
+
+    //     if (!user?.email) {
+    //       return res.status(400).send({ message: "Email is required" });
+    //     }
+
+    //     const existingUser = await userCollection.findOne({ email: user.email });
+
+    //     if (existingUser) {
+    //       return res.send({ message: 'User Already Exists', inserted: false });
+    //     }
+
+    //     const result = await userCollection.insertOne(user);
+    //     res.send({ inserted: true, result });
+
+    //   } catch (error) {
+    //     console.error("❌ User insert error:", error);
+    //     res.status(500).send({ message: "Internal Server Error" });
+    //   }
+    // });
+
+
+    app.post("/users", verifyToken, async (req, res) => {
       try {
         const user = req.body;
 
@@ -112,17 +131,26 @@ async function run() {
         const existingUser = await userCollection.findOne({ email: user.email });
 
         if (existingUser) {
-          return res.send({ message: 'User Already Exists', inserted: false });
+          return res.send({ message: "User Already Exists", inserted: false });
         }
 
-        const result = await userCollection.insertOne(user);
-        res.send({ inserted: true, result });
+        const newUser = {
+          name: user.name || "",
+          email: user.email,
+          role: user.role || "user",
+          image: user.image || "",   // ✅ IMPORTANT
+          created_at: new Date(),
+          last_log_in: new Date(),
+        };
 
+        const result = await userCollection.insertOne(newUser);
+        res.send({ inserted: true, result });
       } catch (error) {
         console.error("❌ User insert error:", error);
         res.status(500).send({ message: "Internal Server Error" });
       }
     });
+
 
     // ========= Set Donors Application in Database =========
 
@@ -294,7 +322,7 @@ async function run() {
       }
     });
 
-
+   
 
     // ---------------------- MAKE ADMIN -----------------------
 
@@ -559,7 +587,35 @@ async function run() {
     
 
     // --------------------- MongoDB Aggregate for Admin Dashboard -------------------------
-    
+     // app.get("/donors", async (req, res) => {
+    //   try {
+    //     const donors = await donorsCollection.aggregate([
+    //       {
+    //         $lookup: {
+    //           from: "users",
+    //           localField: "email",
+    //           foreignField: "email",
+    //           as: "userInfo",
+    //         },
+    //       },
+    //       { $unwind: "$userInfo" },
+    //       {
+    //         $project: {
+    //           name: "$userInfo.name",
+    //           image: "$userInfo.image",
+    //           bloodGroup: 1,
+    //           phone: 1,
+    //           union: 1,
+    //         },
+    //       },
+    //     ]).toArray();
+
+    //     res.send(donors);
+    //   } catch (error) {
+    //     res.status(500).send({ message: "Failed to load donors" });
+    //   }
+    // });
+
 
 
 

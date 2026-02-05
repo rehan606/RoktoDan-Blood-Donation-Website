@@ -102,7 +102,7 @@ const BloodRequestPosts = () => {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center gap-2 mt-8">
+      <div className="flex justify-center gap-2 mt-6">
         {[...Array(totalPages).keys()].map((num) => (
           <button
             key={num}
@@ -135,6 +135,7 @@ const BloodRequestPosts = () => {
                 <p className="text-red-500 font-black"><b>Blood Group:</b> {selected.bloodGroup}</p>
                 <p><b>Union:</b> {selected.union}</p>
                 <p><b>Phone:</b> {selected.phone}</p>
+                <p className="text-red-500 font-black"><b>Role:</b> {selected.role}</p>
                 <p><b>Message:</b> {selected.message}</p>
 
                 <div className="mt-5 text-center">

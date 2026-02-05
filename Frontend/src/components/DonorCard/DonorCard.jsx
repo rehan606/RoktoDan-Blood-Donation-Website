@@ -35,19 +35,33 @@ const DonorCard = ({ donor }) => {
           </span>
         </div>
 
-        <p className="text-gray-700">
-          <strong>Name:</strong> {donor.name}
-        </p>
-        <p className="text-gray-700">
-          <strong>Union:</strong> {donor.union}
-        </p>
-        <p className="text-gray-700">
-          <strong>Phone:</strong> {donor.phone}
-        </p>
+        <div className='flex items-center justify-between overflow-hidden'>
+          <div>
+            <p className="text-gray-700">
+              <strong>Name:</strong> {donor.name}
+            </p>
+            <p className="text-gray-700">
+              <strong>Union:</strong> {donor.union}
+            </p>
+            <p className="text-gray-700">
+              <strong>Phone:</strong> {donor.phone}
+            </p>
+          </div>
+
+          <div className='flex items-center justify-center  bg-gray-200 rounded-lg w-20 h-20'>
+              <div className='w-full '>
+                  <img
+                    src={donor.image || "/avatar.png"}
+                    alt={donor.name}
+                    className="w-24 h-24 mx-auto  object-cover rounded-lg"
+                  />
+              </div>
+          </div>
+        </div>
 
         <button
           onClick={handleOpenModal}
-          className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg font-semibold"
+          className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg font-semibold cursor-pointer"
         >
             { language === "bn" ?  "বিস্তারিত দেখুন" : "See More Details" }
             
@@ -74,7 +88,7 @@ const DonorCard = ({ donor }) => {
             <p><strong>Phone:</strong> {donor.phone}</p>
             <p><strong>Blood Group:</strong> {donor.bloodGroup}</p>
             <p><strong>Union:</strong> {donor.union}</p>
-            <p><strong>Last Donation:</strong> {donor.lastDonationDate}</p>
+            <p><strong>Last Donation:</strong> {donor.lastDonationDate} </p>
 
             <p
               className={`mt-3 font-semibold ${

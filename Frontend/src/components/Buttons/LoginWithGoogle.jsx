@@ -26,9 +26,18 @@ const LoginWithGoogle = () => {
       // 🔑 Firebase ID Token
       const token = await user.getIdToken();
 
+      // const userInfo = {
+      //   email: user.email,
+      //   role: "user",
+      //   created_at: new Date().toISOString(),
+      //   last_log_in: new Date().toISOString(),
+      // };
+
       const userInfo = {
-        email: user.email,
+        name: result.user.displayName,
+        email: result.user.email,
         role: "user",
+        image: result.user.photoURL, // ✅ Google image
         created_at: new Date().toISOString(),
         last_log_in: new Date().toISOString(),
       };

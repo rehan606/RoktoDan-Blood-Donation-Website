@@ -36,12 +36,22 @@ const Register = () => {
         const token = await result.user.getIdToken();
 
         // ======= User Info for MongoDB =======
+        // const userInfo = {
+        //   email: data.email,
+        //   role: "user",
+        //   created_at: new Date().toISOString(),
+        //   last_log_in: new Date().toISOString(),
+        // };
+
         const userInfo = {
+          name: data.name,
           email: data.email,
           role: "user",
+          image: profilePicture, // ✅ image save to DB
           created_at: new Date().toISOString(),
           last_log_in: new Date().toISOString(),
         };
+
 
         // ✅ MongoDB তে user save (token সহ)
         const userRes = await axios.post(
@@ -101,6 +111,7 @@ const Register = () => {
 
     const res = await axios.post(imageUploadUrl, formData);
     setProfilePicture(res.data.data.url);
+
   };
 
   return (
