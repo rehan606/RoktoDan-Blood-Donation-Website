@@ -102,7 +102,7 @@ const BloodRequestPosts = () => {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center gap-2 mt-4">
+      <div className="flex justify-center gap-2 mt-8">
         {[...Array(totalPages).keys()].map((num) => (
           <button
             key={num}
@@ -119,30 +119,35 @@ const BloodRequestPosts = () => {
       </div>
 
       {/* Modal */}
-      {selected && (
-        <dialog open className="modal">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg mb-2">
-              Blood Request Details
-            </h3>
-            <p><b>Name:</b> {selected.name}</p>
-            <p><b>Email:</b> {selected.email}</p>
-            <p><b>Age:</b> {selected.age}</p>
-            <p><b>Blood Group:</b> {selected.bloodGroup}</p>
-            <p><b>Union:</b> {selected.union}</p>
-            <p><b>Phone:</b> {selected.phone}</p>
-            <p><b>Message:</b> {selected.message}</p>
+      { selected && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-lg w-full max-w-md  relative shadow-lg text-zinc-800">
+            <div className="bg-blue-500 text-center text-white py-4 rounded-t-lg">
+                <h3 className="font-bold text-lg mb-2 uppercase">
+                Blood Request Details
+                </h3>
+            </div>
 
-            <div className="modal-action">
-              <button
-                onClick={() => setSelected(null)}
-                className="btn"
-              >
-                Close
-              </button>
+            <div className="bg-white rounded-lg p-6 text-zinc-800">
+                <p><b>Name:</b> {selected.name}</p>
+                <p><b>Email:</b> {selected.email}</p>
+                <p><b>Age:</b> {selected.age}</p>
+                <p className="text-red-500 font-black"><b>Blood Group:</b> {selected.bloodGroup}</p>
+                <p><b>Union:</b> {selected.union}</p>
+                <p><b>Phone:</b> {selected.phone}</p>
+                <p><b>Message:</b> {selected.message}</p>
+
+                <div className="mt-5 text-center">
+                <button
+                    onClick={() => setSelected(null)}
+                    className="px-4 py-2 w-full bg-red-600 text-white rounded hover:bg-red-700 cursor-pointer"
+                >
+                    Close
+                </button>
+                </div>
             </div>
           </div>
-        </dialog>
+        </div>
       )}
     </div>
   );

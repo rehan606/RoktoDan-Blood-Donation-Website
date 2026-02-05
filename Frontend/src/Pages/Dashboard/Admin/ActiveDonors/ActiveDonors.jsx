@@ -181,32 +181,32 @@ const ActiveDonors = () => {
             {/* 👁 Modal */}
             {selectedDonor && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-                <div className="bg-white p-6 rounded-lg w-full max-w-lg text-zinc-800">
-                    <div className="bg-red-500 px-8 py-6 rounded-md text-center mb-4">
-                        <h3 className="text-xl font-bold text-white">
-                        {language === "bn" ? "ডোনারের তথ্য" : "Donor Details"}
-                        </h3>
+                    <div className="bg-white p-6 rounded-lg w-full max-w-lg text-zinc-800">
+                        <div className="bg-red-500 px-8 py-6 rounded-md text-center mb-4">
+                            <h3 className="text-xl font-bold text-white">
+                            {language === "bn" ? "ডোনারের তথ্য" : "Donor Details"}
+                            </h3>
+                        </div>
+
+                        <div className="space-y-2 text-sm text-zinc-800 bg-zinc-200 p-8 rounded-md shadow-md border-2 border-zinc-300">
+
+                            {Object.entries(selectedDonor).map(
+                            ([key, value]) =>
+                                key !== "_id" && (
+                                <p key={key}>
+                                    <b>{key}:</b> {String(value)}
+                                </p>
+                                )
+                            )}
+                        </div>
+
+                        <button
+                        onClick={() => setSelectedDonor(null)}
+                        className="mt-4 w-full bg-red-500 hover:bg-red-700 text-white py-2 rounded"
+                        >
+                        Close
+                        </button>
                     </div>
-
-                    <div className="space-y-2 text-sm text-zinc-800 bg-zinc-200 p-8 rounded-md shadow-md border-2 border-zinc-300">
-
-                        {Object.entries(selectedDonor).map(
-                        ([key, value]) =>
-                            key !== "_id" && (
-                            <p key={key}>
-                                <b>{key}:</b> {String(value)}
-                            </p>
-                            )
-                        )}
-                    </div>
-
-                    <button
-                    onClick={() => setSelectedDonor(null)}
-                    className="mt-4 w-full bg-red-500 hover:bg-red-700 text-white py-2 rounded"
-                    >
-                    Close
-                    </button>
-                </div>
                 </div>
             )}
         </div>
