@@ -54,7 +54,7 @@ const RequestBlood = () => {
             createdAt: new Date(),
         };
 
-        axiosInstance.post("blood-request", requestBlood)
+        axiosInstance.post("/blood-request", requestBlood)
             .then(res => {
                 console.log("Response =>", res.data);
 

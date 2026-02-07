@@ -52,7 +52,7 @@ const App = () => {
         },
         {
           path: '/request-blood', 
-          element: <RequestBlood />
+          element: <PrivateRoute> <RequestBlood /> </PrivateRoute>
         },
         {
           path: '/eligibility', 
