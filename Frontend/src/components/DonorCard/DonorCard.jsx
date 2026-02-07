@@ -1,6 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
 import { useLanguage } from "../../context/LanguageContext";
+import profileIcon from "../../assets/images/profile-icon.png";
+
+
 
 const DonorCard = ({ donor }) => {
   const [open, setOpen] = useState(false);
@@ -48,13 +51,21 @@ const DonorCard = ({ donor }) => {
             </p>
           </div>
 
-          <div className='flex items-center justify-center  bg-gray-200 rounded-lg w-20 h-20'>
-              <div className='w-full '>
+          <div className='flex items-center justify-center  bg-gray-200 rounded-lg w-20 h-20 shadow-lg'>
+              <div className='w-full object-cover rounded-lg border-l-2 border-red-500 shadow-lg'>
+
                   <img
-                    src={donor.image || "/avatar.png"}
-                    alt={donor.name}
-                    className="w-24 h-24 mx-auto  object-cover rounded-lg"
+                    src={
+                      donor?.image?.display_url ||
+                      donor?.image?.url ||
+                      donor?.image ||
+                      profileIcon
+                    }
+                    alt={donor?.name || "Donor"}
+                    onError={(e) => (e.target.src = profileIcon )}
+                    className="w-20 h-20 mx-auto   rounded-xl  p-1"
                   />
+                  
               </div>
           </div>
         </div>
@@ -82,6 +93,8 @@ const DonorCard = ({ donor }) => {
             <h3 className="text-xl font-bold text-red-600 mb-4">
               Donor Details
             </h3>
+
+            
 
             <p><strong>Name:</strong> {donor.name}</p>
             <p><strong>Email:</strong> {donor.email}</p>

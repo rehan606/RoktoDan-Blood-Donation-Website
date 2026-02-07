@@ -456,56 +456,56 @@ async function run() {
 
     // ------------------------- Display Donors in Frontend Donors page --------------------------
 
-    app.get('/donors', async (req, res) => {
-      try {
-        const { bloodGroup, union } = req.query;
+    // app.get('/donors', async (req, res) => {
+    //   try {
+    //     const { bloodGroup, union } = req.query;
 
-        const query = {
-          status: "active",
-        };
+    //     const query = {
+    //       status: "active",
+    //     };
 
-        if (bloodGroup) {
-          query.bloodGroup = bloodGroup;
-        }
+    //     if (bloodGroup) {
+    //       query.bloodGroup = bloodGroup;
+    //     }
 
-        if (union) {
-          query.union = union;
-        }
+    //     if (union) {
+    //       query.union = union;
+    //     }
 
-        let donors = await donorsCollection.find(query).toArray();
+    //     let donors = await donorsCollection.find(query).toArray();
 
-        const today = new Date();
+    //     const today = new Date();
 
-        for (let donor of donors) {
-          if (donor.lastDonationDate) {
-            const lastDate = new Date(donor.lastDonationDate);
-            const diffInMonths =
-              (today.getFullYear() - lastDate.getFullYear()) * 12 +
-              (today.getMonth() - lastDate.getMonth());
+    //     for (let donor of donors) {
+    //       if (donor.lastDonationDate) {
+    //         const lastDate = new Date(donor.lastDonationDate);
+    //         const diffInMonths =
+    //           (today.getFullYear() - lastDate.getFullYear()) * 12 +
+    //           (today.getMonth() - lastDate.getMonth());
 
-            const shouldBeAvailable = diffInMonths >= 3;
+    //         const shouldBeAvailable = diffInMonths >= 3;
 
-            // 🔁 Auto update database if needed
-            if (donor.isAvailable !== shouldBeAvailable) {
-              await donorCollection.updateOne(
-                { _id: donor._id },
-                {
-                  $set: {
-                    isAvailable: shouldBeAvailable,
-                  },
-                }
-              );
-              donor.isAvailable = shouldBeAvailable;
-            }
-          }
-        }
+    //         // 🔁 Auto update database if needed
+    //         if (donor.isAvailable !== shouldBeAvailable) {
+    //           await donorsCollection.updateOne(
+    //             { _id: donor._id },
+    //             {
+    //               $set: {
+    //                 isAvailable: shouldBeAvailable,
+    //               },
+    //             }
+    //           );
+    //           donor.isAvailable = shouldBeAvailable;
+    //         }
+    //       }
+    //     }
 
-        res.send(donors);
-      } catch (error) {
-        console.error("❌ Donor fetch error:", error);
-        res.status(500).send({ message: "Internal Server Error" });
-      }
-    });
+    //     res.send(donors);
+    //   } catch (error) {
+    //     console.error("❌ Donor fetch error:", error);
+    //     res.status(500).send({ message: "Internal Server Error" });
+    //   }
+    // });
 
 
     // --------------------- Single Donor Details ------------------------
@@ -587,7 +587,108 @@ async function run() {
     
 
     // --------------------- MongoDB Aggregate for Admin Dashboard -------------------------
-     // app.get("/donors", async (req, res) => {
+     
+    app.get("/donors", async (req, res) => {
+      try {
+        const { bloodGroup, union, page = 1 } = req.query;
+
+        const limit = 18;                  // ✅ প্রতি page 18 টি card
+        const skip = (parseInt(page) - 1) * limit;
+
+        // 🔹 তোমার আগের filter logic
+        const matchStage = {
+          status: "active",
+        };
+
+        if (bloodGroup) {
+          matchStage.bloodGroup = bloodGroup;
+        }
+
+        if (union) {
+          matchStage.union = union;
+        }
+
+        // 🔹 Total count (pagination এর জন্য)
+        const totalCount = await donorsCollection.countDocuments(matchStage);
+        const totalPages = Math.ceil(totalCount / limit);
+
+        // 🔹 Main aggregate pipeline
+        const donors = await donorsCollection.aggregate([
+          // 1️⃣ Filter
+          { $match: matchStage },
+
+          // 2️⃣ Join users → image, name
+          {
+            $lookup: {
+              from: "users",
+              localField: "email",
+              foreignField: "email",
+              as: "userInfo",
+            },
+          },
+
+          // 3️⃣ array → object
+          { $unwind: "$userInfo" },
+
+          // 4️⃣ Pagination
+          { $skip: skip },
+          { $limit: limit },
+
+          // 5️⃣ Final shape (frontend safe)
+          {
+            $project: {
+              name: 1,
+              image: "$userInfo.image",
+              email: 1,
+              bloodGroup: 1,
+              phone: 1,
+              union: 1,
+              lastDonationDate: 1,
+              isAvailable: 1,
+            },
+          },
+        ]).toArray();
+
+        // 🔁 ⛔ তোমার availability logic (UNCHANGED)
+        const today = new Date();
+
+        for (let donor of donors) {
+          if (donor.lastDonationDate) {
+            const lastDate = new Date(donor.lastDonationDate);
+            const diffInMonths =
+              (today.getFullYear() - lastDate.getFullYear()) * 12 +
+              (today.getMonth() - lastDate.getMonth());
+
+            const shouldBeAvailable = diffInMonths >= 3;
+
+            if (donor.isAvailable !== shouldBeAvailable) {
+              await donorsCollection.updateOne(
+                { email: donor.email },
+                { $set: { isAvailable: shouldBeAvailable } }
+              );
+
+              donor.isAvailable = shouldBeAvailable; // frontend sync
+            }
+          }
+        }
+
+        // 🔹 Response
+        res.send({
+          data: donors,
+          currentPage: parseInt(page),
+          totalPages,
+          totalCount,
+        });
+      } catch (error) {
+        console.error("❌ Donor fetch error:", error);
+        res.status(500).send({ message: "Internal Server Error" });
+      }
+    });
+
+    
+    
+    
+    // app.get("/donors", async (req, res) => {
     //   try {
     //     const donors = await donorsCollection.aggregate([
     //       {

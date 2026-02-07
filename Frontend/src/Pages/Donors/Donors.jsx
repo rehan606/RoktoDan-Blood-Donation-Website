@@ -3,7 +3,6 @@ import { useLanguage } from "../../context/LanguageContext";
 import DonorCard from "../../components/DonorCard/DonorCard";
 import useUnions from "../../Hooks/useUnions";
 import useBloodGroups from "../../Hooks/useBloodGroups";
-// import useAxios from "../../Hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -17,22 +16,28 @@ const Donors = () => {
     union: "",
   });
 
-  // ✅ TanStack Query
-  const { data: donors = [], isLoading } = useQuery({
-    queryKey: ["donors", filters],
+  const [page, setPage] = useState(1);
+
+  // ✅ TanStack Query (UPDATED)
+  const { data, isLoading } = useQuery({
+    queryKey: ["donors", filters, page],
     queryFn: async () => {
-      const params = {};
+      const params = {
+        page,
+      };
+
       if (filters.bloodGroup) params.bloodGroup = filters.bloodGroup;
       if (filters.union) params.union = filters.union;
 
       const res = await axios.get("http://localhost:5000/donors", { params });
-
-      // ⚠️ backend যদি { donors: [] } পাঠায়
-      return res.data.donors || res.data;
-
-      
+      return res.data;
     },
+    keepPreviousData: true,
   });
+
+  const donors = data?.data || [];
+  const totalPages = data?.totalPages || 1;
+  // console.log("DONOR IMAGE 👉", donors.image);
 
   return (
     <section className="bg-gray-50 px-4 py-10">
@@ -51,11 +56,12 @@ const Donors = () => {
                 {language === "bn" ? "রক্তের গ্রুপ" : "Blood Group"}
               </label>
               <select
-                className="w-full  border rounded-lg px-3 py-2 mt-1 "
+                className="w-full border rounded-lg px-3 py-2 mt-1"
                 value={filters.bloodGroup}
-                onChange={(e) =>
-                  setFilters({ ...filters, bloodGroup: e.target.value })
-                }
+                onChange={(e) => {
+                  setPage(1); // 🔁 filter change হলে page reset
+                  setFilters({ ...filters, bloodGroup: e.target.value });
+                }}
               >
                 <option value="">
                   {language === "bn" ? "সব গ্রুপ" : "All Groups"}
@@ -76,9 +82,10 @@ const Donors = () => {
               <select
                 className="w-full border rounded-lg px-3 py-2 mt-1"
                 value={filters.union}
-                onChange={(e) =>
-                  setFilters({ ...filters, union: e.target.value })
-                }
+                onChange={(e) => {
+                  setPage(1);
+                  setFilters({ ...filters, union: e.target.value });
+                }}
               >
                 <option value="">
                   {language === "bn" ? "সব ইউনিয়ন" : "All Unions"}
@@ -91,12 +98,10 @@ const Donors = () => {
               </select>
             </div>
 
-            {/* Button */}
+            {/* Button (UI only) */}
             <button className="bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
               {language === "bn" ? "খুঁজুন" : "Search"}
             </button>
-
-            
           </div>
         </div>
 
@@ -104,19 +109,40 @@ const Donors = () => {
         {isLoading ? (
           <p className="text-center">Loading...</p>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Array.isArray(donors) && donors.length > 0 ? (
-              donors.map((donor) => (
-                <DonorCard key={donor._id} donor={donor} />
-              ))
-            ) : (
-              <p className="col-span-full text-center text-gray-500">
-                {language === "bn"
-                  ? "কোনো রক্তদাতা পাওয়া যায়নি"
-                  : "No donors found"}
-              </p>
+          <>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {donors.length > 0 ? (
+                donors.map((donor, idx) => (
+                  <DonorCard key={idx} donor={donor} />
+                ))
+              ) : (
+                <p className="col-span-full text-center text-gray-500">
+                  {language === "bn"
+                    ? "কোনো রক্তদাতা পাওয়া যায়নি"
+                    : "No donors found"}
+                </p>
+              )}
+            </div>
+
+            {/* 📄 Pagination */}
+            {totalPages > 1 && (
+              <div className="flex justify-center gap-2 mt-10">
+                {[...Array(totalPages).keys()].map((num) => (
+                  <button
+                    key={num}
+                    onClick={() => setPage(num + 1)}
+                    className={`px-4 py-2 rounded ${
+                      page === num + 1
+                        ? "bg-red-600 text-white"
+                        : "bg-gray-200"
+                    }`}
+                  >
+                    {num + 1}
+                  </button>
+                ))}
+              </div>
             )}
-          </div>
+          </>
         )}
       </div>
     </section>

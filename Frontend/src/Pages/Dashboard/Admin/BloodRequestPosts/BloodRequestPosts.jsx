@@ -65,7 +65,7 @@ const BloodRequestPosts = () => {
         <table className="min-w-full border-collapse border border-gray-400 rounded-lg bg-white text-zinc-900">
           <thead className="bg-gray-100 text-zinc-800 py-3">
             <tr>
-              <th className="border border-gray-300 p-3">Name</th>
+              <th className="border border-gray-300 p-3">Patient Name</th>
               <th className="border border-gray-300 p-3">Age</th>
               <th className="border border-gray-300 p-3">Blood Group</th>
               <th className="border border-gray-300 p-3">Phone</th>
@@ -129,7 +129,7 @@ const BloodRequestPosts = () => {
             </div>
 
             <div className="bg-white rounded-lg p-6 text-zinc-800">
-                <p><b>Name:</b> {selected.name}</p>
+                <p><b>Patient Name:</b> {selected.name}</p>
                 <p><b>Email:</b> {selected.email}</p>
                 <p><b>Age:</b> {selected.age}</p>
                 <p className="text-red-500 font-black"><b>Blood Group:</b> {selected.bloodGroup}</p>
