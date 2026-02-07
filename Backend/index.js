@@ -507,6 +507,103 @@ async function run() {
     //   }
     // });
 
+    app.get("/donors", async (req, res) => {
+      try {
+        const { bloodGroup, union, page = 1 } = req.query;
+
+        const limit = 18;                  // ✅ per page 18 cards
+        const skip = (parseInt(page) - 1) * limit;
+
+        // 🔹 filter logic
+        const matchStage = {
+          status: "active",
+        };
+
+        if (bloodGroup) {
+          matchStage.bloodGroup = bloodGroup;
+        }
+
+        if (union) {
+          matchStage.union = union;
+        }
+
+        // 🔹 Total count ( for pagination )
+        const totalCount = await donorsCollection.countDocuments(matchStage);
+        const totalPages = Math.ceil(totalCount / limit);
+
+        // 🔹 Main aggregate pipeline
+        const donors = await donorsCollection.aggregate([
+          // 1️⃣ Filter
+          { $match: matchStage },
+
+          // 2️⃣ Join users → image, name
+          {
+            $lookup: {
+              from: "users",
+              localField: "email",
+              foreignField: "email",
+              as: "userInfo",
+            },
+          },
+
+          // 3️⃣ array → object
+          { $unwind: "$userInfo" },
+
+          // 4️⃣ Pagination
+          { $skip: skip },
+          { $limit: limit },
+
+          // 5️⃣ Final shape (frontend safe)
+          {
+            $project: {
+              name: 1,
+              image: "$userInfo.image",
+              email: 1,
+              bloodGroup: 1,
+              phone: 1,
+              union: 1,
+              lastDonationDate: 1,
+              isAvailable: 1,
+            },
+          },
+        ]).toArray();
+
+        // 🔁 ⛔  availability logic 
+        const today = new Date();
+
+        for (let donor of donors) {
+          if (donor.lastDonationDate) {
+            const lastDate = new Date(donor.lastDonationDate);
+            const diffInMonths =
+              (today.getFullYear() - lastDate.getFullYear()) * 12 +
+              (today.getMonth() - lastDate.getMonth());
+
+            const shouldBeAvailable = diffInMonths >= 3;
+
+            if (donor.isAvailable !== shouldBeAvailable) {
+              await donorsCollection.updateOne(
+                { email: donor.email },
+                { $set: { isAvailable: shouldBeAvailable } }
+              );
+
+              donor.isAvailable = shouldBeAvailable; // frontend sync
+            }
+          }
+        }
+
+        // 🔹 Response
+        res.send({
+          data: donors,
+          currentPage: parseInt(page),
+          totalPages,
+          totalCount,
+        });
+      } catch (error) {
+        console.error("❌ Donor fetch error:", error);
+        res.status(500).send({ message: "Internal Server Error" });
+      }
+    });
+
 
     // --------------------- Single Donor Details ------------------------
     app.get('/donors/:id', async (req, res) => {
@@ -584,138 +681,40 @@ async function run() {
       }
     });
 
-    
-
-    // --------------------- MongoDB Aggregate for Admin Dashboard -------------------------
-     
-    app.get("/donors", async (req, res) => {
+    // Display All Blood Request
+    app.get("/blood-requests", async (req, res) => {
       try {
-        const { bloodGroup, union, page = 1 } = req.query;
+        const requests = await bloodCollection
+          .find({})
+          .sort({ createdAt: -1 })
+          .toArray();
 
-        const limit = 18;                  // ✅ প্রতি page 18 টি card
-        const skip = (parseInt(page) - 1) * limit;
+        res.send(requests);
+      } catch (err) {
+        res.status(500).send({ message: "Failed to load requests" });
+      }
+    });
 
-        // 🔹 তোমার আগের filter logic
-        const matchStage = {
-          status: "active",
-        };
 
-        if (bloodGroup) {
-          matchStage.bloodGroup = bloodGroup;
-        }
+    // Display blood Request in Home page
+    app.get("/blood-requests/latest", async (req, res) => {
+      try {
+        const requests = await bloodCollection
+          .find({})
+          .sort({ createdAt: -1 }) // 🔥 latest first
+          .limit(3)
+          .toArray();
 
-        if (union) {
-          matchStage.union = union;
-        }
-
-        // 🔹 Total count (pagination এর জন্য)
-        const totalCount = await donorsCollection.countDocuments(matchStage);
-        const totalPages = Math.ceil(totalCount / limit);
-
-        // 🔹 Main aggregate pipeline
-        const donors = await donorsCollection.aggregate([
-          // 1️⃣ Filter
-          { $match: matchStage },
-
-          // 2️⃣ Join users → image, name
-          {
-            $lookup: {
-              from: "users",
-              localField: "email",
-              foreignField: "email",
-              as: "userInfo",
-            },
-          },
-
-          // 3️⃣ array → object
-          { $unwind: "$userInfo" },
-
-          // 4️⃣ Pagination
-          { $skip: skip },
-          { $limit: limit },
-
-          // 5️⃣ Final shape (frontend safe)
-          {
-            $project: {
-              name: 1,
-              image: "$userInfo.image",
-              email: 1,
-              bloodGroup: 1,
-              phone: 1,
-              union: 1,
-              lastDonationDate: 1,
-              isAvailable: 1,
-            },
-          },
-        ]).toArray();
-
-        // 🔁 ⛔ তোমার availability logic (UNCHANGED)
-        const today = new Date();
-
-        for (let donor of donors) {
-          if (donor.lastDonationDate) {
-            const lastDate = new Date(donor.lastDonationDate);
-            const diffInMonths =
-              (today.getFullYear() - lastDate.getFullYear()) * 12 +
-              (today.getMonth() - lastDate.getMonth());
-
-            const shouldBeAvailable = diffInMonths >= 3;
-
-            if (donor.isAvailable !== shouldBeAvailable) {
-              await donorsCollection.updateOne(
-                { email: donor.email },
-                { $set: { isAvailable: shouldBeAvailable } }
-              );
-
-              donor.isAvailable = shouldBeAvailable; // frontend sync
-            }
-          }
-        }
-
-        // 🔹 Response
-        res.send({
-          data: donors,
-          currentPage: parseInt(page),
-          totalPages,
-          totalCount,
-        });
-      } catch (error) {
-        console.error("❌ Donor fetch error:", error);
-        res.status(500).send({ message: "Internal Server Error" });
+        res.send(requests);
+      } catch (err) {
+        res.status(500).send({ message: "Failed to load requests" });
       }
     });
 
     
-    
-    
-    // app.get("/donors", async (req, res) => {
-    //   try {
-    //     const donors = await donorsCollection.aggregate([
-    //       {
-    //         $lookup: {
-    //           from: "users",
-    //           localField: "email",
-    //           foreignField: "email",
-    //           as: "userInfo",
-    //         },
-    //       },
-    //       { $unwind: "$userInfo" },
-    //       {
-    //         $project: {
-    //           name: "$userInfo.name",
-    //           image: "$userInfo.image",
-    //           bloodGroup: 1,
-    //           phone: 1,
-    //           union: 1,
-    //         },
-    //       },
-    //     ]).toArray();
 
-    //     res.send(donors);
-    //   } catch (error) {
-    //     res.status(500).send({ message: "Failed to load donors" });
-    //   }
-    // });
+    // --------------------- MongoDB Aggregate for Admin Dashboard -------------------------
+     
 
 
 

@@ -173,7 +173,7 @@ const DashboardLayout = () => {
             </aside>
 
             {/* Main area */}
-            <div className="flex-1 flex flex-col bg-[#EAEEF5]">
+            <div className="flex-1 flex flex-col ">
                 {/* Top bar */}
                 <header className="h-16.5  flex items-center justify-between px-4 md:px-10 border-b border-blue-900">
                     <div className="flex items-center gap-3">
@@ -184,10 +184,10 @@ const DashboardLayout = () => {
                         <FaBars />
                         </button>
                         <div className="flex-col">
-                            <h1 className="font-semibold text-lg text-zinc-700 ">
+                            <h1 className="font-semibold text-lg text-white ">
                             {language === "bn" ? "Hello" : "Hello"} <span className="text-md">{user?.displayName }</span> 
                             </h1>
-                            <p className="text-zinc-800">Welcome to Dashboard !</p>
+                            <p className="text-white">Welcome to Dashboard !</p>
                         </div>
                     </div>
 
