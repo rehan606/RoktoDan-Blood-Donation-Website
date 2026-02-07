@@ -94,14 +94,32 @@ const DonorCard = ({ donor }) => {
               Donor Details
             </h3>
 
-            
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p><strong>Name:</strong> {donor.name}</p>
+                <p><strong>Email:</strong> {donor.email}</p>
+                <p><strong>Phone:</strong> {donor.phone}</p>
+                <p><strong>Blood Group:</strong> {donor.bloodGroup}</p>
+                <p><strong>Union:</strong> {donor.union}</p>
+                <p><strong>Last Donation:</strong> {donor.lastDonationDate} </p>
+              </div>
 
-            <p><strong>Name:</strong> {donor.name}</p>
-            <p><strong>Email:</strong> {donor.email}</p>
-            <p><strong>Phone:</strong> {donor.phone}</p>
-            <p><strong>Blood Group:</strong> {donor.bloodGroup}</p>
-            <p><strong>Union:</strong> {donor.union}</p>
-            <p><strong>Last Donation:</strong> {donor.lastDonationDate} </p>
+              <div className='flex items-center justify-center  bg-gray-200 rounded-lg w-32 h-36 shadow-lg'>
+                <div className='w-full object-cover rounded-lg border-l-4 border-red-500 '>
+                    <img
+                      src={
+                        donor?.image?.display_url ||
+                        donor?.image?.url ||
+                        donor?.image ||
+                        profileIcon
+                      }
+                      alt={donor?.name || "Donor"}
+                      onError={(e) => (e.target.src = profileIcon )}
+                      className="w-32 h-36 mx-auto   rounded-lg p-1  "
+                    /> 
+                </div>
+              </div>
+            </div>
 
             <p
               className={`mt-3 font-semibold ${
