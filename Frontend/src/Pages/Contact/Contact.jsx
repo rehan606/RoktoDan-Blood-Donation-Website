@@ -91,6 +91,10 @@ const Contact = () => {
             <div className="mt-6 bg-red-50 p-4 rounded-lg text-sm text-gray-700">
               <p>{t.quote}</p>
             </div>
+            
+            <div className="w-full overflow-hidden rounded-lg mt-4">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29479.877580933262!2d91.465730264959!3d22.54224597592269!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30acb5b5f0111e71%3A0x505ea6f5b085d268!2sGasua!5e0!3m2!1sen!2sbd!4v1770574589769!5m2!1sen!2sbd" width="600" height="250"  allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
           </div>
 
           {/* Contact Form */}
