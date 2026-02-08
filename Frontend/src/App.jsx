@@ -27,6 +27,7 @@ import PendingDonors from "./Pages/Dashboard/Admin/PendingDonors/PendingDonors";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import BloodRequestPosts from "./Pages/Dashboard/Admin/BloodRequestPosts/BloodRequestPosts";
 import AllBloodRequest from "./Pages/AllBloodRequests/AllBloodRequest";
+import ProfilePage from "./Pages/Dashboard/ProfilePage/ProfilePage";
 
 // Create a client
 const queryClient = new QueryClient()
@@ -119,6 +120,10 @@ const App = () => {
         {
           path: '/dashboard/request-blood-posts', 
           element: <BloodRequestPosts />
+        },
+        {
+          path: '/dashboard/profile', 
+          element: <ProfilePage />
         },
       ]
     },

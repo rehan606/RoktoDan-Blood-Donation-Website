@@ -610,7 +610,7 @@ async function run() {
       try {
         const { id } = req.params;
 
-        const donor = await donorCollection.findOne({
+        const donor = await donorsCollection.findOne({
           _id: new ObjectId(id),
         });
 
@@ -716,7 +716,63 @@ async function run() {
     // Search Blood From HOme Page
     
 
-    // --------------------- MongoDB Aggregate for Admin Dashboard -------------------------
+    // --------------------- Manage User Profile -------------------------
+
+    // 🔹 GET user profile
+    app.get("users/:id", async (req, res) => {
+      try {
+        const userId = req.params.id;
+        const user = await userCollection.findOne({ _id: new ObjectId(userId) });
+
+        if (!user) return res.status(404).send({ message: "User not found" });
+
+        let profile = { ...user };
+
+        // Donor info merge
+        if (user.role === "donor") {
+          const donor = await donorsCollection.findOne({ email: user.email });
+          if (donor) {
+            profile = { ...profile, ...donor }; // merge donor data
+          }
+        }
+
+        res.send(profile);
+      } catch (err) {
+        console.error(err);
+        res.status(500).send({ message: "Internal server error" });
+      }
+    });
+
+
+    // 🔹 PUT update profile
+    app.put("users/:id", async (req, res) => {
+      try {
+        const userId = req.params.id;
+        const updateData = req.body;
+
+        const user = await userCollection.findOne({ _id: new ObjectId(userId) });
+        if (!user) return res.status(404).send({ message: "User not found" });
+
+        // Update user collection
+        await db.collection("users").updateOne(
+          { _id: new ObjectId(userId) },
+          { $set: updateData }
+        );
+
+        // Update donor collection if donor
+        if (user.role === "donor") {
+          await donorsCollection.updateOne(
+            { email: user.email },
+            { $set: updateData }
+          );
+        }
+
+        res.send({ message: "Profile updated successfully" });
+      } catch (err) {
+        console.error(err);
+        res.status(500).send({ message: "Internal server error" });
+      }
+    });
      
 
 

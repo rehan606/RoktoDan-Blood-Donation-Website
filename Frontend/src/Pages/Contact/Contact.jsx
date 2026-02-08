@@ -79,7 +79,7 @@ const Contact = () => {
 
               <p className="flex items-center gap-3">
                 <FaPhoneAlt className="text-red-500" />
-                +880 17XXXXXXXX
+                +880 9638-152387
               </p>
 
               <p className="flex items-center gap-3">
@@ -99,7 +99,7 @@ const Contact = () => {
 
           {/* Contact Form */}
           <div className="bg-white rounded-xl shadow p-6">
-            <h2 className="text-xl font-semibold mb-4 text-gray-800">
+            <h2 className="text-xl font-semibold mb-4 text-red-500">
               {t.messageTitle}
             </h2>
 
@@ -120,7 +120,7 @@ const Contact = () => {
                   {t.phone}
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   placeholder={t.phonePlaceholder}
                   className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-400"
                 />
