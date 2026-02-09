@@ -1,24 +1,61 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxios from "../../../Hooks/useAxios";
 import { useState } from "react";
+import useUnions from "../../../Hooks/useUnions";
 
 const EditProfileModal = ({ close, profile, email }) => {
   const axiosInstance = useAxios();
   const queryClient = useQueryClient();
+  const { unions = [] } = useUnions();
 
-  const role = profile.user.role;
+  const role = profile?.role; // 👈 backend response অনুযায়ী
 
+  // ---------- USER STATE ----------
   const [userData, setUserData] = useState({
-    image: profile.user.image || "",
+    name: profile?.user?.name || "",
+    image: profile?.user?.image || "",
   });
 
+  // ---------- DONOR STATE ----------
   const [donorData, setDonorData] = useState({
-    phone: profile.donor?.phone || "",
-    union: profile.donor?.union || "",
-    bloodGroup: profile.donor?.bloodGroup || "",
-    isAvailable: profile.donor?.isAvailable ?? true,
+    phone: profile?.donor?.phone || "",
+    union: profile?.donor?.union || "",
+    lastDonationDate: profile?.donor?.lastDonationDate || "",
   });
 
+  const [uploading, setUploading] = useState(false);
+
+  // ---------- IMAGE UPLOAD (imgbb) ----------
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("image", file);
+    setUploading(true);
+
+    try {
+      const res = await fetch(
+        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_upload_key}`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const data = await res.json();
+      setUserData((prev) => ({
+        ...prev,
+        image: data.data.display_url,
+      }));
+    } catch (err) {
+      console.error("Image upload failed", err);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  // ---------- UPDATE PROFILE ----------
   const mutation = useMutation({
     mutationFn: async () => {
       return axiosInstance.put(`/profile/${email}`, {
@@ -33,54 +70,101 @@ const EditProfileModal = ({ close, profile, email }) => {
   });
 
   return (
-    <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center px-3">
       <div className="bg-white w-full max-w-lg rounded-xl p-6">
+        <h3 className="text-xl font-bold mb-4 text-zinc-900">
+          Update Profile
+        </h3>
 
-        <h3 className="text-xl font-bold mb-4">Update Profile</h3>
-
-        {/* USER */}
+        {/* ---------- NAME ---------- */}
+        <label className="block text-sm mb-1">Name</label>
         <input
-          className="w-full border p-2 mb-3 rounded"
-          value={userData.image}
+          className="w-full border p-2 mb-3 rounded outline-none text-zinc-800"
+          value={userData.name}
           onChange={(e) =>
-            setUserData({ ...userData, image: e.target.value })
+            setUserData({ ...userData, name: e.target.value })
           }
-          placeholder="Profile Image URL"
         />
 
-        {/* DONOR */}
+        {/* ---------- IMAGE ---------- */}
+        <label className="block text-sm mb-1">Profile Image</label>
+        <input
+          type="file"
+          onChange={handleImageUpload}
+          className="w-full border p-2 mb-3 rounded"
+        />
+
+        {userData.image && (
+          <img
+            src={userData.image}
+            className="w-20 h-20 rounded-full object-cover mb-3"
+          />
+        )}
+
+        {uploading && (
+          <p className="text-sm text-gray-500 mb-2">Uploading image...</p>
+        )}
+
+        {/* ---------- DONOR ONLY ---------- */}
         {role === "donor" && (
           <>
+            {/* PHONE */}
+            <label className="block text-sm mb-1">Phone</label>
             <input
-              className="w-full border p-2 mb-2 rounded"
+              className="w-full border p-2 mb-3 rounded outline-none"
               value={donorData.phone}
               onChange={(e) =>
                 setDonorData({ ...donorData, phone: e.target.value })
               }
-              placeholder="Phone"
             />
 
-            <input
-              className="w-full border p-2 mb-2 rounded"
+            {/* UNION */}
+            <label className="block text-sm mb-1">Union</label>
+            <select
+              className="w-full border p-2 mb-3 rounded outline-none"
               value={donorData.union}
               onChange={(e) =>
                 setDonorData({ ...donorData, union: e.target.value })
               }
-              placeholder="Union"
+            >
+              <option value="">Select Union</option>
+              {unions.map((u) => (
+                <option key={u._id} value={u.name}>
+                  {u.name}
+                </option>
+              ))}
+            </select>
+
+            {/* LAST DONATION DATE */}
+            <label className="block text-sm mb-1">
+              Last Donation Date
+            </label>
+            <input
+              type="date"
+              className="w-full border p-2 mb-3 rounded outline-none"
+              value={donorData.lastDonationDate}
+              onChange={(e) =>
+                setDonorData({
+                  ...donorData,
+                  lastDonationDate: e.target.value,
+                })
+              }
             />
           </>
         )}
 
-        <div className="flex gap-2 mt-4">
+        {/* ---------- ACTIONS ---------- */}
+        <div className="flex gap-3 mt-4">
           <button
-            onClick={mutation.mutate}
+            onClick={() => mutation.mutate()}
             className="flex-1 bg-red-600 text-white py-2 rounded"
           >
-            Save
+            Save Changes
           </button>
+
           <button
             onClick={close}
-            className="flex-1 border py-2 rounded"
+            className="flex-1 bg-gray-200 py-2 rounded"
           >
             Cancel
           </button>

@@ -36,15 +36,14 @@ const ProfilePage = () => {
   const { user, donor } = data;
   const role = user.role;
   
-  console.log("USER IMAGE:", user.image);
 
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="bg-white shadow-xl rounded-2xl p-6">
+    <div className="max-w-5xl mx-auto ">
+      <div className=" flex items-center gap-4 shadow-xl rounded-2xl p-6 bg-[#0F2A44]">
 
         {/* HEADER */}
-        <div className="text-center">
+        <div className="text-center bg-white p-6 rounded-lg text-zinc-900 w-sm ">
           <img
             src={
               typeof user?.image === "string" && user.image.trim() !== ""
@@ -52,42 +51,53 @@ const ProfilePage = () => {
                 : profileIcon
             }
             alt="Profile"
-            className="w-28 h-28 mx-auto rounded-full object-cover"
+            className="w-28 h-28 mx-auto rounded-full object-cover border-8 border-red-300"
           />
           <h2 className="text-2xl font-bold mt-2">
-            {donor?.name || user.email}
+            {donor?.name || user.name}
           </h2>
-          <p className="text-gray-500 capitalize">{role}</p>
+          <p className="text-red-500 capitalize">{role}</p>
+
+          {/* USER INFO */}
+          <div className="mt-2 space-y-2">
+            <p><b>Email:</b> {user.email}</p>
+            <p>
+              <b>Joined:</b>{" "}
+              {new Date(user.created_at).toLocaleDateString()}
+            </p>
+          </div>
+          <div>
+            <button
+              onClick={() => setOpen(true)}
+              className="mt-2 w-full bg-red-500 text-white py-2 rounded-lg cursor-pointer hover:bg-red-700"
+            >
+              Edit Profile
+            </button>
+          </div>
         </div>
 
-        {/* USER INFO */}
-        <div className="mt-6 space-y-2">
-          <p><b>Email:</b> {user.email}</p>
-          <p>
-            <b>Joined:</b>{" "}
-            {new Date(user.created_at).toLocaleDateString()}
-          </p>
-        </div>
+        
 
         {/* DONOR INFO */}
         {role === "donor" && donor && (
-          <div className="mt-4 border-t pt-4 space-y-2">
-            <p><b>Blood Group:</b> {donor.bloodGroup}</p>
-            <p><b>Phone:</b> {donor.phone}</p>
-            <p><b>Union:</b> {donor.union}</p>
-            <p>
-              <b>Available:</b>{" "}
-              {donor.isAvailable ? "Yes" : "No"}
-            </p>
-          </div>
+        <div className="bg-white p-6 rounded-lg  flex-1  ">
+          <h2 className="text-2xl font-semibold text-red-500">Personal Details</h2>
+            <div className="mt-4 border-t pt-4 space-y-2 text-zinc-900">
+              <p className="text-red-600"><b>Blood Group:</b> {donor.bloodGroup}</p>
+              <p><b>Phone:</b> {donor.phone}</p>
+              <p><b>Upazila:</b> {donor.upazila}</p>
+              <p><b>Union:</b> {donor.union}</p>
+              <p><b>Last Donation Date:</b> {donor.lastDonationDate}</p>
+              <p>
+                <b>Available:</b>{" "}
+                {donor.isAvailable ? "Yes" : "No"}
+              </p>
+              <p><b className="text-green-600">ApprovedAt:</b> {donor.approvedAt}</p>
+            </div>
+        </div>
         )}
 
-        <button
-          onClick={() => setOpen(true)}
-          className="mt-6 w-full bg-red-600 text-white py-2 rounded-lg"
-        >
-          Edit Profile
-        </button>
+        
       </div>
 
       {open && (
