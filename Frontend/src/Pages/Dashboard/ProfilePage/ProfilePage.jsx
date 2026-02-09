@@ -36,6 +36,10 @@ const ProfilePage = () => {
   const { user, donor } = data;
   const role = user.role;
   
+  const formatDateForInput = (date) => {
+    if (!date) return "";
+    return new Date(date).toISOString().split("T")[0];
+  };
 
 
   return (
@@ -87,12 +91,12 @@ const ProfilePage = () => {
               <p><b>Phone:</b> {donor.phone}</p>
               <p><b>Upazila:</b> {donor.upazila}</p>
               <p><b>Union:</b> {donor.union}</p>
-              <p><b>Last Donation Date:</b> {donor.lastDonationDate}</p>
+              <p><b>Last Donation Date:</b> {formatDateForInput(donor.lastDonationDate)}</p>
               <p>
                 <b>Available:</b>{" "}
                 {donor.isAvailable ? "Yes" : "No"}
               </p>
-              <p><b className="text-green-600">ApprovedAt:</b> {donor.approvedAt}</p>
+              <p><b className="text-green-600">ApprovedAt:</b> {formatDateForInput(donor.approvedAt)}</p>
             </div>
         </div>
         )}
