@@ -6,13 +6,15 @@ import useUnions from "../../../Hooks/useUnions";
 const EditProfileModal = ({ close, profile, email }) => {
   const axiosInstance = useAxios();
   const queryClient = useQueryClient();
-  const { unions = [] } = useUnions();
+  const { unions  } = useUnions();
 
-  const role = profile?.role; // 👈 backend response অনুযায়ী
+//   const role = profile?.role; 
+  const isDonor = !!profile?.donor;
+
 
   // ---------- USER STATE ----------
   const [userData, setUserData] = useState({
-    name: profile?.user?.name || "",
+    name: profile?.donor?.name || profile?.user?.name || "",
     image: profile?.user?.image || "",
   });
 
@@ -60,7 +62,7 @@ const EditProfileModal = ({ close, profile, email }) => {
     mutationFn: async () => {
       return axiosInstance.put(`/profile/${email}`, {
         user: userData,
-        donor: role === "donor" ? donorData : undefined,
+        donor: isDonor ? donorData : undefined,
       });
     },
     onSuccess: () => {
@@ -77,21 +79,21 @@ const EditProfileModal = ({ close, profile, email }) => {
         </h3>
 
         {/* ---------- NAME ---------- */}
-        <label className="block text-sm mb-1">Name</label>
+        <label className="block text-sm mb-1 text-zinc-800">Name</label>
         <input
           className="w-full border p-2 mb-3 rounded outline-none text-zinc-800"
-          value={userData.name}
+          value={userData?.name}
           onChange={(e) =>
             setUserData({ ...userData, name: e.target.value })
           }
         />
 
         {/* ---------- IMAGE ---------- */}
-        <label className="block text-sm mb-1">Profile Image</label>
+        <label className="block text-sm mb-1 text-zinc-800">Profile Image</label>
         <input
           type="file"
           onChange={handleImageUpload}
-          className="w-full border p-2 mb-3 rounded"
+          className="w-full border p-2 mb-3 rounded text-zinc-800"
         />
 
         {userData.image && (
@@ -106,52 +108,53 @@ const EditProfileModal = ({ close, profile, email }) => {
         )}
 
         {/* ---------- DONOR ONLY ---------- */}
-        {role === "donor" && (
-          <>
-            {/* PHONE */}
-            <label className="block text-sm mb-1">Phone</label>
-            <input
-              className="w-full border p-2 mb-3 rounded outline-none"
-              value={donorData.phone}
-              onChange={(e) =>
-                setDonorData({ ...donorData, phone: e.target.value })
-              }
-            />
+        {isDonor && (
+            <>
+                {/* PHONE */}
+                <label className="block text-sm mb-1 text-zinc-800">Phone</label>
+                <input
+                className="w-full border p-2 mb-3 rounded outline-none text-zinc-800"
+                value={donorData.phone}
+                onChange={(e) =>
+                    setDonorData({ ...donorData, phone: e.target.value })
+                }
+                />
 
-            {/* UNION */}
-            <label className="block text-sm mb-1">Union</label>
-            <select
-              className="w-full border p-2 mb-3 rounded outline-none"
-              value={donorData.union}
-              onChange={(e) =>
-                setDonorData({ ...donorData, union: e.target.value })
-              }
-            >
-              <option value="">Select Union</option>
-              {unions.map((u) => (
-                <option key={u._id} value={u.name}>
-                  {u.name}
-                </option>
-              ))}
-            </select>
+                {/* UNION */}
+                <label className="block text-sm mb-1 text-zinc-800">Union</label>
+                <select
+                className="w-full border p-2 mb-3 rounded outline-none text-zinc-800"
+                value={donorData.union}
+                onChange={(e) =>
+                    setDonorData({ ...donorData, union: e.target.value })
+                }
+                >
+                <option value="">Select Union</option>
+                {unions.map((u) => (
+                    <option key={u.id} value={u.en}>
+                    {u.en}
+                    </option>
+                ))}
+                </select>
 
-            {/* LAST DONATION DATE */}
-            <label className="block text-sm mb-1">
-              Last Donation Date
-            </label>
-            <input
-              type="date"
-              className="w-full border p-2 mb-3 rounded outline-none"
-              value={donorData.lastDonationDate}
-              onChange={(e) =>
-                setDonorData({
-                  ...donorData,
-                  lastDonationDate: e.target.value,
-                })
-              }
-            />
-          </>
+                {/* LAST DONATION DATE */}
+                <label className="block text-sm mb-1 text-zinc-800">
+                Last Donation Date
+                </label>
+                <input
+                type="date"
+                className="w-full border p-2 mb-3 rounded outline-none text-zinc-800"
+                value={donorData.lastDonationDate}
+                onChange={(e) =>
+                    setDonorData({
+                    ...donorData,
+                    lastDonationDate: e.target.value,
+                    })
+                }
+                />
+            </>
         )}
+
 
         {/* ---------- ACTIONS ---------- */}
         <div className="flex gap-3 mt-4">
@@ -164,7 +167,7 @@ const EditProfileModal = ({ close, profile, email }) => {
 
           <button
             onClick={close}
-            className="flex-1 bg-gray-200 py-2 rounded"
+            className="flex-1 bg-gray-200 py-2 rounded text-zinc-800"
           >
             Cancel
           </button>
