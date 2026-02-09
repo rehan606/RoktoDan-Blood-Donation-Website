@@ -1,155 +1,102 @@
 import { useState } from "react";
-import { useParams } from "react-router";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-
+import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../../Hooks/useAxios";
-import { useLanguage } from "../../../context/LanguageContext";
+import EditProfileModal from "./EditProfileModal";
+import useAuth from "../../../Hooks/useAuth";
+import profileIcon from "../../../assets/images/profile-icon.png";
 
 const ProfilePage = () => {
-  const { id } = useParams();
-  const { language } = useLanguage();
+  const { user: authUser, loading } = useAuth(); // 🔥 source of truth
   const axiosInstance = useAxios();
-  const queryClient = useQueryClient();
+  const [open, setOpen] = useState(false);
 
-  const [formData, setFormData] = useState({});
-  const [message, setMessage] = useState("");
+  const email = authUser?.email;
 
-  // 🔹 Fetch profile
-  const { data: user, isLoading } = useQuery({
-    queryKey: ["user", id],
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["profile", email],
+    enabled: !!email && !loading, // 🔥 CRITICAL
     queryFn: async () => {
-      const res = await axiosInstance.get(`/users/${id}`);
+      const res = await axiosInstance.get(`/profile/${email}`);
       return res.data;
-    },
-    onSuccess: (data) => {
-      setFormData({
-        name: data.name || "",
-        email: data.email || "",
-        phone: data.phone || "",
-        bloodGroup: data.bloodGroup || "",
-        union: data.union || "",
-        image: data.image || "",
-      });
     },
   });
 
-  // 🔹 Update profile
-  const mutation = useMutation({
-    mutationFn: async (updatedData) => {
-      const res = await axiosInstance.put(`/users/${id}`, updatedData);
-      return res.data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["user", id]);
-      setMessage(language === "bn" ? "প্রোফাইল সফলভাবে আপডেট হয়েছে" : "Profile updated successfully");
-    },
-    onError: () => {
-      setMessage(language === "bn" ? "আপডেট করতে সমস্যা হয়েছে" : "Failed to update profile");
-    },
-  });
+  if (loading || isLoading) {
+    return <p className="text-center">Loading profile...</p>;
+  }
 
-  const handleChange = (e) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  if (isError) {
+    return <p className="text-center">Failed to load profile</p>;
+  }
 
-  const handleUpdate = () => {
-    setMessage("");
-    mutation.mutate(formData);
-  };
+  if (!data) {
+    return <p className="text-center">No profile data</p>;
+  }
 
-  if (isLoading) return <p className="text-center mt-10">Loading...</p>;
+  const { user, donor } = data;
+  const role = user.role;
+  
+  console.log("USER IMAGE:", user.image);
+
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h2 className="text-3xl font-bold mb-6 text-center">
-        {language === "bn" ? "প্রোফাইল" : "Profile"}
-      </h2>
+    <div className="max-w-4xl mx-auto p-6">
+      <div className="bg-white shadow-xl rounded-2xl p-6">
 
-      <div className="bg-white shadow-xl rounded-2xl p-6 space-y-4">
-        {/* Image */}
+        {/* HEADER */}
         <div className="text-center">
           <img
-            src={formData.image || "/avatar.png"}
+            src={
+              typeof user?.image === "string" && user.image.trim() !== ""
+                ? user.image
+                : profileIcon
+            }
             alt="Profile"
-            className="w-28 h-28 rounded-full mx-auto object-cover"
+            className="w-28 h-28 mx-auto rounded-full object-cover"
           />
+          <h2 className="text-2xl font-bold mt-2">
+            {donor?.name || user.email}
+          </h2>
+          <p className="text-gray-500 capitalize">{role}</p>
         </div>
 
-        {/* Name */}
-        <div>
-          <label className="block text-sm font-semibold mb-1">{language === "bn" ? "নাম" : "Name"}</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full border rounded-lg px-3 py-2"
-          />
+        {/* USER INFO */}
+        <div className="mt-6 space-y-2">
+          <p><b>Email:</b> {user.email}</p>
+          <p>
+            <b>Joined:</b>{" "}
+            {new Date(user.created_at).toLocaleDateString()}
+          </p>
         </div>
 
-        {/* Email */}
-        <div>
-          <label className="block text-sm font-semibold mb-1">{language === "bn" ? "ইমেইল" : "Email"}</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full border rounded-lg px-3 py-2"
-          />
-        </div>
-
-        {/* Phone */}
-        <div>
-          <label className="block text-sm font-semibold mb-1">{language === "bn" ? "ফোন" : "Phone"}</label>
-          <input
-            type="text"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            className="w-full border rounded-lg px-3 py-2"
-          />
-        </div>
-
-        {/* Donor fields */}
-        {user?.role === "donor" && (
-          <>
-            <div>
-              <label className="block text-sm font-semibold mb-1">{language === "bn" ? "রক্তের গ্রুপ" : "Blood Group"}</label>
-              <input
-                type="text"
-                name="bloodGroup"
-                value={formData.bloodGroup}
-                onChange={handleChange}
-                className="w-full border rounded-lg px-3 py-2"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold mb-1">{language === "bn" ? "ইউনিয়ন" : "Union"}</label>
-              <input
-                type="text"
-                name="union"
-                value={formData.union}
-                onChange={handleChange}
-                className="w-full border rounded-lg px-3 py-2"
-              />
-            </div>
-          </>
+        {/* DONOR INFO */}
+        {role === "donor" && donor && (
+          <div className="mt-4 border-t pt-4 space-y-2">
+            <p><b>Blood Group:</b> {donor.bloodGroup}</p>
+            <p><b>Phone:</b> {donor.phone}</p>
+            <p><b>Union:</b> {donor.union}</p>
+            <p>
+              <b>Available:</b>{" "}
+              {donor.isAvailable ? "Yes" : "No"}
+            </p>
+          </div>
         )}
 
         <button
-          onClick={handleUpdate}
-          disabled={mutation.isLoading}
-          className="w-full bg-red-600 hover:bg-red-700 text-white py-2.5 rounded-lg font-semibold mt-2"
+          onClick={() => setOpen(true)}
+          className="mt-6 w-full bg-red-600 text-white py-2 rounded-lg"
         >
-          {mutation.isLoading
-            ? language === "bn" ? "আপডেট হচ্ছে..." : "Updating..."
-            : language === "bn" ? "আপডেট করুন" : "Update Profile"}
+          Edit Profile
         </button>
-
-        {message && <p className="text-center text-green-600 mt-2">{message}</p>}
       </div>
+
+      {open && (
+        <EditProfileModal
+          close={() => setOpen(false)}
+          profile={data}
+          email={email}
+        />
+      )}
     </div>
   );
 };

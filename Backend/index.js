@@ -719,60 +719,72 @@ async function run() {
     // --------------------- Manage User Profile -------------------------
 
     // 🔹 GET user profile
-    app.get("users/:id", async (req, res) => {
+    app.get("/profile/:email", async (req, res) => {
       try {
-        const userId = req.params.id;
-        const user = await userCollection.findOne({ _id: new ObjectId(userId) });
+        const { email } = req.params;
 
-        if (!user) return res.status(404).send({ message: "User not found" });
+        const user = await userCollection.findOne({ email });
 
-        let profile = { ...user };
-
-        // Donor info merge
-        if (user.role === "donor") {
-          const donor = await donorsCollection.findOne({ email: user.email });
-          if (donor) {
-            profile = { ...profile, ...donor }; // merge donor data
-          }
+        if (!user) {
+          return res.status(404).send({ message: "User not found" });
         }
 
-        res.send(profile);
-      } catch (err) {
-        console.error(err);
-        res.status(500).send({ message: "Internal server error" });
+        let donor = null;
+
+        if (user.role === "donor") {
+          donor = await donorsCollection.findOne({ email });
+        }
+
+        res.send({
+          user,       // user full info
+          donor,     // donor info or null
+        });
+
+      } catch (error) {
+        console.error("GET /profile error:", error);
+        res.status(500).send({ message: "Server error" });
       }
     });
+
 
 
     // 🔹 PUT update profile
-    app.put("users/:id", async (req, res) => {
+    app.put("/profile/:email", async (req, res) => {
       try {
-        const userId = req.params.id;
-        const updateData = req.body;
+        const { email } = req.params;
+        const { user: userData, donor: donorData } = req.body;
 
-        const user = await userCollection.findOne({ _id: new ObjectId(userId) });
-        if (!user) return res.status(404).send({ message: "User not found" });
+        const user = await userCollection.findOne({ email });
 
-        // Update user collection
-        await db.collection("users").updateOne(
-          { _id: new ObjectId(userId) },
-          { $set: updateData }
-        );
+        if (!user) {
+          return res.status(404).send({ message: "User not found" });
+        }
 
-        // Update donor collection if donor
-        if (user.role === "donor") {
-          await donorsCollection.updateOne(
-            { email: user.email },
-            { $set: updateData }
+        // update user collection
+        if (userData) {
+          await userCollection.updateOne(
+            { email },
+            { $set: userData }
           );
         }
 
-        res.send({ message: "Profile updated successfully" });
-      } catch (err) {
-        console.error(err);
-        res.status(500).send({ message: "Internal server error" });
+        // update donor collection if role donor
+        if (user.role === "donor" && donorData) {
+          await donorsCollection.updateOne(
+            { email },
+            { $set: donorData }
+          );
+        }
+
+        res.send({ success: true });
+
+      } catch (error) {
+        console.error("PUT /profile error:", error);
+        res.status(500).send({ message: "Server error" });
       }
     });
+
+
      
 
 
