@@ -23,7 +23,7 @@ const MyBloodRequests = () => {
   if (isLoading) return <p>Loading...</p>;
 
   return (
-    <div className="space-y-4 px-3">
+    <div className="space-y-4 px-8 mt-10">
       {requests.length === 0 && (
         <div className="flex flex-col items-center  mx-auto space-y-4">
             <FcDatabase className="text-6xl"/>

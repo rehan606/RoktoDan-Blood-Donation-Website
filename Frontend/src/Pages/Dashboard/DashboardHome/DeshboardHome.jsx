@@ -5,6 +5,7 @@ import UserDashboard from './UserDashboard';
 import DonorDashboard from './DonorDashboard';
 import AdminDashboard from './AdminDashboard';
 import Forbidden from '../ForbiddenPage/Forbidden';
+import ProfilePage from '../ProfilePage/ProfilePage'
 
 const DeshboardHome = () => {
     const { role, roleLoading} = useUserRole();
@@ -17,7 +18,7 @@ const DeshboardHome = () => {
         return <UserDashboard/>
     } 
     else if (role === 'donor') {
-        return <DonorDashboard/>
+        return <ProfilePage />
     }
     else if (role === 'admin') {
         return <AdminDashboard/>

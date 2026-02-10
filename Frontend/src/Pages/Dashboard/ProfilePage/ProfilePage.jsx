@@ -43,7 +43,7 @@ const ProfilePage = () => {
 
 
   return (
-    <div className="max-w-5xl mx-auto ">
+    <div className="max-w-5xl mx-auto mt-10">
       <div className=" flex items-center gap-4 shadow-xl rounded-2xl p-6 bg-[#0F2A44]">
 
         {/* HEADER */}

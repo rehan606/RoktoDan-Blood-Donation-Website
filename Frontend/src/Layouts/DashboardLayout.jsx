@@ -1,12 +1,13 @@
 import { Link, NavLink, Outlet } from "react-router";
 import { useState } from "react";
 import {FaHome,FaUsers,FaTint,FaPlusCircle,FaChartBar,FaCog,FaBars, FaSignOutAlt, FaUserCircle, FaHistory, FaBell, FaCogs, FaUser, FaUserClock, FaUserCheck, } from "react-icons/fa";
+import loadingImagage from '../../src/assets/images/Loading.gif'
 
 
 import useAuth from "../Hooks/useAuth";
 import { useLanguage } from "../context/LanguageContext";
-import AdminHome from "../Pages/Dashboard/DashboardHome/AdminDashboard";
 import useUserRole from "../Hooks/useUserRole";
+
 // ================= Dashboard Layout =================
 const DashboardLayout = () => {
     const { user, logOut } = useAuth();
@@ -16,8 +17,8 @@ const DashboardLayout = () => {
 
     if (roleLoading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-[#0b1c2d] text-white">
-            <span className="loading loading-spinner loading-lg"></span>
+            <div className="min-h-screen  no-repeat flex items-center justify-center  text-white" style={{backgroundImage: `url(${loadingImagage})`}}>
+            <span className="loading loading-spinner loading-lg">Loading</span>
             </div>
         );
     }
@@ -67,40 +68,58 @@ const DashboardLayout = () => {
         },
     ];
 
+    const donorMenus = [
+        {
+            name: language === "bn" ? "আমার প্রোফাইল" : "My Profile",
+            to: "/dashboard/profile",
+            icon: <FaUser />,
+        },
+        {
+            name: language === "bn" ? "আমার অনুরোধ" : "My Requests",
+            to: "/dashboard/my-requests",
+            icon: <FaTint />,
+        },
+        {
+            name: language === "bn" ? "দান ইতিহাস" : "Donation History",
+            to: "/dashboard/history",
+            icon: <FaHistory />,
+        },
+        {
+            name: language === "bn" ? "নোটিফিকেশন" : "Notifications",
+            to: "/dashboard/notification",
+            icon: <FaBell />,
+        },
+        {
+            name: language === "bn" ? "সেটিংস" : "Settings",
+            to: "/dashboard/settings",
+            icon: <FaCogs />,
+        },
+    ];
+
     const userMenus = [
-    // {
-    //     name: language === "bn" ? "ড্যাশবোর্ড" : "Dashboard",
-    //     to: "/dashboard",
-    //     icon: <FaHome />,
-    // },
-    {
-        name: language === "bn" ? "আমার প্রোফাইল" : "My Profile",
-        to: "/dashboard/profile",
-        icon: <FaUser />,
-    },
-    {
-        name: language === "bn" ? "আমার অনুরোধ" : "My Requests",
-        to: "/dashboard/my-requests",
-        icon: <FaTint />,
-    },
-    {
-        name: language === "bn" ? "দান ইতিহাস" : "Donation History",
-        to: "/dashboard/history",
-        icon: <FaHistory />,
-    },
-    {
-        name: language === "bn" ? "নোটিফিকেশন" : "Notifications",
-        to: "/dashboard/notifications",
-        icon: <FaBell />,
-    },
-    {
-        name: language === "bn" ? "সেটিংস" : "Settings",
-        to: "/dashboard/settings",
-        icon: <FaCogs />,
-    },
+        {
+            name: language === "bn" ? "আমার প্রোফাইল" : "My Profile",
+            to: "/dashboard/profile",
+            icon: <FaUser />,
+        },
+        {
+            name: language === "bn" ? "আমার অনুরোধ" : "My Requests",
+            to: "/dashboard/my-requests",
+            icon: <FaTint />,
+        },
+        {
+            name: language === "bn" ? "নোটিফিকেশন" : "Notifications",
+            to: "/dashboard/notification",
+            icon: <FaBell />,
+        },
+        {
+            name: language === "bn" ? "সেটিংস" : "Settings",
+            to: "/dashboard/settings",
+            icon: <FaCogs />,
+        },
     ];
     
-    const menus = role === "admin" ? adminMenus : userMenus;
+    const menus = role === "admin" ? adminMenus : role === "donor" ? donorMenus :  userMenus;
   
 
 
