@@ -23,7 +23,7 @@ const MyBloodRequests = () => {
   if (isLoading) return <p>Loading...</p>;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 px-3">
       {requests.length === 0 && (
         <div className="flex flex-col items-center  mx-auto space-y-4">
             <FcDatabase className="text-6xl"/>
@@ -31,31 +31,35 @@ const MyBloodRequests = () => {
         </div>
       )}
 
-      {requests.map((req) => (
-        <div
-          key={req._id}
-          className="border rounded-lg p-4 shadow-sm"
-        >
-          <h3 className="font-semibold text-lg">
-            Blood Group: {req.bloodGroup}
-          </h3>
-          <p>Union: {req.union}</p>
-          <p>Phone: {req.phone}</p>
-          <p>Message: {req.message}</p>
-
-          <span
-            className={`inline-block mt-2 px-3 py-1 rounded text-sm ${
-              req.status === "pending"
-                ? "bg-yellow-100 text-yellow-700"
-                : req.status === "approved"
-                ? "bg-green-100 text-green-700"
-                : "bg-red-100 text-red-700"
-            }`}
-          >
-            {req.status}
-          </span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {requests.map((req) => (
+                
+                <div
+                key={req._id}
+                className="border rounded-lg p-4 shadow-sm bg-[#0F2A44] flex items-start justify-between"
+                >
+                    <div>
+                        <h3 className="font-semibold text-lg">
+                            Blood Group: {req.bloodGroup}
+                        </h3>
+                        <p>Union: {req.union}</p>
+                        <p>Phone: {req.phone}</p>
+                        <p>Message: {req.message}</p>
+                    </div>
+                    <span
+                        className={`inline-block mt-2 px-3 py-1 rounded text-sm ${
+                        req.status === "pending"
+                            ? "bg-yellow-100 text-yellow-700"
+                            : req.status === "approved"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-red-100 text-red-700"
+                        }`}
+                    >
+                        {req.status}
+                    </span>
+                </div>
+            ))}
         </div>
-      ))}
     </div>
   );
 };
