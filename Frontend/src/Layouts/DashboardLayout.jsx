@@ -7,7 +7,6 @@ import useAuth from "../Hooks/useAuth";
 import { useLanguage } from "../context/LanguageContext";
 import AdminHome from "../Pages/Dashboard/DashboardHome/AdminDashboard";
 import useUserRole from "../Hooks/useUserRole";
-
 // ================= Dashboard Layout =================
 const DashboardLayout = () => {
     const { user, logOut } = useAuth();
@@ -32,7 +31,7 @@ const DashboardLayout = () => {
         icon: <FaHome />,
         },
         {
-        name: language === "bn" ? "সব দাতা" : "All Donors",
+        name: language === "bn" ? "সব দাতা" : "All Users",
         to: "/dashboard/donors",
         icon: <FaUsers />,
         },
@@ -47,7 +46,7 @@ const DashboardLayout = () => {
         icon: <FaUserClock />,
         },
         {
-        name: language === "bn" ? "নতুন দাতা যোগ" : "Make Admin",
+        name: language === "bn" ? "এডমিন যোগ" : "Make Admin",
         to: "/dashboard/make-admin",
         icon: <FaPlusCircle />,
         },
@@ -109,11 +108,11 @@ const DashboardLayout = () => {
         <div className="min-h-screen flex bg-[#0b1c2d] text-gray-200">
             {/* Sidebar */}
             <aside
-                className={`fixed md:static z-40 w-64 bg-[#0f2a44] flex flex-col transition-transform duration-300 ${
+                className={`fixed md:static z-40 w-64 bg-[#0f2a44] flex flex-col transition-transform duration-300  ${
                 sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
                 }`}
             >
-                <div className="p-4  text-xl font-bold border-b rounded-b-3xl bg-[#112336]">
+                <div className="p-4  text-xl font-bold border-b  bg-[#112336]">
                     <Link to="/" className="cursor-pointer flex  items-center justify-center gap-2 hover:scale-110 transition-all duration-300">
                         <FaTint className="text-white w-8 h-8  " />
                         <div>
@@ -121,6 +120,24 @@ const DashboardLayout = () => {
                         </div>
                     </Link>
                 
+                </div>
+
+                <div className="mx-auto">
+                    <div className="flex flex-col items-center justify-center mt-3">
+                        {user?.photoURL ? (
+                        <img
+                            src={user.photoURL}
+                            alt="user"
+                            className="w-12 h-12 rounded-full object-cover border-4 border-gray-200"
+                        />
+                        ) : (
+                        <FaUserCircle className="text-3xl" />
+                        )}
+                        <div className="text-sm text-center">
+                        <p className="font-semibold">{user?.displayName || "Admin"}</p>
+                        <p className="text-xs text-gray-400">{role}</p>
+                        </div>
+                    </div>
                 </div>
 
                 <nav className="flex-1 p-4 space-y-2 ">
@@ -145,26 +162,12 @@ const DashboardLayout = () => {
                 </nav>
 
                 {/* User section bottom */}
-                <div className="p-4 rounded-t-3xl bg-[#112336] border-t ">
-                    <div className="flex items-center gap-3 mb-3">
-                        {user?.photoURL ? (
-                        <img
-                            src={user.photoURL}
-                            alt="user"
-                            className="w-10 h-10 rounded-full object-cover"
-                        />
-                        ) : (
-                        <FaUserCircle className="text-3xl" />
-                        )}
-                        <div className="text-sm">
-                        <p className="font-semibold">{user?.displayName || "Admin"}</p>
-                        <p className="text-xs text-gray-400">{role}</p>
-                        </div>
-                    </div>
+                <div className="p-4  bg-[#112336] border-t ">
+                    
 
                     <button
                         onClick={logOut}
-                        className="flex items-center gap-2 w-full px-3 py-2 rounded-lg hover:bg-red-600 transition"
+                        className="flex items-center gap-2 w-full cursor-pointer px-3 py-2 rounded-lg hover:bg-gray-200 hover:text-red-500 transition"
                     >
                         <FaSignOutAlt />
                         {language === "bn" ? "লগ আউট" : "Logout"}
@@ -175,7 +178,7 @@ const DashboardLayout = () => {
             {/* Main area */}
             <div className="flex-1 flex flex-col ">
                 {/* Top bar */}
-                <header className="h-16.5  flex items-center justify-between px-4 md:px-8 border-b border-blue-900">
+                <header className="h-16.5  flex items-center justify-between px-4 md:px-8  bg-[#0F2A44] border-white">
                     <div className="flex items-center gap-3">
                         <button
                         onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -192,17 +195,20 @@ const DashboardLayout = () => {
                     </div>
 
 
-                    {/* Language Toggle */}
-                    <button
-                    onClick={() =>
-                        setLanguage(language === "bn" ? "en" : "bn")
-                    }
-                    className="border px-3 py-2 rounded-md text-[#0b1c2d]  bg-white hover:bg-[#0b1c2d] transition  hover:text-white cursor-pointer"
-                    >
-                    {language === "bn" ? "English" : "বাংলা"}
-                    
-                    </button>
-
+                    <div className="">
+                        
+                        
+                        {/* Language Toggle */}
+                        <button
+                        onClick={() =>
+                            setLanguage(language === "bn" ? "en" : "bn")
+                        }
+                        className="border px-3 py-2 rounded-md text-white  bg-[#3B82F6] hover:bg-[#1462df] transition  hover:text-white cursor-pointer"
+                        >
+                        {language === "bn" ? "English" : "বাংলা"}
+                        
+                        </button>
+                    </div>
                 
                 </header>
                 
@@ -211,7 +217,7 @@ const DashboardLayout = () => {
                 
 
                 {/* Content */}
-                <main className="flex-1 p-4 md:p-6 bg-[#0b1c2d]">
+                <main className="flex-1   bg-[#0b1c2d]">
                 <Outlet />
                 </main>
             </div>

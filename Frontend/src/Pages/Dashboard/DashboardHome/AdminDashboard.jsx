@@ -59,12 +59,12 @@ const AdminDashboard = () => {
                     {cards.map((card) => (
                     <div
                         key={card.id}
-                        className="bg-[#FEFFFF] border shadow-lg border-blue-900 rounded-xl p-5 flex items-center gap-4 hover:scale-[1.02] transition"
+                        className="bg-[#0F2A44] border shadow-lg border-blue-900 rounded-xl p-5 flex items-center gap-4 hover:scale-[1.02] transition"
                     >
                         <div className="text-3xl text-red-500">{card.icon}</div>
                         <div>
                         <p className="text-sm text-gray-400">{card.title}</p>
-                        <h2 className="text-2xl font-bold text-zinc-800">
+                        <h2 className="text-2xl font-bold text-white">
                             {card.value}
                         </h2>
                         </div>
