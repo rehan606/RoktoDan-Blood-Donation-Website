@@ -80,8 +80,8 @@ const DashboardLayout = () => {
         icon: <FaUser />,
     },
     {
-        name: language === "bn" ? "রক্তের অনুরোধ" : "Blood Requests",
-        to: "/dashboard/requests",
+        name: language === "bn" ? "আমার অনুরোধ" : "My Requests",
+        to: "/dashboard/my-requests",
         icon: <FaTint />,
     },
     {
@@ -175,7 +175,7 @@ const DashboardLayout = () => {
             {/* Main area */}
             <div className="flex-1 flex flex-col ">
                 {/* Top bar */}
-                <header className="h-16.5  flex items-center justify-between px-4 md:px-10 border-b border-blue-900">
+                <header className="h-16.5  flex items-center justify-between px-4 md:px-8 border-b border-blue-900">
                     <div className="flex items-center gap-3">
                         <button
                         onClick={() => setSidebarOpen(!sidebarOpen)}

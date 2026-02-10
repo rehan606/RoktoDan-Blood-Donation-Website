@@ -79,7 +79,7 @@ const EditProfileModal = ({ close, profile, email }) => {
         </h3>
 
         {/* ---------- NAME ---------- */}
-        <label className="block text-sm mb-1 text-zinc-800">Name</label>
+        <label className="block text-sm mb-1 text-zinc-800 font-bold">Name</label>
         <input
           className="w-full border p-2 mb-3 rounded outline-none text-zinc-800"
           value={userData?.name}
@@ -89,7 +89,7 @@ const EditProfileModal = ({ close, profile, email }) => {
         />
 
         {/* ---------- IMAGE ---------- */}
-        <label className="block text-sm mb-1 text-zinc-800">Profile Image</label>
+        <label className="block text-sm mb-1 text-zinc-800 font-bold">Upload Profile Image</label>
         <input
           type="file"
           onChange={handleImageUpload}
@@ -111,7 +111,7 @@ const EditProfileModal = ({ close, profile, email }) => {
         {isDonor && (
             <>
                 {/* PHONE */}
-                <label className="block text-sm mb-1 text-zinc-800">Phone</label>
+                <label className="block text-sm mb-1 text-zinc-800 font-bold">Phone</label>
                 <input
                 className="w-full border p-2 mb-3 rounded outline-none text-zinc-800"
                 value={donorData.phone}
@@ -121,7 +121,7 @@ const EditProfileModal = ({ close, profile, email }) => {
                 />
 
                 {/* UNION */}
-                <label className="block text-sm mb-1 text-zinc-800">Union</label>
+                <label className="block text-sm mb-1 text-zinc-800 font-bold">Union</label>
                 <select
                 className="w-full border p-2 mb-3 rounded outline-none text-zinc-800"
                 value={donorData.union}
@@ -138,7 +138,7 @@ const EditProfileModal = ({ close, profile, email }) => {
                 </select>
 
                 {/* LAST DONATION DATE */}
-                <label className="block text-sm mb-1 text-zinc-800">
+                <label className="block text-sm mb-1 text-zinc-800 font-bold">
                 Last Donation Date
                 </label>
                 <input
@@ -160,14 +160,14 @@ const EditProfileModal = ({ close, profile, email }) => {
         <div className="flex gap-3 mt-4">
           <button
             onClick={() => mutation.mutate()}
-            className="flex-1 bg-red-600 text-white py-2 rounded"
+            className="flex-1 bg-red-600 text-white py-2 rounded cursor-pointer hover:bg-red-700"
           >
             Save Changes
           </button>
 
           <button
             onClick={close}
-            className="flex-1 bg-gray-200 py-2 rounded text-zinc-800"
+            className="flex-1 bg-gray-200 hover:bg-gray-300 py-2 rounded text-zinc-800 cursor-pointer border border-zinc-800"
           >
             Cancel
           </button>

@@ -28,6 +28,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import BloodRequestPosts from "./Pages/Dashboard/Admin/BloodRequestPosts/BloodRequestPosts";
 import AllBloodRequest from "./Pages/AllBloodRequests/AllBloodRequest";
 import ProfilePage from "./Pages/Dashboard/ProfilePage/ProfilePage";
+import MyBloodRequests from "./Pages/Dashboard/User/MyBloodRequests";
 
 // Create a client
 const queryClient = new QueryClient()
@@ -124,6 +125,10 @@ const App = () => {
         {
           path: '/dashboard/profile', 
           element: <ProfilePage />
+        },
+        {
+          path: '/dashboard/my-requests', 
+          element: <MyBloodRequests />
         },
       ]
     },

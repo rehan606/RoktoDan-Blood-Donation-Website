@@ -96,30 +96,6 @@ async function run() {
 
     // ========= Set User in Database =========
 
-    // app.post('/users', verifyToken, async (req, res) => {
-    //   try {
-    //     const user = req.body;
-
-    //     if (!user?.email) {
-    //       return res.status(400).send({ message: "Email is required" });
-    //     }
-
-    //     const existingUser = await userCollection.findOne({ email: user.email });
-
-    //     if (existingUser) {
-    //       return res.send({ message: 'User Already Exists', inserted: false });
-    //     }
-
-    //     const result = await userCollection.insertOne(user);
-    //     res.send({ inserted: true, result });
-
-    //   } catch (error) {
-    //     console.error("❌ User insert error:", error);
-    //     res.status(500).send({ message: "Internal Server Error" });
-    //   }
-    // });
-
-
     app.post("/users", verifyToken, async (req, res) => {
       try {
         const user = req.body;
@@ -716,7 +692,7 @@ async function run() {
     // Search Blood From HOme Page
     
 
-    // --------------------- Manage User Profile -------------------------
+    // --------------------- Manage User and Donor Profile -------------------------
 
     // 🔹 GET user profile
     app.get("/profile/:email", async (req, res) => {
@@ -784,6 +760,21 @@ async function run() {
       }
     });
 
+    // Display User Blood Request in user dashboard
+    app.get("/blood-requests/my", async (req, res) => {
+      const email = req.query.email;
+
+      if (!email) {
+        return res.status(400).send({ message: "Email required" });
+      }
+
+      const result = await bloodCollection
+        .find({ email })
+        .sort({ createdAt: -1 })
+        .toArray();
+
+      res.send(result);
+    });
 
      
 
