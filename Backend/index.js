@@ -819,6 +819,28 @@ async function run() {
         res.status(500).send({ message: "Internal Server Error" });
       }
     });
+
+    // ===============================
+    // Get Pending Donations (Admin)
+    // ===============================
+    app.get(
+      "/blood-donations/pending",
+      verifyToken,
+      verifyAdmin,
+      async (req, res) => {
+        try {
+          const pendingDonations = await bloodDonations
+            .find({ status: "pending" }) // শুধু pending গুলো আনবে
+            .sort({ createdAt: -1 }) // newest আগে
+            .toArray();
+
+          res.send(pendingDonations);
+        } catch (error) {
+          console.error(error);
+          res.status(500).send({ message: "Internal Server Error" });
+        }
+      }
+    );
      
 
 
