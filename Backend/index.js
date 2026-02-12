@@ -723,8 +723,6 @@ async function run() {
       }
     });
 
-
-
     // 🔹 PUT update profile
     app.put("/profile/:email", async (req, res) => {
       try {
@@ -777,6 +775,50 @@ async function run() {
       res.send(result);
     });
 
+    // ---------------------- Donations by Donors ----------------------------------
+    
+    // ===============================
+    // Add Donation (Donor)
+    // ===============================
+    app.post("/blood-donations", verifyToken, async (req, res) => {
+      try {
+        const donationData = req.body;
+
+        // logged in user email (JWT থেকে আসবে)
+        const donorEmail = req.decoded.email;
+
+        // Basic validation
+        if (!donationData.patientName || !donationData.hospitalName) {
+          return res.status(400).send({ message: "Required fields missing" });
+        }
+
+        // Final donation object বানাচ্ছি
+        const newDonation = {
+          donorEmail: donorEmail, // কে donate করেছে
+          donorId: donationData.donorId, // donors collection এর _id
+          bloodGroup: donationData.bloodGroup,
+          patientName: donationData.patientName,
+          hospitalName: donationData.hospitalName,
+          donationType: donationData.donationType || "direct", 
+          requestId: donationData.requestId || null, 
+          donatedAt: new Date(donationData.donatedAt) || new Date(), 
+          status: "pending", // Admin approve না করা পর্যন্ত pending
+          createdAt: new Date(), // record কবে তৈরি হলো
+        };
+
+        const result = await bloodDonations.insertOne(newDonation);
+
+        res.send({
+          success: true,
+          message: "Donation submitted for approval",
+          insertedId: result.insertedId,
+        });
+
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: "Internal Server Error" });
+      }
+    });
      
 
 
