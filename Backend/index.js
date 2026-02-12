@@ -134,14 +134,32 @@ async function run() {
 
     // ---------------- 90 DAYS HELPER ----------------
     const isEligibleAfter90Days = (lastDonationDate) => {
+      if (!lastDonationDate) return 0;
+
       const today = new Date();
       const lastDate = new Date(lastDonationDate);
 
-      const diffTime = today - lastDate;
+      today.setHours(0, 0, 0, 0);
+      lastDate.setHours(0, 0, 0, 0);
+
+      const diffTime = today.getTime() - lastDate.getTime();
       const diffDays = diffTime / (1000 * 60 * 60 * 24);
 
-      return diffDays >= 90;
+      const remaining = 90 - diffDays;
+
+      return remaining > 0 ? Math.ceil(remaining) : 0;
     };
+
+
+    // const isEligibleAfter90Days = (lastDonationDate) => {
+    //   const today = new Date();
+    //   const lastDate = new Date(lastDonationDate);
+
+    //   const diffTime = today - lastDate;
+    //   const diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+    //   return diffDays >= 90;
+    // };
 
     // ---------------- /donors POST API ----------------
     app.post("/donors", async (req, res) => {
