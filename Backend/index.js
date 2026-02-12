@@ -898,6 +898,27 @@ async function run() {
         res.status(500).send({ message: "Internal Server Error" });
       }
     });
+
+
+    // ===============================
+    // Get Approved Donation Count
+    // ===============================
+    app.get("/blood-donations/count", verifyToken, async (req, res) => {
+      try {
+        const email = req.decoded.email;
+
+        const total = await bloodDonations.countDocuments({
+          donorEmail: email,
+          status: "approved", // শুধু approved গুলো count হবে
+        });
+
+        res.send({ totalDonations: total });
+
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: "Internal Server Error" });
+      }
+    });
      
 
 
