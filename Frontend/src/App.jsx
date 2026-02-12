@@ -29,6 +29,7 @@ import BloodRequestPosts from "./Pages/Dashboard/Admin/BloodRequestPosts/BloodRe
 import AllBloodRequest from "./Pages/AllBloodRequests/AllBloodRequest";
 import ProfilePage from "./Pages/Dashboard/ProfilePage/ProfilePage";
 import MyBloodRequests from "./Pages/Dashboard/User/MyBloodRequests";
+import AddDonation from "./Pages/Dashboard/Donors/AddDonation/AddDonation";
 
 // Create a client
 const queryClient = new QueryClient()
@@ -129,6 +130,10 @@ const App = () => {
         {
           path: '/dashboard/my-requests', 
           element: <MyBloodRequests />
+        },
+        {
+          path: '/dashboard/add-donation', 
+          element: <AddDonation />
         },
       ]
     },

@@ -798,32 +798,119 @@ async function run() {
     // ===============================
     // Add Donation (Donor)
     // ===============================
+    
+    // app.post("/blood-donations", verifyToken, async (req, res) => {
+    //   try {
+    //     const donationData = req.body;
+
+    //     // logged in user email (JWT থেকে আসবে)
+    //     const donorEmail = req.decoded.email;
+
+    //     // Basic validation
+    //     if (!donationData.patientName || !donationData.hospitalName) {
+    //       return res.status(400).send({ message: "Required fields missing" });
+    //     }
+
+    //     // Final donation object বানাচ্ছি
+    //     const newDonation = {
+    //       donorEmail: donorEmail, // কে donate করেছে
+    //       donorId: donationData.donorId, // donors collection এর _id
+    //       bloodGroup: donationData.bloodGroup,
+    //       patientName: donationData.patientName,
+    //       hospitalName: donationData.hospitalName,
+    //       donationType: donationData.donationType || "direct", 
+    //       requestId: donationData.requestId || null, 
+    //       donatedAt: new Date(donationData.donatedAt) || new Date(), 
+    //       status: "pending", // Admin approve না করা পর্যন্ত pending
+    //       createdAt: new Date(), // record কবে তৈরি হলো
+    //     };
+
+    //     const result = await bloodDonations.insertOne(newDonation);
+
+    //     res.send({
+    //       success: true,
+    //       message: "Donation submitted for approval",
+    //       insertedId: result.insertedId,
+    //     });
+
+    //   } catch (error) {
+    //     console.error(error);
+    //     res.status(500).send({ message: "Internal Server Error" });
+    //   }
+    // });
+
     app.post("/blood-donations", verifyToken, async (req, res) => {
       try {
         const donationData = req.body;
-
-        // logged in user email (JWT থেকে আসবে)
         const donorEmail = req.decoded.email;
 
-        // Basic validation
+        // ==============================
+        // 1️⃣ Basic Validation
+        // ==============================
         if (!donationData.patientName || !donationData.hospitalName) {
           return res.status(400).send({ message: "Required fields missing" });
         }
 
-        // Final donation object বানাচ্ছি
+        // ==============================
+        // 2️⃣ Donation Date Setup
+        // ==============================
+        const donatedAt = donationData.donatedAt
+          ? new Date(donationData.donatedAt)
+          : new Date();
+
+        // Future date allow না
+        const today = new Date();
+        if (donatedAt > today) {
+          return res.status(400).send({
+            message: "Future donation date is not allowed",
+          });
+        }
+
+        // ==============================
+        // 3️⃣ Last Approved Donation খুঁজে বের করা
+        // ==============================
+        const lastDonation = await bloodDonations
+          .find({
+            donorEmail: donorEmail,
+            status: "approved",
+          })
+          .sort({ donatedAt: -1 })
+          .limit(1)
+          .toArray();
+
+        if (lastDonation.length > 0) {
+          const lastDate = lastDonation[0].donatedAt;
+
+          // তোমার দেওয়া function use করছি
+          const remainingDays = isEligibleAfter90Days(lastDate);
+
+          // যদি এখনো 90 দিন পূর্ণ না হয়
+          if (remainingDays > 0) {
+            return res.status(400).send({
+              message: `You can donate after ${remainingDays} days.`,
+            });
+          }
+        }
+
+        // ==============================
+        // 4️⃣ Final Donation Object
+        // ==============================
         const newDonation = {
-          donorEmail: donorEmail, // কে donate করেছে
-          donorId: donationData.donorId, // donors collection এর _id
+          donorEmail: donorEmail,
+          donorId: donationData.donorId,
           bloodGroup: donationData.bloodGroup,
           patientName: donationData.patientName,
           hospitalName: donationData.hospitalName,
-          donationType: donationData.donationType || "direct", 
-          requestId: donationData.requestId || null, 
-          donatedAt: new Date(donationData.donatedAt) || new Date(), 
-          status: "pending", // Admin approve না করা পর্যন্ত pending
-          createdAt: new Date(), // record কবে তৈরি হলো
+          donationType: donationData.donationType || "direct",
+          requestId: donationData.requestId || null,
+          donatedAt: donatedAt,
+          status: "pending", // Admin approve না করা পর্যন্ত
+          createdAt: new Date(),
         };
 
+        // ==============================
+        // 5️⃣ Insert Into Database
+        // ==============================
         const result = await bloodDonations.insertOne(newDonation);
 
         res.send({

@@ -1,7 +1,7 @@
 import { Link, NavLink, Outlet } from "react-router";
 import { useState } from "react";
 import {FaHome,FaUsers,FaTint,FaPlusCircle,FaChartBar,FaCog,FaBars, FaSignOutAlt, FaUserCircle, FaHistory, FaBell, FaCogs, FaUser, FaUserClock, FaUserCheck, } from "react-icons/fa";
-import loadingImagage from '../../src/assets/images/Loading.gif'
+// import loadingImagage from '../../src/assets/images/Loading.gif'
 
 
 import useAuth from "../Hooks/useAuth";
@@ -17,7 +17,8 @@ const DashboardLayout = () => {
 
     if (roleLoading) {
         return (
-            <div className="min-h-screen  no-repeat flex items-center justify-center  text-white" style={{backgroundImage: `url(${loadingImagage})`}}>
+            <div className="min-h-screen  no-repeat flex items-center justify-center bg-zinc-800 text-red-500">
+            
             <span className="loading loading-spinner loading-lg">Loading</span>
             </div>
         );
@@ -73,6 +74,11 @@ const DashboardLayout = () => {
             name: language === "bn" ? "আমার প্রোফাইল" : "My Profile",
             to: "/dashboard/profile",
             icon: <FaUser />,
+        },
+        {
+            name: language === "bn" ? "ডোনেশন যোগ করুন " : "Add Donation",
+            to: "/dashboard/add-donation",
+            icon: <FaPlusCircle />,
         },
         {
             name: language === "bn" ? "আমার অনুরোধ" : "My Requests",
