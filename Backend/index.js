@@ -841,6 +841,42 @@ async function run() {
         }
       }
     );
+
+
+
+    // ===============================
+    // Approve Donation (Admin)
+    // ===============================
+    app.patch(
+      "/blood-donations/:id",
+      verifyToken,
+      verifyAdmin,
+      async (req, res) => {
+        try {
+          const id = req.params.id;
+
+          const filter = { _id: new ObjectId(id) };
+
+          const updateDoc = {
+            $set: {
+              status: "approved", // status approved
+              approvedAt: new Date(), // approval time
+            },
+          };
+
+          const result = await bloodDonations.updateOne(filter, updateDoc);
+
+          res.send({
+            success: true,
+            message: "Donation approved successfully",
+          });
+
+        } catch (error) {
+          console.error(error);
+          res.status(500).send({ message: "Internal Server Error" });
+        }
+      }
+    );
      
 
 
