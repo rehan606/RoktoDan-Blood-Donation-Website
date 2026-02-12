@@ -877,6 +877,27 @@ async function run() {
         }
       }
     );
+
+
+    // ===============================
+    // Get My Donations (Donor Profile)
+    // ===============================
+    app.get("/blood-donations/my", verifyToken, async (req, res) => {
+      try {
+        const email = req.decoded.email;
+
+        const myDonations = await bloodDonations
+          .find({ donorEmail: email }) // শুধু নিজের গুলো
+          .sort({ donatedAt: -1 }) // latest আগে
+          .toArray();
+
+        res.send(myDonations);
+
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: "Internal Server Error" });
+      }
+    });
      
 
 
