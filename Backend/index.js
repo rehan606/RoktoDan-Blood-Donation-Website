@@ -637,7 +637,7 @@ async function run() {
           message,
 
           role,         // "user" | "donor"
-          status: "pending", // optional but useful
+          status: "approved", // optional but useful
           createdAt: new Date(),
         };
 

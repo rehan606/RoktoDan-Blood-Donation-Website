@@ -20,7 +20,7 @@ const MyBloodRequests = () => {
     },
   });
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <p className="text-center mt-10">Loading...</p>;
 
   return (
     <div className="space-y-4 px-8 mt-10">
