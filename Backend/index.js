@@ -51,7 +51,8 @@ async function run() {
     const db = client.db('roktoDan');
     const userCollection = db.collection('users');
     const donorsCollection = db.collection('donors');
-    const bloodCollection = db.collection('request-blood')
+    const bloodCollection = db.collection('request-blood');
+    const bloodDonations = db.collection('bloodDonations');
 
 
     // ========= Custom Middleware =========
