@@ -148,7 +148,7 @@ async function run() {
         query.email = { $regex: search, $options: "i" };
       }
 
-      const total = await usersCollection.countDocuments(query);
+      const total = await userCollection.countDocuments(query);
 
       const users = await usersCollection
         .find(query)
@@ -164,6 +164,63 @@ async function run() {
         totalPages: Math.ceil(total / limit),
       });
     });
+
+    // ===============================
+    // UserManagement Role Update
+    // ===============================
+    app.patch("/users/role/:id", verifyToken, verifyAdmin, async (req, res) => {
+      const id = req.params.id;
+      const { role } = req.body;
+
+      const result = await userCollection.updateOne(
+        { _id: new ObjectId(id) },
+        { $set: { role } }
+      );
+
+      res.send(result);
+    });
+
+    // ===============================
+    // UserManagement Suspend / Ban User
+    // ===============================
+    app.patch("/users/status/:id", verifyToken, verifyAdmin, async (req, res) => {
+      const id = req.params.id;
+      const { status } = req.body; // active | suspended | banned
+
+      const result = await userCollection.updateOne(
+        { _id: new ObjectId(id) },
+        { $set: { status } }
+      );
+
+      res.send(result);
+    });
+
+    // ===============================
+    // UserManagement Delete (Admin Protection)
+    // ===============================
+    app.delete("/users/:id", verifyToken, verifyAdmin, async (req, res) => {
+      const id = req.params.id;
+
+      // prevent deleting self
+      const user = await userCollection.findOne({
+        _id: new ObjectId(id),
+      });
+
+      if (user.email === req.decoded.email) {
+        return res.status(403).send({
+          message: "You cannot delete yourself",
+        });
+      }
+
+      const result = await usersCollection.deleteOne({
+        _id: new ObjectId(id),
+      });
+
+      res.send(result);
+    });
+
+
+
 
 
 
