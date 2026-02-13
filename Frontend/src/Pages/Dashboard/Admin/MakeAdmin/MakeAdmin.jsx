@@ -60,26 +60,29 @@ const MakeAdmin = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">
-        {language === "bn"
-          ? "অ্যাডমিন ম্যানেজমেন্ট"
-          : "Admin Management"}
-      </h2>
 
-      {/* Search */}
-      <input
-        type="text"
-        placeholder={
-          language === "bn"
-            ? "ইমেইল দিয়ে খুঁজুন..."
-            : "Search by email..."
-        }
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="w-full md:w-1/2 border p-2 rounded-lg mb-4"
-      />
+      <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-6 ">
+        <h2 className="text-2xl font-bold ">
+          {language === "bn"
+            ? "অ্যাডমিন ম্যানেজমেন্ট"
+            : "Admin Management"}
+        </h2>
 
-      {isPending && <p>Loading...</p>}
+        {/* Search */}
+        <input
+          type="text"
+          placeholder={
+            language === "bn"
+              ? "ইমেইল দিয়ে খুঁজুন..."
+              : "Search by email..."
+          }
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full md:w-1/2 border p-2 rounded-lg bg-gray-100/30"
+        />
+      </div>
+
+      {/* {isPending && <p>Loading...</p>} */}
 
       {/* Table */}
       {users.length > 0 && (
