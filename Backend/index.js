@@ -986,6 +986,7 @@ async function run() {
     // ===============================
     // Delete Donation (Admin)
     // ===============================
+
     app.delete("/admin/delete-donation/:id", verifyToken, verifyAdmin, async (req, res) => {
       const id = req.params.id;
 
@@ -996,12 +997,35 @@ async function run() {
       res.send(result);
     });
 
+    // ===============================
+    // Display Approved Donation (Admin)
+    // ===============================
+    app.get(
+      "/blood-donations/approved",
+      verifyToken,
+      verifyAdmin,
+      async (req, res) => {
+        try {
+          const approvedDonations = await bloodDonations
+            .find({ status: "approved" })
+            .sort({ approvedAt: -1 }) // approval date অনুযায়ী
+            .toArray();
+
+          res.send(approvedDonations);
+        } catch (error) {
+          console.error(error);
+          res.status(500).send({ message: "Internal Server Error" });
+        }
+      }
+    );
+
+
 
 
     // ===============================
-    // Get My Donations (Donor Profile)
+    // Get My Donations (Donor Profile) /my-donations
     // ===============================
-    app.get("/blood-donations/my", verifyToken, async (req, res) => {
+    app.get("/my-donations", verifyToken, async (req, res) => {
       try {
         const email = req.decoded.email;
 

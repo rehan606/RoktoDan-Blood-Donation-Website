@@ -63,15 +63,20 @@ const DashboardLayout = () => {
         icon: <BiSolidDonateBlood />,
         },
         {
+        name: language === "bn" ? "সব দান" : "All Donations",
+        to: "/dashboard/all-donations",
+        icon: <BiSolidDonateBlood />,
+        },
+        {
         name: language === "bn" ? "রিপোর্ট" : "Reports",
         to: "/dashboard/reports",
         icon: <FaChartBar />,
         },
-        {
-        name: language === "bn" ? "সেটিংস" : "Settings",
-        to: "/dashboard/settings",
-        icon: <FaCog />,
-        },
+        // {
+        // name: language === "bn" ? "সেটিংস" : "Settings",
+        // to: "/dashboard/settings",
+        // icon: <FaCog />,
+        // },
     ];
 
     const donorMenus = [
@@ -92,7 +97,7 @@ const DashboardLayout = () => {
         },
         {
             name: language === "bn" ? "দান ইতিহাস" : "Donation History",
-            to: "/dashboard/history",
+            to: "/dashboard/my-donations",
             icon: <FaHistory />,
         },
         {

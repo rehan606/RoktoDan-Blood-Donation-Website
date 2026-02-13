@@ -171,7 +171,7 @@ const PendingDonations = () => {
                     {/* Approve */}
                     <button
                       onClick={() => handleApprove(donation._id)}
-                      className="bg-[#0C2349] text-white p-2 rounded hover:bg-green-600 transition cursor-pointer"
+                      className="bg-[#0C2349] text-white p-2 rounded hover:bg-green-600 transition cursor-pointer "
                     >
                       <FaCheck />
                     </button>
@@ -179,7 +179,7 @@ const PendingDonations = () => {
                     {/* Delete */}
                     <button
                       onClick={() => handleDelete(donation._id)}
-                      className="bg-red-500 text-white p-2 rounded hover:bg-red-600 transition cursor-pointer"
+                      className="bg-red-500 text-white p-2 rounded hover:bg-red-600 transition cursor-pointer "
                     >
                       <FaTrash />
                     </button>

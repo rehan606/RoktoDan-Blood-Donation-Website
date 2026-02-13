@@ -31,6 +31,8 @@ import ProfilePage from "./Pages/Dashboard/ProfilePage/ProfilePage";
 import MyBloodRequests from "./Pages/Dashboard/User/MyBloodRequests";
 import AddDonation from "./Pages/Dashboard/Donors/AddDonation/AddDonation";
 import PendingDonations from "./Pages/Dashboard/Admin/PandingDonation/PandingDonations";
+import CompletedDonations from "./Pages/Dashboard/Admin/CompletedDonations/CompletedDonations";
+import MyDonations from "./Pages/Dashboard/Donors/MyDonations/MyDonations";
 
 // Create a client
 const queryClient = new QueryClient()
@@ -139,6 +141,14 @@ const App = () => {
         {
           path: '/dashboard/pending-donations', 
           element: <PendingDonations />
+        },
+        {
+          path: '/dashboard/all-donations', 
+          element: <CompletedDonations />
+        },
+        {
+          path: '/dashboard/my-donations', 
+          element: <MyDonations />
         },
       ]
     },
