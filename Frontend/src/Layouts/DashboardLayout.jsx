@@ -81,6 +81,11 @@ const DashboardLayout = () => {
 
     const donorMenus = [
         {
+            name: language === "bn" ? "ড্যাশবোর্ড" : "Dashboard",
+            to: "/dashboard",
+            icon: <FaHome />,
+        },
+        {
             name: language === "bn" ? "আমার প্রোফাইল" : "My Profile",
             to: "/dashboard/profile",
             icon: <FaUser />,
