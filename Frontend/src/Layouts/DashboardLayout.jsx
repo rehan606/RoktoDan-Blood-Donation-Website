@@ -7,6 +7,7 @@ import { BiSolidDonateBlood } from "react-icons/bi";
 import useAuth from "../Hooks/useAuth";
 import { useLanguage } from "../context/LanguageContext";
 import useUserRole from "../Hooks/useUserRole";
+import DashboardLoadingSkeleton from "../components/Loader/DashboardLoadingSkeleton";
 
 // ================= Dashboard Layout =================
 const DashboardLayout = () => {
@@ -17,10 +18,7 @@ const DashboardLayout = () => {
 
     if (roleLoading) {
         return (
-            <div className="min-h-screen  no-repeat flex items-center justify-center bg-zinc-800 text-red-500">
-            
-            <span className="loading loading-spinner loading-lg">Loading</span>
-            </div>
+            <DashboardLoadingSkeleton />
         );
     }
 

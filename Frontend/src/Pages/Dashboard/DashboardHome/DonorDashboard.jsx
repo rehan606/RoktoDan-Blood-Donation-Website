@@ -7,6 +7,7 @@ import { FcApproval } from "react-icons/fc";
 import { MdPending } from "react-icons/md";
 import { FaRegCalendarCheck } from "react-icons/fa";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import DashboardLoadingSkeleton from "../../../components/Loader/DashboardLoadingSkeleton";
 
 const DonorDashboard = () => {
     const axiosSecure = useAxiosSecure();
@@ -124,9 +125,10 @@ const DonorDashboard = () => {
 
     if (loading) {
         return (
-        <div className="text-center py-10">
-            {language === "bn" ? "লোড হচ্ছে..." : "Loading..."}
-        </div>
+        // <div className="text-center py-10">
+        //     {language === "bn" ? "লোড হচ্ছে..." : "Loading..."}
+        // </div>
+            <DashboardLoadingSkeleton />
         );
     }
 
