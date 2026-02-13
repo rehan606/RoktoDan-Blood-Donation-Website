@@ -150,7 +150,7 @@ async function run() {
 
       const total = await userCollection.countDocuments(query);
 
-      const users = await usersCollection
+      const users = await userCollection
         .find(query)
         .skip((page - 1) * limit)
         .limit(limit)
