@@ -129,6 +129,44 @@ async function run() {
     });
 
 
+    // ===============================
+    // Get All Users For UserManagement
+    // ===============================
+    app.get("/users", verifyToken, verifyAdmin, async (req, res) => {
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10;
+      const role = req.query.role;
+      const search = req.query.search;
+
+      const query = {};
+
+      if (role && role !== "all") {
+        query.role = role;
+      }
+
+      if (search) {
+        query.email = { $regex: search, $options: "i" };
+      }
+
+      const total = await usersCollection.countDocuments(query);
+
+      const users = await usersCollection
+        .find(query)
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .sort({ created_at: -1 })
+        .toArray();
+
+      res.send({
+        users,
+        total,
+        currentPage: page,
+        totalPages: Math.ceil(total / limit),
+      });
+    });
+
+
+
     // ========= Set Donors Application in Database =========
 
 
@@ -798,47 +836,6 @@ async function run() {
     // ===============================
     // Add Donation (Donor)
     // ===============================
-    
-    // app.post("/blood-donations", verifyToken, async (req, res) => {
-    //   try {
-    //     const donationData = req.body;
-
-    //     // logged in user email (JWT থেকে আসবে)
-    //     const donorEmail = req.decoded.email;
-
-    //     // Basic validation
-    //     if (!donationData.patientName || !donationData.hospitalName) {
-    //       return res.status(400).send({ message: "Required fields missing" });
-    //     }
-
-    //     // Final donation object বানাচ্ছি
-    //     const newDonation = {
-    //       donorEmail: donorEmail, // কে donate করেছে
-    //       donorId: donationData.donorId, // donors collection এর _id
-    //       bloodGroup: donationData.bloodGroup,
-    //       patientName: donationData.patientName,
-    //       hospitalName: donationData.hospitalName,
-    //       donationType: donationData.donationType || "direct", 
-    //       requestId: donationData.requestId || null, 
-    //       donatedAt: new Date(donationData.donatedAt) || new Date(), 
-    //       status: "pending", // Admin approve না করা পর্যন্ত pending
-    //       createdAt: new Date(), // record কবে তৈরি হলো
-    //     };
-
-    //     const result = await bloodDonations.insertOne(newDonation);
-
-    //     res.send({
-    //       success: true,
-    //       message: "Donation submitted for approval",
-    //       insertedId: result.insertedId,
-    //     });
-
-    //   } catch (error) {
-    //     console.error(error);
-    //     res.status(500).send({ message: "Internal Server Error" });
-    //   }
-    // });
-
     app.post("/blood-donations", verifyToken, async (req, res) => {
       try {
         const donationData = req.body;
@@ -986,7 +983,6 @@ async function run() {
     // ===============================
     // Delete Donation (Admin)
     // ===============================
-
     app.delete("/admin/delete-donation/:id", verifyToken, verifyAdmin, async (req, res) => {
       const id = req.params.id;
 

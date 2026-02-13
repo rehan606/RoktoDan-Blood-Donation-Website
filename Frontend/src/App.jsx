@@ -33,6 +33,7 @@ import AddDonation from "./Pages/Dashboard/Donors/AddDonation/AddDonation";
 import PendingDonations from "./Pages/Dashboard/Admin/PandingDonation/PandingDonations";
 import CompletedDonations from "./Pages/Dashboard/Admin/CompletedDonations/CompletedDonations";
 import MyDonations from "./Pages/Dashboard/Donors/MyDonations/MyDonations";
+import AllUsers from "./Pages/Dashboard/Admin/AllUsers/AllUsers";
 
 // Create a client
 const queryClient = new QueryClient()
@@ -105,6 +106,10 @@ const App = () => {
         {
           index: true,
           element: <DeshboardHome />
+        },
+        {
+          path: '/dashboard/all-users', 
+          element: <AdminRoute> <AllUsers /> </AdminRoute> 
         },
         {
           path: '/dashboard/active-donors', 

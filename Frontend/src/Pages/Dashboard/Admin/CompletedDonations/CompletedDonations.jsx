@@ -51,8 +51,8 @@ const CompletedDonations = () => {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4 ">
         <h2 className="text-2xl md:text-3xl font-bold text-white">
           {language === "bn"
-            ? "অনুমোদিত ডোনেশন ইতিহাস"
-            : "Approved Donation History"} : 
+            ? " ডোনেশন ইতিহাস"
+            : "All Donation History"} : 
 
              ({filtered.length})
         </h2>
@@ -67,7 +67,7 @@ const CompletedDonations = () => {
           }
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="border px-4 py-2 rounded-lg w-full md:w-72 focus:ring-2 focus:ring-green-400 outline-none"
+          className="border px-4 py-2 rounded-lg w-full bg-gray-100/20 md:w-72 focus:ring-2 focus:ring-green-400 outline-none"
         />
       </div>
 

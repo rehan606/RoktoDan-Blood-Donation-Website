@@ -7,6 +7,7 @@ import useAuth from "../Hooks/useAuth";
 import { useLanguage } from "../context/LanguageContext";
 import useUserRole from "../Hooks/useUserRole";
 import DashboardLoader from "../components/Loader/DashboardLoader";
+import { IoReloadCircleSharp } from "react-icons/io5";
 
 // ================= Dashboard Layout =================
 const DashboardLayout = () => {
@@ -31,7 +32,7 @@ const DashboardLayout = () => {
         },
         {
         name: language === "bn" ? "সব দাতা" : "All Users",
-        to: "/dashboard/donors",
+        to: "/dashboard/all-users",
         icon: <FaUsers />,
         },
         {
@@ -57,7 +58,7 @@ const DashboardLayout = () => {
         {
         name: language === "bn" ? "অপেক্ষামান দান" : "Pending Donations",
         to: "/dashboard/pending-donations",
-        icon: <BiSolidDonateBlood />,
+        icon: <IoReloadCircleSharp />,
         },
         {
         name: language === "bn" ? "সব দান" : "All Donations",
