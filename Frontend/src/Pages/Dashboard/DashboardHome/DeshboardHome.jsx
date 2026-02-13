@@ -2,10 +2,10 @@ import React from 'react'
 import useUserRole from '../../../Hooks/useUserRole'
 import DashboardLoader from '../../../components/Loader/DashboardLoader';
 // import UserDashboard from './UserDashboard';
-// import DonorDashboard from './DonorDashboard';
 import AdminDashboard from './AdminDashboard';
 import Forbidden from '../ForbiddenPage/Forbidden';
 import ProfilePage from '../ProfilePage/ProfilePage'
+import DonorDashboard from './DonorDashboard';
 
 const DeshboardHome = () => {
     const { role, roleLoading} = useUserRole();
@@ -18,7 +18,7 @@ const DeshboardHome = () => {
         return <ProfilePage />
     } 
     else if (role === 'donor') {
-        return <ProfilePage />
+        return <DonorDashboard />
     }
     else if (role === 'admin') {
         return <AdminDashboard/>

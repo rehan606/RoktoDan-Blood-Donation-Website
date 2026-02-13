@@ -91,14 +91,14 @@ const DashboardLayout = () => {
             icon: <FaPlusCircle />,
         },
         {
-            name: language === "bn" ? "আমার অনুরোধ" : "My Requests",
-            to: "/dashboard/my-requests",
-            icon: <FaTint />,
-        },
-        {
             name: language === "bn" ? "দান ইতিহাস" : "Donation History",
             to: "/dashboard/my-donations",
             icon: <FaHistory />,
+        },
+        {
+            name: language === "bn" ? "আমার অনুরোধ" : "My Requests",
+            to: "/dashboard/my-requests",
+            icon: <FaTint />,
         },
         {
             name: language === "bn" ? "নোটিফিকেশন" : "Notifications",

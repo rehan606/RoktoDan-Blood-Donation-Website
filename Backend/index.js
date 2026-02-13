@@ -1020,10 +1020,8 @@ async function run() {
     );
 
 
-
-
     // ===============================
-    // Get My Donations (Donor Profile) /my-donations
+    // Get My Donations (Donor Profile) 
     // ===============================
     app.get("/my-donations", verifyToken, async (req, res) => {
       try {
@@ -1038,6 +1036,36 @@ async function run() {
 
       } catch (error) {
         console.error(error);
+        res.status(500).send({ message: "Internal Server Error" });
+      }
+    });
+
+    // ===============================
+    // Donor Dashboard Statistics
+    // ===============================
+    app.get("/donor/dashboard", verifyToken, async (req, res) => {
+      try {
+        const donorEmail = req.decoded.email;
+
+        const donations = await bloodDonations
+          .find({ donorEmail })
+          .sort({ donatedAt: -1 })
+          .toArray();
+
+        const total = donations.length;
+        const approved = donations.filter(d => d.status === "approved").length;
+        const pending = donations.filter(d => d.status === "pending").length;
+
+        const lastApproved = donations.find(d => d.status === "approved");
+
+        res.send({
+          total,
+          approved,
+          pending,
+          lastApprovedDonation: lastApproved || null
+        });
+
+      } catch (error) {
         res.status(500).send({ message: "Internal Server Error" });
       }
     });

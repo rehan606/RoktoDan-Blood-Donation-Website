@@ -52,7 +52,7 @@ const MyDonations = () => {
       ) : (
         <div className="overflow-x-auto bg-white shadow-lg rounded-xl">
           <table className="min-w-full text-sm text-left">
-            <thead className="bg-[#0C2349] text-white">
+            <thead className="bg-[#0C2349] text-white border ">
               <tr>
                 <th className="px-4 py-3">#</th>
                 <th className="px-4 py-3">
