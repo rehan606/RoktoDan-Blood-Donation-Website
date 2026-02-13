@@ -19,7 +19,7 @@ const AllUsers = () => {
   // ===============================
   // Fetch Users
   // ===============================
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ["users", page, role, search],
     queryFn: async () => {
       const res = await axiosSecure.get(
@@ -78,13 +78,14 @@ const AllUsers = () => {
     });
   };
 
-  if (isLoading) return <div >Loading...</div>;
+//   if (isLoading) return <div  className='text-center py-20'>Loading...</div>;
 
   return (
     <div className="p-4 md:p-8 text-white space-y-6">
 
       <h2 className="text-2xl font-bold">
-        {language === "bn" ? "সব ব্যবহারকারী" : "All Users"}
+        {language === "bn" ? "সব ব্যবহারকারী" : "All Users"} : {users.length}
+
       </h2>
 
       {/* Filter Section */}
@@ -110,9 +111,9 @@ const AllUsers = () => {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto bg-[#0f2a44] rounded-xl">
+      <div className="overflow-x-auto bg-white  rounded-xl">
         <table className="min-w-full text-sm">
-          <thead className="bg-[#112336]">
+          <thead className="bg-[#1b6bc0]">
             <tr>
               <th className="px-4 py-3">Email</th>
               <th>Status</th>
@@ -125,7 +126,7 @@ const AllUsers = () => {
           <tbody>
             {users.map((u) => (
               <tr key={u._id} className="border-b border-gray-700">
-                <td className="px-4 py-3">{u.email}</td>
+                <td className="px-4 py-3 text-gray-800">{u.email}</td>
 
                 <td>
                   <span className={`px-2 py-1 rounded text-xs ${
@@ -133,16 +134,16 @@ const AllUsers = () => {
                       ? "bg-green-600"
                       : u.status === "suspended"
                       ? "bg-yellow-600"
-                      : "bg-red-600"
+                      : "bg-green-600"
                   }`}>
                     {u.status || "active"}
                   </span>
                 </td>
 
-                <td>{u.role}</td>
-                <td>{new Date(u.created_at).toLocaleDateString()}</td>
+                <td className='text-gray-800'>{u.role}</td>
+                <td className='text-gray-800' >{new Date(u.created_at).toLocaleDateString()}</td>
 
-                <td className="flex gap-2">
+                <td className="flex items-center justify-center gap-2 ">
 
                   <button
                     onClick={() =>
@@ -151,7 +152,7 @@ const AllUsers = () => {
                         status: "suspended",
                       })
                     }
-                    className="bg-yellow-600 px-2 py-1 rounded text-xs"
+                    className="bg-yellow-600 px-2 py-1 rounded text-xs cursor-pointer mt-2.5"
                   >
                     Suspend
                   </button>
@@ -163,14 +164,14 @@ const AllUsers = () => {
                         status: "banned",
                       })
                     }
-                    className="bg-red-600 px-2 py-1 rounded text-xs"
+                    className="bg-red-600 px-2 py-1 rounded text-xs cursor-pointer mt-2.5 "
                   >
                     Ban
                   </button>
 
                   <button
                     onClick={() => handleDelete(u._id, u.email)}
-                    className="bg-red-700 px-2 py-1 rounded text-xs"
+                    className="bg-red-700 px-2 py-1 rounded text-xs cursor-pointer mt-2.5 "
                   >
                     Delete
                   </button>
