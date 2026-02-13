@@ -983,6 +983,20 @@ async function run() {
       }
     );
 
+    // ===============================
+    // Delete Donation (Admin)
+    // ===============================
+    app.delete("/admin/delete-donation/:id", verifyToken, verifyAdmin, async (req, res) => {
+      const id = req.params.id;
+
+      const result = await bloodDonations.deleteOne({
+        _id: new ObjectId(id),
+      });
+
+      res.send(result);
+    });
+
+
 
     // ===============================
     // Get My Donations (Donor Profile)

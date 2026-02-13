@@ -13,7 +13,7 @@ const RequestBlood = () => {
     const { user } = useAuth()
     const { unions } = useUnions()
     const { bloodGroups } = useBloodGroups()
-    const navigate = useNavigate();
+    const { navigate } = useNavigate();
     const axiosInstance = useAxios()
     const { role, roleLoading} = useUserRole();
 

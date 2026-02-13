@@ -1,7 +1,7 @@
 import { Link, NavLink, Outlet } from "react-router";
 import { useState } from "react";
 import {FaHome,FaUsers,FaTint,FaPlusCircle,FaChartBar,FaCog,FaBars, FaSignOutAlt, FaUserCircle, FaHistory, FaBell, FaCogs, FaUser, FaUserClock, FaUserCheck, } from "react-icons/fa";
-// import loadingImagage from '../../src/assets/images/Loading.gif'
+import { BiSolidDonateBlood } from "react-icons/bi";
 
 
 import useAuth from "../Hooks/useAuth";
@@ -56,6 +56,11 @@ const DashboardLayout = () => {
         name: language === "bn" ? "রক্তের অনুরোধ" : "Blood Requests",
         to: "/dashboard/request-blood-posts",
         icon: <FaTint />,
+        },
+        {
+        name: language === "bn" ? "অপেক্ষামান দান" : "Pending Donations",
+        to: "/dashboard/pending-donations",
+        icon: <BiSolidDonateBlood />,
         },
         {
         name: language === "bn" ? "রিপোর্ট" : "Reports",

@@ -4,12 +4,15 @@ import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import useAuth from "../../../../Hooks/useAuth";
 import {useLanguage} from "../../../../context/LanguageContext";
 import useBloodGroups from "../../../../Hooks/useBloodGroups";
+// import { useNavigate } from "react-router";
+
 
 const AddDonation = () => {
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
     const { language } = useLanguage();
     const { bloodGroups } = useBloodGroups()
+    // const { navigate } = useNavigate()
 
     const [loading, setLoading] = useState(false);
 
@@ -48,6 +51,8 @@ const AddDonation = () => {
             });
 
             form.reset();
+            // navigate("/dashboard/profile");
+            
         }
         } catch (error) {
         Swal.fire({
@@ -67,8 +72,10 @@ const AddDonation = () => {
         setLoading(false);
     };
 
+    
+
     return (
-        <div className="max-w-3xl mx-auto px-4 py-8">
+        <div className="max-w-5xl mx-auto px-4 py-8">
         <div className="bg-white shadow-lg rounded-xl p-6 md:p-10">
             <h2 className="text-2xl md:text-3xl font-bold  mb-6 text-[#0C2349]">
             {language === "bn"
