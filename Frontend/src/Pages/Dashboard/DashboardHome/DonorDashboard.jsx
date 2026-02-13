@@ -125,9 +125,6 @@ const DonorDashboard = () => {
 
     if (loading) {
         return (
-        // <div className="text-center py-10">
-        //     {language === "bn" ? "লোড হচ্ছে..." : "Loading..."}
-        // </div>
             <DashboardLoadingSkeleton />
         );
     }
@@ -174,7 +171,7 @@ const DonorDashboard = () => {
                         <MdPending className="text-3xl text-yellow-500 "/>
                     </div>
                 <h3 className="text-gray-500 mt-2">
-                    {language === "bn" ? "Pending" : "Pending"}
+                    {language === "bn" ? "অপেক্ষামান" : "Pending"}
                 </h3>
                 <p className="text-3xl font-bold text-yellow-500">
                     {data.pending}
@@ -235,13 +232,13 @@ const DonorDashboard = () => {
 
             {/* Monthly Chart */}
             <div className="bg-white shadow-lg rounded-xl p-6">
-                <h3 className="text-lg font-semibold mb-4">
+                <h3 className="text-lg font-semibold mb-4 text-gray-800">
                 {language === "bn"
                     ? "মাসভিত্তিক ডোনেশন"
                     : "Monthly Donations"}
                 </h3>
 
-                <ResponsiveContainer width="100%" height={300}>
+                <ResponsiveContainer width="100%" height={200}>
                 <BarChart data={monthlyData()}>
                     <XAxis dataKey="month" />
                     <YAxis />
