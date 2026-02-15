@@ -1096,7 +1096,7 @@ async function run() {
     // ===============================
     // Donor Dashboard Statistics
     // ===============================
-    app.get("/donor/dashboard", verifyToken, async (req, res) => {
+    app.get("/donor/dashboard", verifyToken, verifyAdmin, async (req, res) => {
       try {
         const donorEmail = req.decoded.email;
 
@@ -1148,188 +1148,188 @@ async function run() {
     // ==============================
     // Dashboard Stats
     // ==============================
-  app.get("/api/admin/dashboard-stats", async (req, res) => {
-  try {
+    app.get("/api/admin/dashboard-stats", verifyToken, async (req, res) => {
+      try {
 
-    const now = new Date();
-    const firstDayThisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-    const firstDayLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+        const now = new Date();
+        const firstDayThisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const firstDayLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
 
-    // ===============================
-    // 1️⃣ Overview Counts (Parallel)
-    // ===============================
-    const [
-      totalUsers,
-      totalDonors,
-      approvedDonors,
-      pendingDonors,
-      totalRequests,
-      pendingRequests,
-      totalDonations,
-      availableDonors
-    ] = await Promise.all([
-      userCollection.countDocuments(),
-      donorsCollection.countDocuments(),
-      donorsCollection.countDocuments({ status: "approved" }),
-      donorsCollection.countDocuments({ status: "pending" }),
-      bloodCollection.countDocuments(),
-      bloodCollection.countDocuments({ status: "pending" }),
-      bloodDonations.countDocuments({ status: "approved" }),
-      donorsCollection.countDocuments({ isAvailable: true })
-    ]);
+        // ===============================
+        // 1️⃣ Overview Counts (Parallel)
+        // ===============================
+        const [
+          totalUsers,
+          totalDonors,
+          approvedDonors,
+          pendingDonors,
+          totalRequests,
+          pendingRequests,
+          totalDonations,
+          availableDonors
+        ] = await Promise.all([
+          userCollection.countDocuments(),
+          donorsCollection.countDocuments(),
+          donorsCollection.countDocuments({ status: "approved" }),
+          donorsCollection.countDocuments({ status: "pending" }),
+          bloodCollection.countDocuments(),
+          bloodCollection.countDocuments({ status: "pending" }),
+          bloodDonations.countDocuments({ status: "approved" }),
+          donorsCollection.countDocuments({ isAvailable: true })
+        ]);
 
-    // ===============================
-    // 2️⃣ Donation Growth (Month Comparison)
-    // ===============================
-    const thisMonthDonations = await bloodDonations.countDocuments({
-      status: "approved",
-      donatedAt: { $gte: firstDayThisMonth }
-    });
+        // ===============================
+        // 2️⃣ Donation Growth (Month Comparison)
+        // ===============================
+        const thisMonthDonations = await bloodDonations.countDocuments({
+          status: "approved",
+          donatedAt: { $gte: firstDayThisMonth }
+        });
 
-    const lastMonthDonations = await bloodDonations.countDocuments({
-      status: "approved",
-      donatedAt: {
-        $gte: firstDayLastMonth,
-        $lt: firstDayThisMonth
-      }
-    });
+        const lastMonthDonations = await bloodDonations.countDocuments({
+          status: "approved",
+          donatedAt: {
+            $gte: firstDayLastMonth,
+            $lt: firstDayThisMonth
+          }
+        });
 
-    const donationGrowth =
-      lastMonthDonations === 0
-        ? 100
-        : ((thisMonthDonations - lastMonthDonations) /
-            lastMonthDonations) *
-          100;
+        const donationGrowth =
+          lastMonthDonations === 0
+            ? 100
+            : ((thisMonthDonations - lastMonthDonations) /
+                lastMonthDonations) *
+              100;
 
-    // ===============================
-    // 3️⃣ Blood Group Distribution
-    // ===============================
-    const bloodGroupStats = await donorsCollection.aggregate([
-      {
-        $match: {
-          role: "donor",
-          status: "active"
-        }
-      },
-      {
-        $group: {
-          _id: "$bloodGroup",
-          total: { $sum: 1 }
-        }
-      },
-      { $sort: { total: -1 } }
-    ]).toArray();
-
-
-    // ===============================
-    // 4️⃣ Union Wise Donors
-    // ===============================
-    const unionDonorStats = await donorsCollection.aggregate([
-      {
-        $match: {
-          role: "donor",
-          status: "active"
-        }
-      },
-      {
-        $group: {
-          _id: "$union",
-          totalDonors: { $sum: 1 }
-        }
-      },
-      { $sort: { totalDonors: -1 } }
-    ]).toArray();
-
-
-    // ===============================
-    // 5️⃣ Request Status
-    // ===============================
-    const requestStatusStats = await bloodCollection.aggregate([
-      {
-        $group: {
-          _id: "$status",
-          total: { $sum: 1 }
-        }
-      }
-    ]).toArray();
-
-    // ===============================
-    // 6️⃣ Monthly Donations (Last 12 Months)
-    // ===============================
-    const monthlyDonations = await bloodDonations.aggregate([
-      { $match: { status: "approved" } },
-      {
-        $group: {
-          _id: {
-            year: { $year: "$donatedAt" },
-            month: { $month: "$donatedAt" }
+        // ===============================
+        // 3️⃣ Blood Group Distribution
+        // ===============================
+        const bloodGroupStats = await donorsCollection.aggregate([
+          {
+            $match: {
+              role: "donor",
+              status: "active"
+            }
           },
-          total: { $sum: 1 }
-        }
-      },
-      { $sort: { "_id.year": 1, "_id.month": 1 } }
-    ]).toArray();
+          {
+            $group: {
+              _id: "$bloodGroup",
+              total: { $sum: 1 }
+            }
+          },
+          { $sort: { total: -1 } }
+        ]).toArray();
 
-    // ===============================
-    // 7️⃣ Recent Data
-    // ===============================
-    const recentRequests = await bloodCollection
-      .find()
-      .sort({ createdAt: -1 })
-      .limit(5)
-      .toArray();
 
-    const recentDonations = await bloodDonations
-      .find({ status: "approved" })
-      .sort({ createdAt: -1 })
-      .limit(5)
-      .toArray();
+        // ===============================
+        // 4️⃣ Union Wise Donors
+        // ===============================
+        const unionDonorStats = await donorsCollection.aggregate([
+          {
+            $match: {
+              role: "donor",
+              status: "active"
+            }
+          },
+          {
+            $group: {
+              _id: "$union",
+              totalDonors: { $sum: 1 }
+            }
+          },
+          { $sort: { totalDonors: -1 } }
+        ]).toArray();
 
-    // ===============================
-    // 8️⃣ Top Donors
-    // ===============================
-    const topDonors = await bloodDonations.aggregate([
-      { $match: { status: "approved" } },
-      {
-        $group: {
-          _id: "$donorEmail",
-          totalDonations: { $sum: 1 }
-        }
-      },
-      { $sort: { totalDonations: -1 } },
-      { $limit: 5 }
-    ]).toArray();
 
-    // ===============================
-    // Final Response
-    // ===============================
-    res.json({
-      overview: {
-        totalUsers,
-        totalDonors,
-        approvedDonors,
-        pendingDonors,
-        totalRequests,
-        pendingRequests,
-        totalDonations,
-        availableDonors
-      },
-      growth: {
-        donationGrowth: donationGrowth.toFixed(2)
-      },
-      bloodGroupStats,
-      unionDonorStats,
-      requestStatusStats,
-      monthlyDonations,
-      recentRequests,
-      recentDonations,
-      topDonors
-    });
+        // ===============================
+        // 5️⃣ Request Status
+        // ===============================
+        const requestStatusStats = await bloodCollection.aggregate([
+          {
+            $group: {
+              _id: "$status",
+              total: { $sum: 1 }
+            }
+          }
+        ]).toArray();
 
-  } catch (error) {
-    console.error("Dashboard Error:", error);
-    res.status(500).json({ message: "Dashboard stats failed" });
-  }
+        // ===============================
+        // 6️⃣ Monthly Donations (Last 12 Months)
+        // ===============================
+        const monthlyDonations = await bloodDonations.aggregate([
+          { $match: { status: "approved" } },
+          {
+            $group: {
+              _id: {
+                year: { $year: "$donatedAt" },
+                month: { $month: "$donatedAt" }
+              },
+              total: { $sum: 1 }
+            }
+          },
+          { $sort: { "_id.year": 1, "_id.month": 1 } }
+        ]).toArray();
+
+        // ===============================
+        // 7️⃣ Recent Data
+        // ===============================
+        const recentRequests = await bloodCollection
+          .find()
+          .sort({ createdAt: -1 })
+          .limit(5)
+          .toArray();
+
+        const recentDonations = await bloodDonations
+          .find({ status: "approved" })
+          .sort({ createdAt: -1 })
+          .limit(5)
+          .toArray();
+
+        // ===============================
+        // 8️⃣ Top Donors
+        // ===============================
+        const topDonors = await bloodDonations.aggregate([
+          { $match: { status: "approved" } },
+          {
+            $group: {
+              _id: "$donorEmail",
+              totalDonations: { $sum: 1 }
+            }
+          },
+          { $sort: { totalDonations: -1 } },
+          { $limit: 5 }
+        ]).toArray();
+
+        // ===============================
+        // Final Response
+        // ===============================
+        res.json({
+          overview: {
+            totalUsers,
+            totalDonors,
+            approvedDonors,
+            pendingDonors,
+            totalRequests,
+            pendingRequests,
+            totalDonations,
+            availableDonors
+          },
+          growth: {
+            donationGrowth: donationGrowth.toFixed(2)
+          },
+          bloodGroupStats,
+          unionDonorStats,
+          requestStatusStats,
+          monthlyDonations,
+          recentRequests,
+          recentDonations,
+          topDonors
+        });
+
+      } catch (error) {
+        console.error("Dashboard Error:", error);
+        res.status(500).json({ message: "Dashboard stats failed" });
+    }
 });
 
 
