@@ -8,6 +8,7 @@ import { useLanguage } from "../context/LanguageContext";
 import useUserRole from "../Hooks/useUserRole";
 import DashboardLoader from "../components/Loader/DashboardLoader";
 import { IoReloadCircleSharp } from "react-icons/io5";
+import { ImHome } from "react-icons/im";
 
 // ================= Dashboard Layout =================
 const DashboardLayout = () => {
@@ -149,7 +150,7 @@ const DashboardLayout = () => {
                 <aside
                     className={`fixed top-0 left-0 z-40 w-64 h-screen bg-[#0f2a44] flex flex-col transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`} 
                 >
-                    <div className="p-4  text-xl font-bold border-b  bg-[#112336]" >
+                    {/* <div className="p-4  text-xl font-bold border-b  bg-[#112336]" >
                         <Link to="/" className="cursor-pointer flex  items-center justify-center gap-2 hover:scale-110 transition-all duration-300">
                             <FaTint className="text-white w-8 h-8  " />
                             <div>
@@ -157,7 +158,7 @@ const DashboardLayout = () => {
                             </div>
                         </Link>
                     
-                    </div>
+                    </div> */}
 
                     <div className="mx-auto">
                         <div className="flex flex-col items-center justify-center mt-3">
@@ -215,7 +216,7 @@ const DashboardLayout = () => {
                 {/* Main area */}
                 <div className="flex-1 flex flex-col md:ml-64 h-screen">
                     {/* Top bar */}
-                    <header  className="fixed top-0 left-0 md:left-64 right-0 h-16 flex items-center justify-between px-4 md:px-8 bg-[#0F2A44] z-30">
+                    <header  className="fixed top-0 left-0 md:left-64 right-0 h-16 flex items-center justify-between px-4 md:px-10 bg-[#0F2A44] z-30">
                         <div className="flex items-center gap-3">
                             <button
                             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -223,11 +224,13 @@ const DashboardLayout = () => {
                             >
                             <FaBars />
                             </button>
+                            <Link to='/' className=" cursor-pointer p-4 bg-white rounded-md text-center text-gray-800 text-xl"> <ImHome /> </Link>
+                            
                             <div className="flex-col">
-                                <h1 className="font-semibold text-lg text-white ">
-                                {language === "bn" ? "হ্যালো" : "Hello"} <span className="text-md"> {user?.displayName } </span> 
+                                <h1 className="font-semibold text-md text-white ">
+                                {language === "bn" ? "হ্যালো" : "Hello"} <span className="text-md "> {user?.displayName } </span> 
                                 </h1>
-                                <p className="text-white">
+                                <p className="text-gray-300 text-sm">
                                     {language === 'bn' ? 'ড্যাশবোর্ডে স্বাগতম ' : 'Welcome to Dashboard '}
                                     !
                                 </p>
@@ -254,7 +257,7 @@ const DashboardLayout = () => {
                     
 
                     {/* Content */}
-                    <main className="mt-16 flex-1 overflow-y-auto bg-[#0b1c2d] p-4 md:p-6">
+                    <main className="mt-16 flex-1 overflow-y-auto bg-[#0b1c2d] p-4 ">
                     <Outlet />
                     </main>
                 </div>
