@@ -243,12 +243,12 @@ const DashboardLayout = () => {
                             
                             {/* Language Toggle */}
                             <button
-                            onClick={() =>
-                                setLanguage(language === "bn" ? "en" : "bn")
-                            }
-                            className="border px-3 py-2 rounded-md text-white  bg-[#3B82F6] hover:bg-[#1462df] transition  hover:text-white cursor-pointer"
-                            >
-                            {language === "bn" ? "English" : "বাংলা"}
+                                onClick={() =>
+                                    setLanguage(language === "bn" ? "en" : "bn")
+                                }
+                                className="border px-3 py-2 rounded-md text-white  bg-[#3B82F6] hover:bg-[#1462df] transition  hover:text-white cursor-pointer"
+                                >
+                                {language === "bn" ? "English" : "বাংলা"}
                             
                             </button>
                         </div>

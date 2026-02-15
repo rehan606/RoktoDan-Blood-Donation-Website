@@ -54,7 +54,7 @@ const CompletedDonations = () => {
             ? " ডোনেশন ইতিহাস"
             : "All Donation History"} : 
 
-             ({filtered.length})
+              {filtered.length}
         </h2>
 
         {/* Search */}
