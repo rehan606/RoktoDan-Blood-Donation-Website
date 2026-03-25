@@ -34,6 +34,7 @@ import PendingDonations from "./Pages/Dashboard/Admin/PandingDonation/PandingDon
 import CompletedDonations from "./Pages/Dashboard/Admin/CompletedDonations/CompletedDonations";
 import MyDonations from "./Pages/Dashboard/Donors/MyDonations/MyDonations";
 import AllUsers from "./Pages/Dashboard/Admin/AllUsers/AllUsers";
+import Settings from "./Pages/Dashboard/Settings/Settings";
 
 // Create a client
 const queryClient = new QueryClient()
@@ -154,6 +155,10 @@ const App = () => {
         {
           path: '/dashboard/my-donations', 
           element: <MyDonations />
+        },
+        {
+          path: '/dashboard/settings', 
+          element: <Settings />
         },
       ]
     },

@@ -75,7 +75,7 @@ const Login = () => {
                         <input
                         type="email"
                         placeholder={t.emailPlaceholder}
-                        className="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-400"
+                        className="mt-1 w-full px-4 py-2 border rounded-lg "
                         {...register("email", {
                             required: t.errors.emailRequired,
                             pattern: {
@@ -101,7 +101,7 @@ const Login = () => {
                         <input
                             type={showPassword ? "text" : "password"}
                             placeholder={t.passwordPlaceholder}
-                            className="mt-1 w-full px-4 py-2 border rounded-lg pr-10 focus:ring-2 focus:ring-red-400"
+                            className="mt-1 w-full px-4 py-2 border rounded-lg pr-10 "
                             {...register("password", {
                             required: t.errors.passwordRequired,
                             })}
