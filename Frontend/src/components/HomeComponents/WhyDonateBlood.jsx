@@ -13,15 +13,15 @@ const WhyDonateBlood = ({ language }) => {
         </h2>
 
         {/* Subtitle / Description */}
-        <p className={`text-gray-700 mb-12 ${isBangla ? "font-bn" : "font-en"} text-lg max-w-3xl mx-auto`}>
+        <p className={`text-gray-700 px-10 mb-12 ${isBangla ? "font-bn" : "font-en"} text-lg max-w-3xl mx-auto`}>
           {isBangla
             ? "আপনার একটি রক্তদান অনেক জীবনের জন্য নতুন সম্ভাবনা তৈরি করতে পারে। নিচে রক্তদানের গুরুত্বপূর্ণ কারণগুলো দেখুন।"
             : "A single blood donation can create new possibilities for many lives. Check out the important reasons to donate blood below."}
         </p>
 
         {/* Key Points / Features */}
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+        <div className="grid md:grid-cols-3 gap-6 border border-gray-200 p-6 rounded-lg">
+          <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition ">
             <FaHeartbeat className="text-red-600 w-12 h-12 mx-auto mb-4" />
             <h3 className={`text-xl font-semibold mb-2 ${isBangla ? "font-bn" : "font-en"}`}>
               {isBangla ? "জীবন রক্ষা" : "Save Lives"}
