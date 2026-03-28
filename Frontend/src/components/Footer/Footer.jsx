@@ -57,7 +57,7 @@ const Footer = ({ language = "bn" }) => {
 
   return (
     <footer className="bg-linear-to-r from-red-600 via-red-700 to-red-800 text-white">
-      <div className="max-w-7xl mx-auto px-4 py-12 grid gap-10 md:grid-cols-4">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 grid gap-10 md:grid-cols-4">
         
         {/* About */}
         <div>
