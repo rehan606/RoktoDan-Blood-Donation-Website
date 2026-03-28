@@ -42,7 +42,7 @@ const HowItWorks = ({ language }) => {
           {isBangla ? "কিভাবে কাজ করে" : "How It Works"}
         </h2>
 
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 border border-gray-200 p-6 rounded-lg">
           {steps.map((step, idx) => (
             <div key={idx} className="bg-red-50 p-6 rounded-lg shadow hover:shadow-lg transition">
               {step.icon}

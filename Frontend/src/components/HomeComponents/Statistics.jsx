@@ -43,7 +43,7 @@ const Statistics = ({ language }) => {
           {isBangla ? "আমাদের কার্যক্রম" : "Our Impact"}
         </h2>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-6 border border-gray-200 p-6 rounded-lg">
           {stats.map((stat, idx) => (
             <div key={idx} className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
               {stat.icon}

@@ -36,7 +36,7 @@ const UrgentBloodRequests = ( ) => {
           </div>
 
           {/* Cards */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 border border-gray-200 p-6 rounded-lg">
             {posts.map((post, idx) => (
               <EmergencyBloodCard key={idx} post={post} language={language}  />
             ))}
