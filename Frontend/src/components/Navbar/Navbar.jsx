@@ -15,7 +15,31 @@ const Navbar = ({ language, setLanguage }) => {
     return (
         <nav className="bg-white text-zinc-800 sticky top-0 z-50 border-b shadow-md border-red-200">
             <div className="max-w-7xl mx-auto px-4 ">
-                <div className="flex justify-between items-center h-20 ">
+                <div className="flex justify-between  items-center h-20 ">
+
+                    {/* Mobile Button */}
+                <button
+                    className="md:hidden "
+                    onClick={() => setIsOpen(!isOpen)}
+                >
+                    <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d={
+                        isOpen
+                            ? "M6 18L18 6M6 6l12 12"
+                            : "M4 6h16M4 12h16M4 18h16"
+                        }
+                    />
+                    </svg>
+                </button>
                 
                 {/* Logo */}
                 <Link to={'/'} className="flex items-center gap-1">
@@ -30,9 +54,62 @@ const Navbar = ({ language, setLanguage }) => {
                         }
                     </div>
                 </Link>
+                    {/* Desktop Menu */}
+                    <ul className="hidden md:flex items-center gap-4 text-md uppercase  ">
+                        <NavLink to={'/'} className={({ isActive }) => isActive
+                            ? "text-red-500 font-semibold"
+                            : "text-gray-700 hover:text-red-600 cursor-pointer"
+                        }>
+                            {language === "bn" ? "হোম" : "Home"}
+                        </NavLink>
+                        <NavLink to={'/all-donors'} className={({ isActive }) => isActive
+                            ? "text-red-500 font-semibold"
+                            : "text-gray-700 hover:text-red-600 cursor-pointer"
+                        }>
+                            {language === "bn" ? "রক্তদাতা" : "Donors"}
+                        </NavLink>
+                        <NavLink to={'/request-blood'} className={({ isActive }) => isActive
+                            ? "text-red-500 font-semibold"
+                            : "text-gray-700 hover:text-red-600 cursor-pointer"
+                        }>
+                            {language === "bn" ? "রক্ত অনুরোধ" : "Request Blood"}
+                        </NavLink>
+                        <NavLink to={'/contact'} className={({ isActive }) => isActive
+                            ? "text-red-500 font-semibold"
+                            : "text-gray-700 hover:text-red-600 cursor-pointer"
+                        }>
+                            {language === "bn" ? "যোগাযোগ" : "Contact"}
+                        </NavLink>
 
-                {/* Desktop Menu */}
-                <ul className="hidden md:flex items-center gap-4 text-md uppercase  ">
+                        
+                    </ul>
+                
+                    
+                    <div className="flex gap-3">
+
+                        {/* Profile Button  */}
+                        
+                        { !user? ( <Link to={'/login'} className="bg-red-500 text-white py-2 px-4 rounded-md border hover:bg-white hover:text-red-500 hover:border-red-500 transition-all duration-300  "> {language === "bn" ? "লগইন" : "Login"}</Link> ) : (<UserButton />) }
+                        
+                        {/* Language Toggle */}
+                        <button
+                            onClick={() =>
+                                setLanguage(language === "bn" ? "en" : "bn")
+                            }
+                            className="border hidden md:flex px-3 py-2 rounded bg-white text-red-600 transition hover:bg-red-500 hover:text-white cursor-pointer"
+                            >
+                            {language === "bn" ? "EN" : "BN"}
+                        </button>
+                    </div>
+                
+                
+                </div>
+            </div>
+
+            {/* Mobile Menu */}
+            {isOpen && (
+                <div className="flex flex-col md:hidden bg-gray-200 shadow-2xl  border-t-2 border-red-500 text-white px-6 py-8 space-y-3">
+
                     <NavLink to={'/'} className={({ isActive }) => isActive
                         ? "text-red-500 font-semibold"
                         : "text-gray-700 hover:text-red-600 cursor-pointer"
@@ -58,65 +135,11 @@ const Navbar = ({ language, setLanguage }) => {
                         {language === "bn" ? "যোগাযোগ" : "Contact"}
                     </NavLink>
 
-                    <div className="flex items-center gap-3">
-
-                        {/* Profile Button  */}
-                        { !user? ( <Link to={'/login'} className="bg-red-500 text-white py-2 px-4 rounded-md border hover:bg-white hover:text-red-500 hover:border-red-500 transition-all duration-300  "> {language === "bn" ? "লগইন" : "Login"}</Link> ) : (<UserButton />) }
-                        
-                        {/* Language Toggle */}
-                        <button
-                        onClick={() =>
-                            setLanguage(language === "bn" ? "en" : "bn")
-                        }
-                        className="border px-3 py-2 rounded bg-white text-red-600 transition hover:bg-red-500 hover:text-white cursor-pointer"
-                        >
-                        {language === "bn" ? "EN" : "BN"}
-                        </button>
-                    </div>
-
-                    
-                    
-                </ul>
-
-                {/* Mobile Button */}
-                <button
-                    className="md:hidden"
-                    onClick={() => setIsOpen(!isOpen)}
-                >
-                    <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d={
-                        isOpen
-                            ? "M6 18L18 6M6 6l12 12"
-                            : "M4 6h16M4 12h16M4 18h16"
-                        }
-                    />
-                    </svg>
-                </button>
-                </div>
-            </div>
-
-            {/* Mobile Menu */}
-            {isOpen && (
-                <div className="md:hidden bg-red-700 px-4 pb-4 space-y-3">
-                <p>{language === "bn" ? "হোম" : "Home"}</p>
-                <p>{language === "bn" ? "রক্তদাতা" : "Donors"}</p>
-                <p>{language === "bn" ? "রক্ত অনুরোধ" : "Request Blood"}</p>
-                <p>{language === "bn" ? "যোগাযোগ" : "Contact"}</p>
-
                 <button
                     onClick={() =>
                     setLanguage(language === "bn" ? "en" : "bn")
                     }
-                    className="border px-3 py-1 rounded w-fit"
+                    className="border bg-red-500 px-3 py-1 rounded w-fit text-white"
                 >
                     {language === "bn" ? "EN" : "BN"}
                 </button>

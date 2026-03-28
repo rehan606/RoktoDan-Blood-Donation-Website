@@ -1,7 +1,7 @@
 
 import { Link, NavLink, Outlet } from "react-router";
 import { useState } from "react";
-import {FaHome,FaUsers,FaTint,FaPlusCircle,FaChartBar,FaCog,FaBars, FaSignOutAlt, FaUserCircle, FaHistory, FaBell, FaCogs, FaUser, FaUserClock, FaUserCheck, } from "react-icons/fa";
+import {FaHome,FaUsers,FaTint,FaPlusCircle,FaChartBar,FaCog, FaBars, FaSignOutAlt, FaUserCircle, FaHistory, FaBell, FaCogs, FaUser, FaUserClock, FaUserCheck, } from "react-icons/fa";
 import { BiSolidDonateBlood } from "react-icons/bi";
 import useAuth from "../Hooks/useAuth";
 import { useLanguage } from "../context/LanguageContext";
@@ -104,11 +104,11 @@ const DashboardLayout = () => {
             to: "/dashboard/my-requests",
             icon: <FaTint />,
         },
-        {
-            name: language === "bn" ? "নোটিফিকেশন" : "Notifications",
-            to: "/dashboard/notification",
-            icon: <FaBell />,
-        },
+        // {
+        //     name: language === "bn" ? "নোটিফিকেশন" : "Notifications",
+        //     to: "/dashboard/notification",
+        //     icon: <FaBell />,
+        // },
         {
             name: language === "bn" ? "সেটিংস" : "Settings",
             to: "/dashboard/settings",
@@ -127,11 +127,11 @@ const DashboardLayout = () => {
             to: "/dashboard/my-requests",
             icon: <FaTint />,
         },
-        {
-            name: language === "bn" ? "নোটিফিকেশন" : "Notifications",
-            to: "/dashboard/notification",
-            icon: <FaBell />,
-        },
+        // {
+        //     name: language === "bn" ? "নোটিফিকেশন" : "Notifications",
+        //     to: "/dashboard/notification",
+        //     icon: <FaBell />,
+        // },
         {
             name: language === "bn" ? "সেটিংস" : "Settings",
             to: "/dashboard/settings",

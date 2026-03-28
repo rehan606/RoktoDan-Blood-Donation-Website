@@ -219,11 +219,6 @@ async function run() {
       res.send(result);
     });
 
-
-
-
-
-
     // ========= Set Donors Application in Database =========
 
 

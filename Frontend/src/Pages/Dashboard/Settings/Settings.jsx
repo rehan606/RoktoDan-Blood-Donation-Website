@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { FaUser, FaLock, FaBell, FaGlobe } from "react-icons/fa";
 import { useLanguage } from "../../../Context/LanguageContext";
+// import { changeUserPassword } from "../../../utils/changePassword";
+import Swal from "sweetalert2";
 
 const Settings = () => {
   const { language, setLanguage } = useLanguage();
@@ -17,6 +19,19 @@ const Settings = () => {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+
+    // Change password handler
+
+    // const handlePasswordUpdate = async () => {
+    //     try {
+    //         await changeUserPassword(form.password, form.newPassword);
+
+    //         Swal.fire("Success", "Password updated successfully", "success");
+
+    //     } catch (error) {
+    //         Swal.fire("Error", error.message, "error");
+    //     }
+    // };
 
   return (
     <div className="p-6 text-white space-y-6">
@@ -68,7 +83,7 @@ const Settings = () => {
           />
         </div>
 
-        <button className="btn-primary mt-4">
+        <button  className="btn-primary mt-4">
           {language === "bn" ? "পাসওয়ার্ড আপডেট" : "Update Password"}
         </button>
       </Section>
