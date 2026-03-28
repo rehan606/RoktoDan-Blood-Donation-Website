@@ -1,7 +1,7 @@
 const Testimonials = ({ language = "bn" }) => {
   const content = {
     bn: {
-      title: "মানুষের মুখে RoktoDan",
+      title: "মানুষের মুখে  ' রক্তদান ' ",
       subtitle:
         "রক্তদাতা ও রক্তগ্রহীতাদের বাস্তব অভিজ্ঞতা যা অনুপ্রেরণা দেয়",
     },
@@ -19,7 +19,7 @@ const Testimonials = ({ language = "bn" }) => {
       roleBn: "রক্তদাতা",
       roleEn: "Blood Donor",
       messageBn:
-        "RoktoDan এর মাধ্যমে আমি খুব সহজে একজন রোগীর সাথে যোগাযোগ করতে পেরেছি। আমার রক্তদানের অভিজ্ঞতা সত্যিই অসাধারণ।",
+        "  রক্তদান, এর মাধ্যমে আমি খুব সহজে একজন রোগীর সাথে যোগাযোগ করতে পেরেছি। আমার রক্তদানের অভিজ্ঞতা সত্যিই অসাধারণ।",
       messageEn:
         "Through RoktoDan, I was able to connect with a patient very easily. Donating blood felt truly meaningful.",
     },
@@ -29,7 +29,7 @@ const Testimonials = ({ language = "bn" }) => {
       roleBn: "রক্তগ্রহীতা",
       roleEn: "Blood Receiver",
       messageBn:
-        "জরুরি মুহূর্তে RoktoDan আমাদের জন্য আশীর্বাদ হয়ে এসেছে। সময়মতো রক্ত পেয়ে আমার মায়ের জীবন রক্ষা পেয়েছে।",
+        "জরুরি মুহূর্তে  'রক্তদান' আমাদের জন্য আশীর্বাদ হয়ে এসেছে। সময়মতো রক্ত পেয়ে আমার মায়ের জীবন রক্ষা পেয়েছে।",
       messageEn:
         "In an emergency, RoktoDan became a blessing for us. Timely blood donation saved my mother’s life.",
     },
@@ -59,7 +59,7 @@ const Testimonials = ({ language = "bn" }) => {
         </div>
 
         {/* Cards */}
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 border border-gray-200 p-6 rounded-lg">
           {testimonials.map((item, index) => (
             <div
               key={index}
