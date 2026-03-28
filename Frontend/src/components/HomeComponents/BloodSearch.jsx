@@ -57,7 +57,7 @@ const BloodSearch = () => {
 
   return (
     <section
-      className="bg-cover bg-center bg-no-repeat py-20"
+      className="bg-cover bg-center bg-no-repeat py-16 md:py-20"
       style={{ backgroundImage: `url(${bgImage})` }}
     >
       <div className="max-w-5xl mx-auto px-4">
@@ -66,7 +66,7 @@ const BloodSearch = () => {
         </h2>
 
         {/* 🔍 Search Box */}
-        <div className="bg-white rounded-2xl shadow-md p-6">
+        <div className="bg-white rounded-2xl shadow-lg p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
             {/* Blood Group */}
             <div>
