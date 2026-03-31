@@ -1,4 +1,5 @@
 import { FaFacebook, FaGithub, FaLinkedin, FaWeebly } from "react-icons/fa";
+import { GrPersonalComputer } from "react-icons/gr";
 import { useEffect, useState } from "react";
 
 // ⚠️ IMPORTANT:
@@ -88,7 +89,8 @@ const DevSupportSection = ({ language }) => {
               <FaLinkedin className="hover:scale-125 transition duration-300" />
             </a>
             <a href="https://kh-rehan-portfolio.netlify.app/" target="_blank" rel="noreferrer">
-              <FaWeebly className="hover:scale-125 transition duration-300" />
+              <GrPersonalComputer className="hover:scale-125 transition duration-300" />
+            
             </a>
           </div>
 
