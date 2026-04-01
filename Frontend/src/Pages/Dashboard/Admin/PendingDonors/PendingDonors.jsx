@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import { FaEye,  FaUserSlash } from "react-icons/fa";
+import { FaEye, FaUserSlash, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { BiSolidUserCheck } from "react-icons/bi";
 import { useState } from "react";
 
@@ -69,48 +69,67 @@ const PendingDonors = () => {
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6">Pending Donors : ( {pendingDonors.length} ) </h2>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full border-collapse border text-center border-gray-400 rounded-lg bg-white text-zinc-900">
+      {/* ================= DESKTOP TABLE (lg+) =================  */}
+
+      <div className="hidden lg:block overflow-x-auto">
+        <table className="min-w-full border rounded-xl overflow-hidden bg-white text-zinc-900">
+          
           <thead className="bg-gray-100 text-red-500">
             <tr>
-              <th className="p-3 border">Name</th>
-              <th className="p-3 border">Blood Group</th>
+              <th className="p-3 border text-left">Name</th>
+              <th className="p-3 border">Blood</th>
               <th className="p-3 border">Phone</th>
               <th className="p-3 border">Union</th>
-              <th className="p-3 border">Actions</th>
+              <th className="p-3 border text-center">Actions</th>
             </tr>
           </thead>
 
           <tbody>
             {pendingDonors.map((donor) => (
-              <tr key={donor._id} className="text-center">
-                <td className="p-2 border">{donor.name}</td>
-                <td className="p-2 border font-semibold text-red-500">{donor.bloodGroup}</td>
-                <td className="p-2 border">{donor.phone}</td>
-                <td className="p-2 border">{donor.union}</td>
+              <tr
+                key={donor._id}
+                className="text-center hover:bg-gray-50 transition"
+              >
+                <td className="p-3 border text-left font-medium">
+                  {donor.name}
+                </td>
 
-                <td className="p-2 border  ">
-                    <div className="flex justify-center gap-2">
-                        <button
-                            onClick={() => setSelectedDonor(donor)}
-                            className="p-2 bg-blue-600 text-white rounded cursor-pointer"
-                        >
-                            <FaEye />
-                        </button>
+                <td className="p-3 border font-semibold text-red-500">
+                  {donor.bloodGroup}
+                </td>
 
-                        <button
-                            onClick={() => handleApprove(donor._id)}
-                            className="px-3 py-1 bg-green-600 text-white text-2xl rounded cursor-pointer"
-                        >
-                           <BiSolidUserCheck />
-                        </button>
+                <td className="p-3 border">
+                  <a href={`tel:${donor.phone}`} className="text-blue-600">
+                    {donor.phone}
+                  </a>
+                </td>
 
-                        <button
-                            onClick={() => handleReject(donor._id)}
-                            className="px-3 py-1 bg-red-600 text-white rounded cursor-pointer"
-                        >
-                            <FaUserSlash />
-                        </button>
+                <td className="p-3 border">{donor.union}</td>
+
+                <td className="p-3 border">
+                  <div className="flex justify-center gap-2">
+                    
+                    <button
+                      onClick={() => setSelectedDonor(donor)}
+                      className="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
+                    >
+                      <FaEye />
+                    </button>
+
+                    <button
+                      onClick={() => handleApprove(donor._id)}
+                      className="p-2 bg-green-600 hover:bg-green-700 text-white rounded-md"
+                    >
+                      <BiSolidUserCheck />
+                    </button>
+
+                    <button
+                      onClick={() => handleReject(donor._id)}
+                      className="p-2 bg-red-600 hover:bg-red-700 text-white rounded-md"
+                    >
+                      <FaUserSlash />
+                    </button>
+
                   </div>
                 </td>
               </tr>
@@ -118,6 +137,95 @@ const PendingDonors = () => {
           </tbody>
         </table>
       </div>
+
+      {/* ================= MOBILE + TABLET CARD ================= */}
+
+      <div className="lg:hidden space-y-4">
+        {pendingDonors.map((donor) => (
+          <div
+            key={donor._id}
+            className="bg-white border border-gray-200 rounded-2xl shadow-sm p-4 hover:shadow-md transition"
+          >
+            
+            {/* Top Section */}
+            <div className="flex justify-between items-start">
+              
+              <div>
+                <h2 className="text-base font-semibold text-gray-800">
+                  {donor.name}
+                </h2>
+
+                <div className="flex items-center justify-between  mt-4 rounded-lg">
+                  <div className="flex items-center gap-2">
+                      <FaMapMarkerAlt className="text-red-500" />
+                       <span className="font-sm text-gray-500">
+                      {donor.union}, {donor.upazila}
+                  </span>
+                  </div>
+                 
+                </div>
+              </div>
+
+              {/* Blood Badge */}
+              <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-bold">
+                {donor.bloodGroup}
+              </span>
+            </div>
+
+            {/* Pending Status */}
+            <div className="mt-3">
+              <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-medium">
+                ⏳ Pending Approval
+              </span>
+            </div>
+
+            {/* Phone */}
+            <div className="mt-3 flex justify-between items-center text-sm">
+              <span className="text-gray-500 font-medium">Phone</span>
+
+              <a
+                href={`tel:${donor.phone}`}
+                className="flex items-center gap-1 text-blue-600 font-medium"
+              >
+                <FaPhoneAlt className="text-xs" />
+                {donor.phone}
+              </a>
+            </div>
+
+            {/* Divider */}
+            <div className="border-t my-4"></div>
+
+            {/* Actions */}
+            <div className="grid grid-cols-3 gap-2">
+              
+              <button
+                onClick={() => setSelectedDonor(donor)}
+                className="flex items-center justify-center gap-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-xs font-medium"
+              >
+                <FaEye /> View
+              </button>
+
+              <button
+                onClick={() => handleApprove(donor._id)}
+                className="flex items-center justify-center gap-1 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg text-xs font-medium"
+              >
+                <BiSolidUserCheck /> Approve
+              </button>
+
+              <button
+                onClick={() => handleReject(donor._id)}
+                className="flex items-center justify-center gap-1 bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg text-xs font-medium"
+              >
+                <FaUserSlash /> Reject
+              </button>
+
+            </div>
+          </div>
+        ))}
+      </div>
+
+
+
 
       {/* Modal */}
       {selectedDonor && (
