@@ -1,6 +1,6 @@
 import { FaFacebook, FaGithub, FaLinkedin, FaWeebly } from "react-icons/fa";
 import { GrPersonalComputer } from "react-icons/gr";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
 // ⚠️ IMPORTANT:
 // This uses CountAPI (free public API) for live visitor count
@@ -30,25 +30,22 @@ const DevSupportSection = ({ language }) => {
     visitors: isBangla ? "মোট ভিজিটর" : "Total Visitors",
   };
 
-  const [visitors, setVisitors] = useState(0);
+  // const [visitors, setVisitors] = useState(0);
 
-  useEffect(() => {
-    // 🔴 Change namespace & key to make it unique for your site
-    // const namespace = "rehan-roktodan-project";
-    // const key = "homepage";
+  // useEffect(() => {
 
-    const namespace = "roktodan";
-    const key = "main-site";
+  //   const namespace = "roktodan";
+  //   const key = "main-site";
 
-    fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setVisitors(data.value);
-      })
-      .catch(() => {
-        console.log("Visitor count error");
-      });
-  }, []);
+  //   fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setVisitors(data.value);
+  //     })
+  //     .catch(() => {
+  //       console.log("Visitor count error");
+  //     });
+  // }, []);
 
   return (
     <div className="w-full py-16 bg-linear-to-br from-red-50 via-white to-red-100">
@@ -95,16 +92,16 @@ const DevSupportSection = ({ language }) => {
           </div>
 
           {/* Support Text */}
-          <p className="mt-6 text-green-600 bg-green-100 p-6 rounded-full border-2 border-green-300 max-w-2xl leading-relaxed">
+          <p className="mt-6 text-green-600 bg-green-100 px-6 py-2 rounded-full border-2 border-green-300 max-w-2xl leading-relaxed">
             {content.supportText}
           </p>
 
           {/* Visitor Badge */}
-          <div className="mt-10">
+          {/* <div className="mt-10">
             <div className="bg-linear-to-r from-green-500 to-green-600 text-white px-8 py-2 rounded-full text-lg font-semibold shadow-lg animate-pulse">
               {content.visitors}: {visitors.toLocaleString()}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -55,7 +55,7 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4">
-      <div className="max-w-6xl mx-auto">
+      <div className="container mx-auto max-w-6xl">
         {/* Header */}
         <div className="text-center mb-10">
           <h1 className="text-3xl md:text-4xl font-bold text-red-600">
@@ -64,9 +64,9 @@ const Contact = () => {
           <p className="mt-2 text-gray-600">{t.subtitle}</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Contact Info */}
-          <div className="bg-white rounded-xl shadow p-6">
+          <div className="bg-white w-full md:w-1/2 rounded-xl shadow p-6 ">
             <h2 className="text-xl font-semibold mb-4 text-gray-800">
               {t.addressTitle}
             </h2>
@@ -98,7 +98,7 @@ const Contact = () => {
           </div>
 
           {/* Contact Form */}
-          <div className="bg-white rounded-xl shadow p-6">
+          <div className="bg-white w-full md:w-1/2 rounded-xl shadow p-6 ">
             <h2 className="text-xl font-semibold mb-4 text-red-500">
               {t.messageTitle}
             </h2>
