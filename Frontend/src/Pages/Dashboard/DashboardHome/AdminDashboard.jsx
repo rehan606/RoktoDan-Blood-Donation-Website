@@ -65,7 +65,7 @@ const AdminDashboard = () => {
     <div className="p-6 space-y-8 text-white">
 
         {/* ================= KPI CARDS ================= */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-6 border border-gray-200 p-4 rounded-xl">
 
             <Card
             title={language === "bn" ? "মোট ব্যবহারকারী" : "Total Users"}
@@ -103,76 +103,84 @@ const AdminDashboard = () => {
       
 
         {/* ================= Bar Charts ================= */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="flex flex-col lg:flex-row justify-between  gap-6">
 
             {/* Blood Group Chart */}
-            <ChartBox title="Blood Group Distribution">
-            <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={bloodGroupData}>
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="total" fill="#ef4444" />
-                </BarChart>
-            </ResponsiveContainer>
-            </ChartBox>
+            <div className="w-full lg:w-1/2 border border-gray-200 p-4 rounded-xl">
+              <ChartBox title="Blood Group Distribution">
+              <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={bloodGroupData}>
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="total" fill="#ef4444" />
+                  </BarChart>
+              </ResponsiveContainer>
+              </ChartBox>
+            </div>
 
             {/* Union Chart */}
-            <ChartBox title="Union Wise Donors">
-            <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={unionData}>
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="total" fill="#22c55e" />
-                </BarChart>
-            </ResponsiveContainer>
-            </ChartBox>
+            <div className="w-full lg:w-1/2 border border-gray-200 p-4 rounded-xl">
+              <ChartBox title="Union Wise Donors">
+              <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={unionData}>
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="total" fill="#22c55e" />
+                  </BarChart>
+              </ResponsiveContainer>
+              </ChartBox>
+            </div>
 
         </div>
 
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="flex flex-col lg:flex-row justify-between  gap-6">
             {/* ================= Monthly Line Chart ================= */}
-            <ChartBox title="Monthly Donations">
-                <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={monthlyData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month" />
-                    <YAxis />
-                    <Tooltip />
-                    <Line type="monotone" dataKey="total" stroke="#ef4444" />
-                </LineChart>
-                </ResponsiveContainer>
-            </ChartBox>
+            <div className="w-full lg:w-1/2 border border-gray-200 p-4 rounded-xl">
+              <ChartBox title="Monthly Donations">
+                  <ResponsiveContainer width="100%" height={300}>
+                  <LineChart data={monthlyData}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="month" />
+                      <YAxis />
+                      <Tooltip />
+                      <Line type="monotone" dataKey="total" stroke="#ef4444" />
+                  </LineChart>
+                  </ResponsiveContainer>
+              </ChartBox>
+            </div>
 
             {/* ================= Pie Chart ================= */}
-            <ChartBox title="Request Status">
-                <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                    <Pie
-                    data={data.requestStatusStats}
-                    dataKey="total"
-                    nameKey="_id"
-                    outerRadius={100}
-                    label
-                    >
-                    {data.requestStatusStats.map((entry, index) => (
-                        <Cell
-                        key={index}
-                        fill={COLORS[index % COLORS.length]}
-                        />
-                    ))}
-                    </Pie>
-                    <Tooltip />
-                </PieChart>
-                </ResponsiveContainer>
-            </ChartBox>
+            <div className="w-full lg:w-1/2 border border-gray-200 p-4 rounded-xl">
+              <ChartBox title="Request Status">
+                  <ResponsiveContainer width="100%" height={300}>
+                  <PieChart>
+                      <Pie
+                      data={data.requestStatusStats}
+                      dataKey="total"
+                      nameKey="_id"
+                      outerRadius={100}
+                      label
+                      >
+                      {data.requestStatusStats.map((entry, index) => (
+                          <Cell
+                          key={index}
+                          fill={COLORS[index % COLORS.length]}
+                          />
+                      ))}
+                      </Pie>
+                      <Tooltip />
+                  </PieChart>
+                  </ResponsiveContainer>
+              </ChartBox>
+            </div>
         </div>
         {/* ================= TOP DONORS ================= */}
         <ChartBox title="Top Donors">
             {data.topDonors.map((donor, index) => (
-            <div key={index} className="flex justify-between py-2 border-b border-gray-700 text-green-600">
+            <div key={index} className="flex justify-between py-2 border-b border-gray-500 text-green-600">
                 <span>{donor._id}</span>
                 <span>{donor.name}</span>
                 <span>{donor.totalDonations}</span>
