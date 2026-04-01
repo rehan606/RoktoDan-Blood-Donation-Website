@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import { FaEye, FaUserSlash, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
+import { FaEye, FaUserSlash, FaPhoneAlt, FaMapMarkerAlt, FaPhone, FaEnvelope, FaTint  } from "react-icons/fa";
+
 import { BiSolidUserCheck } from "react-icons/bi";
 import { useState } from "react";
 
@@ -66,7 +67,7 @@ const PendingDonors = () => {
     }
 
   return (
-    <div className="p-6">
+    <div className="p-2 md:p-6">
       <h2 className="text-2xl font-bold mb-6">Pending Donors : ( {pendingDonors.length} ) </h2>
 
       {/* ================= DESKTOP TABLE (lg+) =================  */}
@@ -173,21 +174,23 @@ const PendingDonors = () => {
             </div>
 
             {/* Pending Status */}
-            <div className="mt-3">
+            <div className="mt-3 ">
+              ⏳
               <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-medium">
-                ⏳ Pending Approval
+                 Pending Approval
               </span>
             </div>
 
             {/* Phone */}
-            <div className="mt-3 flex justify-between items-center text-sm">
-              <span className="text-gray-500 font-medium">Phone</span>
-
+            <div className="mt-3 flex justify-between items-center text-md">
+              
+                <span className="text-gray-500 font-medium flex items-center gap-3"> <FaPhoneAlt className="text-xs" /> Phone</span>
+              
               <a
                 href={`tel:${donor.phone}`}
                 className="flex items-center gap-1 text-blue-600 font-medium"
               >
-                <FaPhoneAlt className="text-xs" />
+                
                 {donor.phone}
               </a>
             </div>
@@ -229,39 +232,109 @@ const PendingDonors = () => {
 
       {/* Modal */}
       {selectedDonor && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg w-full max-w-md">
-
-            <div className="bg-red-500 px-8 py-6 rounded-md text-center mb-4">
-                <h3 className="text-2xl font-semibold  text-white-">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center px-4">
+          
+          {/* Modal */}
+          <div className="bg-white w-full max-w-md rounded-2xl shadow-xl overflow-hidden animate-fadeIn">
+            
+            {/* Header */}
+            <div className="bg-linear-to-r from-red-500 to-red-600 p-6 text-center">
+              <h3 className="text-xl font-semibold text-white">
                 Donor Details
-                </h3>
+              </h3>
+              <p className="text-sm text-red-100 mt-1">
+                {selectedDonor.name}
+              </p>
             </div>
 
-            <div className="space-y-2 text-sm text-zinc-800 bg-zinc-200 p-8 rounded-md shadow-md border-2 border-zinc-300">
+            {/* Body */}
+            <div className="p-5 space-y-3 text-sm text-gray-700">
+              
+              {/* Blood Group */}
+              <div className="flex justify-between items-center bg-red-50 p-3 rounded-lg">
+                <div className="flex items-center gap-2 text-red-600 font-medium">
+                  <FaTint />
+                  Blood Group
+                </div>
+                <span className="font-bold text-red-600">
+                  {selectedDonor.bloodGroup}
+                </span>
+              </div>
 
-                <p><b>Name:</b> {selectedDonor.name}</p>
-                <p><b>Email:</b> {selectedDonor.email}</p>
-                <p><b>Blood Group:</b> {selectedDonor.bloodGroup}</p>
-                <p><b>Phone:</b> {selectedDonor.phone}</p>
-                <p><b>Upazila:</b> {selectedDonor.upazila}</p>
-                <p><b>Union:</b> {selectedDonor.union}</p>
-                <p><b>Donor Type:</b> {selectedDonor.donorType}</p>
+              {/* Email */}
+              <div className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <FaEnvelope className="text-blue-500" />
+                  Email
+                </div>
+                <span className="font-medium text-xs break-all">
+                  {selectedDonor.email}
+                </span>
+              </div>
 
-                {selectedDonor.lastDonationDate && (
-                <p>
-                    <b>Last Donation:</b>{" "}
+              {/* Phone */}
+              <div className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <FaPhoneAlt className="text-green-500" />
+                  Phone
+                </div>
+                <a
+                  href={`tel:${selectedDonor.phone}`}
+                  className="text-green-600 font-medium"
+                >
+                  {selectedDonor.phone}
+                </a>
+              </div>
+
+              {/* Location */}
+              <div className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <FaMapMarkerAlt className="text-red-500" />
+                  Location
+                </div>
+                <span className="text-right">
+                  {selectedDonor.upazila}, {selectedDonor.union}
+                </span>
+              </div>
+
+              {/* Donor Type */}
+              <div className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
+                <span className="font-medium">Donor Type</span>
+                <span className="bg-blue-100 text-blue-600 px-2 py-1 rounded text-xs font-semibold">
+                  {selectedDonor.donorType}
+                </span>
+              </div>
+
+              {/* Last Donation */}
+              {selectedDonor.lastDonationDate && (
+                <div className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
+                  <span className="font-medium">Last Donation</span>
+                  <span className="text-xs">
                     {new Date(selectedDonor.lastDonationDate).toDateString()}
-                </p>
-                )}
+                  </span>
+                </div>
+              )}
             </div>
 
-            <button
-              onClick={() => setSelectedDonor(null)}
-              className="mt-4 w-full bg-red-500 hover:bg-red-700 text-white py-2 rounded"
-            >
-              Close
-            </button>
+            {/* Footer */}
+            <div className="p-4 flex gap-3 border-t">
+              
+              {/* Call */}
+              <a
+                href={`tel:${selectedDonor.phone}`}
+                className="flex-1 text-center bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg font-medium"
+              >
+                📞 Call
+              </a>
+
+              {/* Close */}
+              <button
+                onClick={() => setSelectedDonor(null)}
+                className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg font-medium"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}
