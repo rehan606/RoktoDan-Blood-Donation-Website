@@ -61,7 +61,7 @@ const MakeAdmin = () => {
   return (
     <div className="p-6">
 
-      <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-6 ">
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-6 pb-6 ">
         <h2 className="text-2xl font-bold ">
           {language === "bn"
             ? "অ্যাডমিন ম্যানেজমেন্ট"
@@ -78,14 +78,15 @@ const MakeAdmin = () => {
           }
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full md:w-1/2 border p-2 rounded-lg bg-gray-100/30"
+          className="w-full lg:w-1/2 border p-2 rounded-lg bg-gray-100/30"
         />
       </div>
 
       {/* {isPending && <p>Loading...</p>} */}
 
       {/* Table */}
-      {users.length > 0 && (
+      
+      {/* {users.length > 0 && (
         <div className="overflow-x-auto">
           <table className="min-w-full border-collapse border border-gray-400 rounded-lg bg-white text-zinc-900">
             <thead className="bg-gray-100">
@@ -129,7 +130,134 @@ const MakeAdmin = () => {
             </tbody>
           </table>
         </div>
+      )} */}
+
+
+      {/* ================= DESKTOP TABLE ================= */}
+      {users.length > 0 && (
+        <div className="hidden lg:block overflow-x-auto">
+          <table className="min-w-full border rounded-xl overflow-hidden bg-white text-zinc-900">
+            
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="p-3 border text-left">Email</th>
+                <th className="p-3 border">Created</th>
+                <th className="p-3 border">Role</th>
+                <th className="p-3 border text-center">Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {users.map((user) => (
+                <tr
+                  key={user._id}
+                  className="text-center hover:bg-gray-50 transition"
+                >
+                  <td className="p-3 border text-left break-all">
+                    {user.email}
+                  </td>
+
+                  <td className="p-3 border">
+                    {formatDate(user.created_at)}
+                  </td>
+
+                  <td className="p-3 border">
+                    <span
+                      className={`text-xs font-semibold px-3 py-1 rounded-full ${
+                        user.role === "admin"
+                          ? "bg-red-500 text-white"
+                          : "bg-green-500 text-white"
+                      }`}
+                    >
+                      {user.role}
+                    </span>
+                  </td>
+
+                  <td className="p-3 border">
+                    <button
+                      onClick={() => handleRoleChange(user)}
+                      className={`px-4 py-1.5 rounded-md text-white text-sm ${
+                        user.role === "admin"
+                          ? "bg-red-500 hover:bg-red-600"
+                          : "bg-green-500 hover:bg-green-600"
+                      }`}
+                    >
+                      {user.role === "admin"
+                        ? language === "bn"
+                          ? "User করুন"
+                          : "Make User"
+                        : language === "bn"
+                        ? "Admin করুন"
+                        : "Make Admin"}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
+
+      {/* ================= MOBILE + TABLET CARD ================= */}
+      <div className="lg:hidden space-y-4">
+        {users.map((user) => (
+          <div
+            key={user._id}
+            className="bg-white border border-gray-200 rounded-2xl shadow-sm p-4 hover:shadow-md transition"
+          >
+            
+            {/* Top */}
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-xs text-gray-500">Email</p>
+                <p className="font-semibold text-gray-800 break-all">
+                  {user.email}
+                </p>
+              </div>
+
+              {/* Role Badge */}
+              <span
+                className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                  user.role === "admin"
+                    ? "bg-red-100 text-red-600"
+                    : "bg-green-100 text-green-600"
+                }`}
+              >
+                {user.role}
+              </span>
+            </div>
+
+            {/* Created */}
+            <div className="mt-3 text-sm flex justify-between">
+              <span className="text-gray-500">Created</span>
+              <span className="font-medium text-gray-800">
+                {formatDate(user.created_at)}
+              </span>
+            </div>
+
+            {/* Divider */}
+            <div className="border-t my-4"></div>
+
+            {/* Action */}
+            <button
+              onClick={() => handleRoleChange(user)}
+              className={`w-full py-2 rounded-lg text-white font-medium text-sm ${
+                user.role === "admin"
+                  ? "bg-red-500 hover:bg-red-600"
+                  : "bg-green-500 hover:bg-green-600"
+              }`}
+            >
+              {user.role === "admin"
+                ? language === "bn"
+                  ? "User করুন"
+                  : "Make User"
+                : language === "bn"
+                ? "Admin করুন"
+                : "Make Admin"}
+            </button>
+          </div>
+        ))}
+      </div>
 
       {!isPending && users.length === 0 && search && (
         <p className="text-gray-500">

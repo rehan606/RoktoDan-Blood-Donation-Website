@@ -66,7 +66,7 @@ const Navbar = ({ language, setLanguage }) => {
                             ? "text-red-500 font-semibold"
                             : "text-gray-700 hover:text-red-600 cursor-pointer"
                         }>
-                            {language === "bn" ? "রক্তদাতা" : "Donors"}
+                            {language === "bn" ? "রক্তদাতা" : "All Donors"}
                         </NavLink>
                         <NavLink to={'/request-blood'} className={({ isActive }) => isActive
                             ? "text-red-500 font-semibold"
