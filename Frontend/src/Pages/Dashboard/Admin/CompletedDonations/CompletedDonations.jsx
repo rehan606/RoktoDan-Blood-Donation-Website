@@ -79,69 +79,112 @@ const CompletedDonations = () => {
             : "No approved donations found"}
         </div>
       ) : (
-        <div className="overflow-x-auto bg-white shadow-lg rounded-xl">
-          <table className="min-w-full text-sm text-left">
-            <thead className="bg-[#0C2349] text-white border ">
-              <tr>
-                <th className="px-4 py-3">#</th>
-                <th className="px-4 py-3">
-                  {language === "bn" ? "ডোনার" : "Donor"}
-                </th>
-                <th className="px-4 py-3">
-                  {language === "bn" ? "রক্ত" : "Blood"}
-                </th>
-                <th className="px-4 py-3">
-                  {language === "bn" ? "রোগী" : "Patient"}
-                </th>
-                <th className="px-4 py-3">
-                  {language === "bn" ? "হাসপাতাল" : "Hospital"}
-                </th>
-                <th className="px-4 py-3">
-                  {language === "bn" ? "ডোনেশন তারিখ" : "Donation Date"}
-                </th>
-                <th className="px-4 py-3">
-                  {language === "bn" ? "অনুমোদনের তারিখ" : "Approved At"}
-                </th>
-                <th className="px-4 py-3 text-center">
-                  {language === "bn" ? "স্ট্যাটাস" : "Status"}
-                </th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {filtered.map((donation, index) => (
-                <tr
-                  key={donation._id}
-                  className="border-b hover:bg-gray-50 transition text-gray-800 "
-                >
-                  <td className="px-4 py-3">{index + 1}</td>
-                  <td className="px-4 py-3">
-                    {donation.donorEmail}
-                  </td>
-                  <td className="px-4 py-3 font-semibold text-red-600">
-                    {donation.bloodGroup}
-                  </td>
-                  <td className="px-4 py-3">
-                    {donation.patientName}
-                  </td>
-                  <td className="px-4 py-3">
-                    {donation.hospitalName}
-                  </td>
-                  <td className="px-4 py-3">
-                    {new Date(donation.donatedAt).toLocaleDateString()}
-                  </td>
-                  <td className="px-4 py-3">
-                    {new Date(donation.approvedAt).toLocaleDateString()}
-                  </td>
-                  <td className="px-4 py-3 text-center">
-                    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">
-                      {language === "bn" ? "অনুমোদিত" : "Approved"}
-                    </span>
-                  </td>
+        <div>
+          <div className="overflow-x-auto hidden lg:block bg-white shadow-lg rounded-xl">
+            <table className="min-w-full text-sm text-left">
+              <thead className="bg-[#0C2349] text-white border ">
+                <tr>
+                  <th className="px-4 py-3">#</th>
+                  <th className="px-4 py-3">
+                    {language === "bn" ? "ডোনার" : "Donor"}
+                  </th>
+                  <th className="px-4 py-3">
+                    {language === "bn" ? "রক্ত" : "Blood"}
+                  </th>
+                  <th className="px-4 py-3">
+                    {language === "bn" ? "রোগী" : "Patient"}
+                  </th>
+                  <th className="px-4 py-3">
+                    {language === "bn" ? "হাসপাতাল" : "Hospital"}
+                  </th>
+                  <th className="px-4 py-3">
+                    {language === "bn" ? "ডোনেশন তারিখ" : "Donation Date"}
+                  </th>
+                  <th className="px-4 py-3">
+                    {language === "bn" ? "অনুমোদনের তারিখ" : "Approved At"}
+                  </th>
+                  <th className="px-4 py-3 text-center">
+                    {language === "bn" ? "স্ট্যাটাস" : "Status"}
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody>
+                {filtered.map((donation, index) => (
+                  <tr
+                    key={donation._id}
+                    className="border-b hover:bg-gray-50 transition text-gray-800 "
+                  >
+                    <td className="px-4 py-3">{index + 1}</td>
+                    <td className="px-4 py-3">
+                      {donation.donorEmail}
+                    </td>
+                    <td className="px-4 py-3 font-semibold text-red-600">
+                      {donation.bloodGroup}
+                    </td>
+                    <td className="px-4 py-3">
+                      {donation.patientName}
+                    </td>
+                    <td className="px-4 py-3">
+                      {donation.hospitalName}
+                    </td>
+                    <td className="px-4 py-3">
+                      {new Date(donation.donatedAt).toLocaleDateString()}
+                    </td>
+                    <td className="px-4 py-3">
+                      {new Date(donation.approvedAt).toLocaleDateString()}
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">
+                        {language === "bn" ? "অনুমোদিত" : "Approved"}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="grid gap-4 lg:hidden">
+            {filtered.map((donation, index) => (
+              <div
+                key={donation._id}
+                className="bg-white border border-gray-200 rounded-2xl shadow-md p-4 hover:shadow-lg transition"
+              >
+                {/* Top */}
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="font-semibold text-zinc-800 text-sm">
+                    #{index + 1} • Patient Name: {donation.patientName}
+                  </h3>
+
+                  <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs font-semibold">
+                    🩸 {donation.bloodGroup}
+                  </span>
+                </div>
+
+                {/* Info */}
+                <div className="space-y-1 text-sm text-gray-600">
+                  <p><b>👤 Donor:</b> {donation.donorEmail}</p>
+                  <p><b>🏥 Hospital:</b> {donation.hospitalName}</p>
+
+                  <p className="text-xs text-gray-400">
+                    🗓 Donation: {new Date(donation.donatedAt).toLocaleDateString()}
+                  </p>
+
+                  <p className="text-xs text-gray-400">
+                    ✅ Approved: {new Date(donation.approvedAt).toLocaleDateString()}
+                  </p>
+                </div>
+
+                {/* Status */}
+                <div className="mt-3 flex justify-end">
+                  <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">
+                    {language === "bn" ? "অনুমোদিত" : "Approved"}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
