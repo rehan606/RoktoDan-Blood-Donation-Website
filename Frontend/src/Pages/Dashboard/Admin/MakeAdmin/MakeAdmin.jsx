@@ -85,53 +85,6 @@ const MakeAdmin = () => {
       {/* {isPending && <p>Loading...</p>} */}
 
       {/* Table */}
-      
-      {/* {users.length > 0 && (
-        <div className="overflow-x-auto">
-          <table className="min-w-full border-collapse border border-gray-400 rounded-lg bg-white text-zinc-900">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="p-3 border">Email</th>
-                <th className="p-3 border">Created_At</th>
-                <th className="p-3 border">Role</th>
-                <th className="p-3 border">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr key={user._id} className="text-center bg-white text-zinc-800 ">
-                  <td className="p-2 border">{user.email}</td>
-                  <td className="p-2 border">{formatDate(user.created_at)}</td>
-                  <td className="p-2 border " > <span className={`${
-                        user.role === "admin"
-                          ? "bg-red-500 text-white rounded-full px-4 py-2 uppercase"
-                          : "bg-green-500 rounded-full px-4 py-2"
-                      }`}>{user.role}</span> </td>
-                  <td className="p-2 border">
-                    <button
-                      onClick={() => handleRoleChange(user)}
-                      className={`btn btn-sm bg-green-500 px-6 py-2 rounded-md text-white cursor-pointer ${
-                        user.role === "admin"
-                          ? "bg-red-500"
-                          : "bg-green-500"
-                      }`}
-                    >
-                      {user.role === "admin"
-                        ? language === "bn"
-                          ? "User করুন"
-                          : "Make User"
-                        : language === "bn"
-                        ? "Admin করুন"
-                        : "Make Admin"}
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )} */}
-
 
       {/* ================= DESKTOP TABLE ================= */}
       {users.length > 0 && (
@@ -214,6 +167,7 @@ const MakeAdmin = () => {
                   {user.email}
                 </p>
               </div>
+              
 
               {/* Role Badge */}
               <span
@@ -231,7 +185,7 @@ const MakeAdmin = () => {
             <div className="mt-3 text-sm flex justify-between">
               <span className="text-gray-500">Created</span>
               <span className="font-medium text-gray-800">
-                {formatDate(user.created_at)}
+                📅 {formatDate(user.created_at)}
               </span>
             </div>
 
