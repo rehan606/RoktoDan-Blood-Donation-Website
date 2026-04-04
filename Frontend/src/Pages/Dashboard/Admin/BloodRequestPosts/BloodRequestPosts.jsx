@@ -68,48 +68,6 @@ const BloodRequestPosts = () => {
         Blood Request Posts
       </h2>
 
-      {/* Table */}
-      {/* <div className="overflow-x-auto">
-        <table className="min-w-full border-collapse border border-gray-400 rounded-lg bg-white text-zinc-900">
-          <thead className="bg-gray-100 text-zinc-800 py-3">
-            <tr>
-              <th className="border border-gray-300 p-3">Patient Name</th>
-              <th className="border border-gray-300 p-3">Age</th>
-              <th className="border border-gray-300 p-3">Blood Group</th>
-              <th className="border border-gray-300 p-3">Phone</th>
-              <th className="text-center border border-gray-300 p-3 ">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {requests.map((item) => (
-              <tr key={item._id}>
-                <td className="border border-gray-300 p-3">{item.name}</td>
-                <td className="border border-gray-300 p-3">{item.age}</td>
-                <td className="border border-gray-300 p-3 font-semibold ">{item.bloodGroup}</td>
-                <td className="border border-gray-300 p-3">{item.phone}</td>
-                <td className="p-2 border border-gray-300">
-                    <div className="flex justify-center gap-2">
-                        <button
-                            onClick={() => setSelected(item)}
-                            className="bg-blue-600 p-2 text-white rounded cursor-pointer"
-                        >
-                            <FaEye />
-                        </button>
-                        <button
-                            onClick={() => handleDelete(item._id)}
-                            className="bg-red-600 p-2 text-white rounded cursor-pointer"
-                        >
-                            <FaTrash />
-                        </button>
-                    </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div> */}
-
-
       {/* ================= DESKTOP TABLE VIEW =================   */}
       <div className="hidden lg:block overflow-x-auto">
         <table className="min-w-full border-collapse border border-gray-200 rounded-xl overflow-hidden shadow-sm bg-white text-zinc-900">

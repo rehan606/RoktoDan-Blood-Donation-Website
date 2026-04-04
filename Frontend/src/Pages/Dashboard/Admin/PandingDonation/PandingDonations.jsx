@@ -115,80 +115,135 @@ const PendingDonations = () => {
         <div className="text-center text-gray-500">
           {language === "bn"
             ? "কোনো Pending ডোনেশন নেই"
-            : "No pending donations found"}
+            : "No pending donations found"} 
         </div>
       ) : (
-        <div className="overflow-x-auto bg-white shadow-lg rounded-xl">
-          <table className="min-w-full text-sm text-left">
-            <thead className="bg-[#0C2349] text-white">
-              <tr>
-                <th className="px-4 py-3">#</th>
-                <th className="px-4 py-3">
-                  {language === "bn" ? "ডোনার" : "Donor"}
-                </th>
-                <th className="px-4 py-3">
-                  {language === "bn" ? "রক্ত" : "Blood"}
-                </th>
-                <th className="px-4 py-3">
-                  {language === "bn" ? "রোগী" : "Patient"}
-                </th>
-                <th className="px-4 py-3">
-                  {language === "bn" ? "হাসপাতাল" : "Hospital"}
-                </th>
-                <th className="px-4 py-3">
-                  {language === "bn" ? "তারিখ" : "Date"}
-                </th>
-                <th className="px-4 py-3 text-center">
-                  {language === "bn" ? "একশন" : "Action"}
-                </th>
-              </tr>
-            </thead>
+        <div>
+          <div className="hidden md:block overflow-x-auto bg-white shadow-xl rounded-2xl border border-gray-200">
+            <table className="min-w-full text-sm text-left">
 
-            <tbody>
-              {donations.map((donation, index) => (
-                <tr
-                  key={donation._id}
-                  className="border-b hover:bg-gray-50 transition text-zinc-800"
-                >
-                  <td className="px-4 py-3">{index + 1}</td>
-                  <td className="px-4 py-3">
-                    {donation.donorEmail}
-                  </td>
-                  <td className="px-4 py-3 font-semibold text-red-600">
-                    {donation.bloodGroup}
-                  </td>
-                  <td className="px-4 py-3">
-                    {donation.patientName}
-                  </td>
-                  <td className="px-4 py-3">
-                    {donation.hospitalName}
-                  </td>
-                  <td className="px-4 py-3">
-                    {new Date(donation.donatedAt).toLocaleDateString()}
-                  </td>
-                  <td className="px-4 py-3 flex justify-center gap-3">
-
-                    {/* Approve */}
-                    <button
-                      onClick={() => handleApprove(donation._id)}
-                      className="bg-[#0C2349] text-white p-2 rounded hover:bg-green-600 transition cursor-pointer "
-                    >
-                      <FaCheck />
-                    </button>
-
-                    {/* Delete */}
-                    <button
-                      onClick={() => handleDelete(donation._id)}
-                      className="bg-red-500 text-white p-2 rounded hover:bg-red-600 transition cursor-pointer "
-                    >
-                      <FaTrash />
-                    </button>
-
-                  </td>
+              <thead className="bg-linear-to-r from-[#0C2349] to-[#1d4ed8] text-white">
+                <tr>
+                  <th className="px-4 py-3">#</th>
+                  <th className="px-4 py-3">
+                    {language === "bn" ? "ডোনার" : "Donor"}
+                  </th>
+                  <th className="px-4 py-3">
+                    {language === "bn" ? "রক্ত" : "Blood"}
+                  </th>
+                  <th className="px-4 py-3">
+                    {language === "bn" ? "রোগী" : "Patient"}
+                  </th>
+                  <th className="px-4 py-3">
+                    {language === "bn" ? "হাসপাতাল" : "Hospital"}
+                  </th>
+                  <th className="px-4 py-3">
+                    {language === "bn" ? "তারিখ" : "Date"}
+                  </th>
+                  <th className="px-4 py-3 text-center">
+                    {language === "bn" ? "একশন" : "Action"}
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody>
+                {donations.map((donation, index) => (
+                  <tr
+                    key={donation._id}
+                    className="border-b hover:bg-gray-50 transition text-zinc-800"
+                  >
+                    <td className="px-4 py-3">{index + 1}</td>
+
+                    <td className="px-4 py-3">
+                      {donation.donorEmail}
+                    </td>
+
+                    <td className="px-4 py-3">
+                      <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs font-semibold">
+                        {donation.bloodGroup}
+                      </span>
+                    </td>
+
+                    <td className="px-4 py-3">
+                      {donation.patientName}
+                    </td>
+
+                    <td className="px-4 py-3">
+                      {donation.hospitalName}
+                    </td>
+
+                    <td className="px-4 py-3 text-gray-600">
+                      {new Date(donation.donatedAt).toLocaleDateString()}
+                    </td>
+
+                    <td className="px-4 py-3">
+                      <div className="flex justify-center gap-2">
+                        <button
+                          onClick={() => handleApprove(donation._id)}
+                          className="bg-[#0C2349] hover:bg-green-600 text-white p-2 rounded-lg transition"
+                        >
+                          <FaCheck />
+                        </button>
+
+                        <button
+                          onClick={() => handleDelete(donation._id)}
+                          className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg transition"
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="grid gap-4 md:hidden">
+            {donations.map((donation, index) => (
+              <div
+                key={donation._id}
+                className="bg-white border border-gray-200 rounded-2xl shadow-md p-4 hover:shadow-lg transition"
+              >
+                {/* Top */}
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="font-semibold text-zinc-800 text-sm">
+                    #{index + 1} • {donation.patientName}
+                  </h3>
+
+                  <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs font-semibold">
+                    🩸 {donation.bloodGroup}
+                  </span>
+                </div>
+
+                {/* Info */}
+                <div className="space-y-1 text-sm text-gray-600">
+                  <p><b>👤 Donor:</b> {donation.donorEmail}</p>
+                  <p><b>🏥 Hospital:</b> {donation.hospitalName}</p>
+                  <p className="text-xs text-gray-400">
+                    🗓 {new Date(donation.donatedAt).toLocaleDateString()}
+                  </p>
+                </div>
+
+                {/* Actions */}
+                <div className="flex justify-end gap-2 mt-4">
+                  <button
+                    onClick={() => handleApprove(donation._id)}
+                    className="bg-[#0C2349] hover:bg-green-600 text-white p-2 rounded-lg transition"
+                  >
+                    <FaCheck />
+                  </button>
+
+                  <button
+                    onClick={() => handleDelete(donation._id)}
+                    className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg transition"
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
