@@ -43,11 +43,11 @@ const ProfilePage = () => {
 
 
   return (
-    <div className="max-w-5xl mx-auto mt-10">
-      <div className=" flex items-center gap-4 shadow-xl rounded-2xl p-6 bg-[#0F2A44]">
+    <div className=" mx-auto mt-10">
+      <div className=" flex items-center justify-center  flex-wrap">
 
         {/* HEADER */}
-        <div className="text-center bg-white p-6 rounded-lg text-zinc-900 w-sm ">
+        <div className="text-center bg-white p-6 rounded-lg text-zinc-900 w-full md:w-sm shadow-lg">
           <img
             src={
               typeof user?.image === "string" && user.image.trim() !== ""
@@ -55,12 +55,12 @@ const ProfilePage = () => {
                 : profileIcon
             }
             alt="Profile"
-            className="w-28 h-28 mx-auto rounded-full object-cover border-8 border-red-300"
+            className="w-28 h-28 mx-auto rounded-full object-cover border-8 border-green-200"
           />
           <h2 className="text-2xl font-bold mt-2">
             {donor?.name || user.name}
           </h2>
-          <p className="text-red-500 capitalize">{role}</p>
+          <p className="text-green-600 bg-green-200 rounded-full inline-block px-3 py-1 capitalize">{role}</p>
 
           {/* USER INFO */}
           <div className="mt-2 space-y-2">
