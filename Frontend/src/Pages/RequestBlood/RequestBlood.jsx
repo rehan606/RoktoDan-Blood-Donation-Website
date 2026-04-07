@@ -4,16 +4,16 @@ import useAuth from "../../Hooks/useAuth";
 import useUnions from "../../Hooks/useUnions";
 import useBloodGroups from "../../Hooks/useBloodGroups";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router";
 import useAxios from "../../Hooks/useAxios";
 import useUserRole from "../../Hooks/useUserRole";
+import { useNavigate } from "react-router";
 
 const RequestBlood = () => {
     const { language } = useLanguage();
     const { user } = useAuth()
     const { unions } = useUnions()
     const { bloodGroups } = useBloodGroups()
-    const { navigate } = useNavigate();
+    const navigate = useNavigate()
     const axiosInstance = useAxios()
     const { role, roleLoading} = useUserRole();
 
@@ -56,9 +56,8 @@ const RequestBlood = () => {
 
         axiosInstance.post("/blood-request", requestBlood)
             .then(res => {
-                console.log("Response =>", res.data);
 
-                if (res.data.success) {
+                if (res.data.insertedId || res.data.success) {
                     Swal.fire({
                         icon: "success",
                         title: language === "bn"
@@ -242,7 +241,7 @@ const RequestBlood = () => {
                     <button
                         type="submit"
                         disabled={roleLoading}
-                        className={`w-full py-2 rounded-lg font-semibold transition
+                        className={`w-full py-2 rounded-lg font-semibold transition cursor-pointer
                             ${roleLoading
                             ? "bg-gray-400 cursor-not-allowed"
                             : "bg-red-600 hover:bg-red-700 text-white"

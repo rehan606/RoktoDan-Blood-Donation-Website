@@ -31,7 +31,7 @@ const MyBloodRequests = () => {
         </div>
       )}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {requests.map((req) => (
                 
                 <div
@@ -59,6 +59,60 @@ const MyBloodRequests = () => {
                     </span>
                 </div>
             ))}
+        </div> */}
+
+        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-6">
+          {requests.map((req) => (
+            <div
+              key={req._id}
+              className="relative group rounded-2xl p-[1px] bg-white hover:scale-[1.02] transition-all duration-300"
+            >
+              <div className="h-full w-full rounded-2xl bg-white backdrop-blur-md p-5 flex flex-col justify-between shadow-xl">
+                
+                {/* Top Section */}
+                <div>
+                  <div className="flex items-center justify-between">
+                    
+                    <h3 className="text-xl font-bold text-gray-700 mb-2">
+                       {req.name}
+                    </h3>
+                    <h4 className=" font-bold text-gray-700 mb-2 bg-red-100 px-4 py-1 rounded-full">
+                      🩸 {req.bloodGroup}
+                    </h4>
+                  </div>
+
+                  <div className="space-y-1 text-sm text-gray-600">
+                    <p><span className="text-gray-400">📍 Union:</span> {req.union}</p>
+                    <p><span className="text-gray-400">📞 Phone:</span> {req.phone}</p>
+                    <p className="line-clamp-2">
+                      <span className="text-gray-400">💬</span> {req.message}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Bottom Section */}
+                <div className="flex items-center justify-between mt-4">
+                  <span
+                    className={`text-xs font-semibold px-3 py-1 rounded-full capitalize ${
+                      req.status === "pending"
+                        ? "bg-yellow-500/20 text-yellow-400 border border-yellow-400/30"
+                        : req.status === "approved"
+                        ? "bg-green-500/20 text-green-400 border border-green-400/30"
+                        : "bg-red-500/20 text-red-400 border border-red-400/30"
+                    }`}
+                  >
+                    {req.status}
+                  </span>
+
+                  {/* Optional Button */}
+                  <button className="text-xs bg-gray-200 hover:bg-gray-300 text-gray-600 px-3 py-1 rounded-full transition">
+                    View
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          ))}
         </div>
     </div>
   );
