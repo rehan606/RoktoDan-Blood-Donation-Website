@@ -83,103 +83,111 @@ const AddDonation = () => {
                 : "Add New Donation"}
             </h2>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
-
-                <div className=" flex items-center justify-between gap-6">
+            <form onSubmit={handleSubmit}
+                className="max-w-5xl mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-lg space-y-6">
+                {/* Row 1 */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                    
                     {/* Patient Name */}
-                    <div className="flex flex-col flex-1">
-                        <label className="block mb-1 font-medium text-zinc-800">
+                    <div>
+                    <label className="block mb-1 text-sm font-medium text-gray-700">
                         {language === "bn" ? "রোগীর নাম" : "Patient Name"}
-                        </label>
-                        <input
+                    </label>
+                    <input
                         type="text"
                         name="patientName"
-                        placeholder={ language === "bn" ? "রোগীর নাম " : "Enter Patient Name"}
+                        placeholder={
+                        language === "bn" ? "রোগীর নাম লিখুন" : "Enter Patient Name"
+                        }
                         required
-                        className="w-full border border-gray-300 bg-[#FAFAFA] rounded-sm px-4 py-2 focus:none focus:ring-gray-400 outline-none text-zinc-700"
-                        />
+                        className="w-full border border-gray-300 text-gray-600 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-red-400 outline-none transition"
+                    />
                     </div>
 
                     {/* Hospital */}
-
-                    <div className="flex flex-col flex-1">
-                        <label className="block mb-1 font-medium text-zinc-800">
+                    <div>
+                    <label className="block mb-1 text-sm font-medium text-gray-700">
                         {language === "bn" ? "হাসপাতালের নাম" : "Hospital Name"}
-                        </label>
-                        <input
+                    </label>
+                    <input
                         type="text"
                         name="hospitalName"
-                        placeholder={ language === "bn" ? " হাসপাতালের নাম" : "Enter Hospital Name"}
+                        placeholder={
+                        language === "bn" ? "হাসপাতালের নাম লিখুন" : "Enter Hospital Name"
+                        }
                         required
-                        className="w-full border border-gray-300 bg-[#FAFAFA] rounded-sm px-4 py-2 focus:none focus:ring-gray-400 outline-none text-zinc-700"
-                        />
+                        className="w-full border border-gray-300 text-gray-600 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-red-400 outline-none transition"
+                    />
                     </div>
-
                 </div>
 
-                <div className=" flex items-center justify-between gap-6">
+                {/* Row 2 */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     
                     {/* Blood Group */}
-                    <div className="flex flex-col flex-1">
-                        <label className="block mb-1 font-medium text-zinc-800">
+                    <div>
+                    <label className="block mb-1 text-sm font-medium text-gray-700">
                         {language === "bn" ? "রক্তের গ্রুপ" : "Blood Group"}
-                        </label>
-                        <select
+                    </label>
+                    <select
                         name="bloodGroup"
                         required
-                        className="w-full border border-gray-300 bg-[#FAFAFA] rounded-sm px-4 py-2 focus:none focus:ring-gray-400 outline-none text-zinc-700"
-                        >
-                            <option value="">Select</option>
-                            {bloodGroups.map((bg) => (
-                                <option key={bg.lebel} value={bg.value}>
-                                    {bg.value}
-                                </option>
-                            ))}
-                        </select>
+                        className="w-full border border-gray-300 text-gray-600 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-red-400 outline-none transition"
+                    >
+                        <option value="">Select</option>
+                        {bloodGroups.map((bg) => (
+                        <option key={bg.lebel} value={bg.value}>
+                            {bg.value}
+                        </option>
+                        ))}
+                    </select>
                     </div>
+
                     {/* Donation Date */}
-                    <div className="flex flex-col flex-1">
-                        <label className="block mb-1 font-medium text-zinc-800">
+                    <div>
+                    <label className="block mb-1 text-sm font-medium text-gray-700">
                         {language === "bn" ? "ডোনেশনের তারিখ" : "Donation Date"}
-                        </label>
-                        <input
+                    </label>
+                    <input
                         type="date"
                         name="donatedAt"
                         required
-                        className="w-full border border-gray-300 bg-[#FAFAFA] rounded-sm px-4 py-2 focus:none focus:ring-gray-400 outline-none text-zinc-700"
-                        />
+                        className="w-full border border-gray-300 text-gray-600 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-red-400 outline-none transition"
+                    />
                     </div>
                 </div>
 
-                <div className=" flex items-center justify-between gap-6">
+                {/* Row 3 */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-end">
+                    
                     {/* Donation Type */}
-                    <div className="flex flex-col flex-1 ">
-                        <label className="block mb-1 font-medium text-zinc-800">
+                    <div>
+                    <label className="block mb-1 text-sm font-medium text-gray-700">
                         {language === "bn" ? "ডোনেশন টাইপ" : "Donation Type"}
-                        </label>
-                        <select
+                    </label>
+                    <select
                         name="donationType"
-                    className="w-full border border-gray-300 bg-[#FAFAFA] rounded-sm px-4 py-2 focus:none focus:ring-gray-400 outline-none text-zinc-700"
-                        >
+                        className="w-full border border-gray-300 text-gray-600 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-red-400 outline-none transition"
+                    >
                         <option value="direct">
-                            {language === "bn" ? "ডাইরেক্ট কল" : "Direct Call"}
+                        {language === "bn" ? "ডাইরেক্ট কল" : "Direct Call"}
                         </option>
                         <option value="request">
-                            {language === "bn" ? "রিকোয়েস্ট ভিত্তিক" : "Request Based"}
+                        {language === "bn" ? "রিকোয়েস্ট ভিত্তিক" : "Request Based"}
                         </option>
-                        </select>
+                    </select>
                     </div>
-                    
+
                     {/* Submit Button */}
                     <button
-                        type="submit"
-                        disabled={loading}
-                        className=" flex flex-col flex-1 w-full bg-[#0C2349] text-white py-2.5 rounded-sm font-semibold hover:bg-[#0B2349] transition duration-300 disabled:opacity-60 mt-6 cursor-pointer"
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-gradient-to-r from-red-500 to-pink-500 text-white py-3 rounded-xl font-semibold hover:opacity-90 transition duration-300 disabled:opacity-60"
                     >
-                        {loading
+                    {loading
                         ? language === "bn"
-                            ? "অপেক্ষা করুন..."
-                            : "Please wait..."
+                        ? "অপেক্ষা করুন..."
+                        : "Please wait..."
                         : language === "bn"
                         ? "ডোনেশন সাবমিট করুন"
                         : "Submit Donation"}
