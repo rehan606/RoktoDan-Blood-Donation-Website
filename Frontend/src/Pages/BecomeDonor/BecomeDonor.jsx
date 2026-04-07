@@ -6,9 +6,9 @@ import { useLanguage } from "../../context/LanguageContext";
 import useAuth from "../../Hooks/useAuth";
 import useUnions from "../../Hooks/useUnions";
 import useBloodGroups from "../../Hooks/useBloodGroups";
-import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useNavigate } from "react-router";
 
 const BecomeDonor = () => {
   const { language } = useLanguage();
@@ -85,12 +85,12 @@ const BecomeDonor = () => {
   // }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-4">
+    <div className="min-h-screen bg-gray-50/30 py-10 px-4">
       <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg ">
         {/* Header */}
         <div className="text-center mb-8 bg-radial-[at_50%_75%] from-white via-red-400 to-red-500 to-90% py-10 rounded-2xl">
           <FaTint className="text-red-600 text-4xl mx-auto mb-2" />
-          <h1 className="text-3xl font-bold text-red-600">
+          <h1 className="text-3xl font-bold text-gray-700">
             {language === "bn" ? "রক্তদাতা হন" : "Become a Blood Donor"}
           </h1>
           <p className="text-gray-800 mt-2">

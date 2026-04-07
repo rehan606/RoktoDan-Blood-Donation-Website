@@ -81,8 +81,8 @@ const MyBloodRequests = () => {
                     </h4>
                   </div>
 
-                  <div className="space-y-1 text-sm text-gray-600">
-                    <p><span className="text-gray-400">📍 Union:</span> {req.union}</p>
+                  <div className="space-y-1 text-sm text-gray-600 border-t border-t-gray-200 pt-3">
+                    <p><span className="text-gray-400 ">📍 Union:</span> {req.union}</p>
                     <p><span className="text-gray-400">📞 Phone:</span> {req.phone}</p>
                     <p className="line-clamp-2">
                       <span className="text-gray-400">💬</span> {req.message}

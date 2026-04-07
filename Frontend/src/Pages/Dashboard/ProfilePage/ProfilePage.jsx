@@ -44,64 +44,135 @@ const ProfilePage = () => {
 
   return (
     <div className=" mx-auto mt-10">
-      <div className=" flex items-center justify-center  flex-wrap">
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
 
-        {/* HEADER */}
-        <div className="text-center bg-white p-6 rounded-lg text-zinc-900 w-full md:w-sm shadow-lg">
-          <img
-            src={
-              typeof user?.image === "string" && user.image.trim() !== ""
-                ? user.image
-                : profileIcon
-            }
-            alt="Profile"
-            className="w-28 h-28 mx-auto rounded-full object-cover border-8 border-green-200"
-          />
-          <h2 className="text-2xl font-bold mt-2">
-            {donor?.name || user.name}
-          </h2>
-          <p className="text-green-600 bg-green-200 rounded-full inline-block px-3 py-1 capitalize">{role}</p>
+          {/* ================= PROFILE CARD ================= */}
+          <div className="lg:col-span-1">
+            <div className="relative p-[1px] rounded-2xl bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 shadow-lg">
+              
+              <div className="bg-white/90 backdrop-blur-md rounded-2xl p-6 text-center">
 
-          {/* USER INFO */}
-          <div className="mt-2 space-y-2">
-            <p><b>Email:</b> {user.email}</p>
-            <p>
-              <b>Joined:</b>{" "}
-              {new Date(user.created_at).toLocaleDateString()}
-            </p>
-          </div>
-          <div>
-            <button
-              onClick={() => setOpen(true)}
-              className="mt-2 w-full bg-red-500 text-white py-2 rounded-lg cursor-pointer hover:bg-red-700"
-            >
-              Edit Profile
-            </button>
-          </div>
-        </div>
+                {/* Profile Image */}
+                <div className="relative w-fit mx-auto">
+                  <img
+                    src={
+                      typeof user?.image === "string" && user.image.trim() !== ""
+                        ? user.image
+                        : profileIcon
+                    }
+                    alt="Profile"
+                    className="w-28 h-28 rounded-full object-cover border-4 border-white shadow-md"
+                  />
+                  <span className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></span>
+                </div>
 
-        
+                {/* Name */}
+                <h2 className="text-xl sm:text-2xl font-bold mt-4 text-gray-800">
+                  {donor?.name || user.name}
+                </h2>
 
-        {/* DONOR INFO */}
-        {role === "donor" && donor && (
-        <div className="bg-white p-6 rounded-lg  flex-1  ">
-          <h2 className="text-2xl font-semibold text-red-500">Personal Details</h2>
-            <div className="mt-4 border-t pt-4 space-y-2 text-zinc-900">
-              <p className="text-red-600"><b>Blood Group:</b> {donor.bloodGroup}</p>
-              <p><b>Phone:</b> {donor.phone}</p>
-              <p><b>Upazila:</b> {donor.upazila}</p>
-              <p><b>Union:</b> {donor.union}</p>
-              <p><b>Last Donation Date:</b> {formatDateForInput(donor.lastDonationDate)}</p>
-              <p>
-                <b>Available:</b>{" "}
-                {donor.isAvailable ? "Yes" : "No"}
-              </p>
-              <p><b className="text-green-600">ApprovedAt:</b> {formatDateForInput(donor.approvedAt)}</p>
+                {/* Role Badge */}
+                <span className="inline-block mt-2 text-xs font-semibold px-3 py-1 rounded-full bg-green-100 text-green-600 capitalize">
+                  {role}
+                </span>
+
+                {/* Info */}
+                <div className="mt-4 space-y-2 text-sm text-gray-600 text-left">
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">Email</span>
+                    <span className="font-medium">{user.email}</span>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">Joined</span>
+                    <span className="font-medium">
+                      {new Date(user.created_at).toLocaleDateString()}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Button */}
+                <button
+                  onClick={() => setOpen(true)}
+                  className="mt-5 w-full bg-gradient-to-r from-red-500 to-pink-500 text-white py-2 rounded-xl font-medium hover:opacity-90 transition"
+                >
+                  ✏️ Edit Profile
+                </button>
+              </div>
             </div>
-        </div>
-        )}
+          </div>
 
-        
+          {/* ================= DONOR INFO ================= */}
+          {role === "donor" && donor && (
+            <div className="lg:col-span-2">
+              <div className="relative rounded-2xl p-[1px] bg-gradient-to-r from-red-500 via-pink-500 to-blue-500 shadow-lg">
+                
+                <div className="bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-5">
+
+                  {/* Header */}
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b pb-4">
+                    <h2 className="text-xl sm:text-2xl font-bold text-red-500">
+                      🩸 Donor Details
+                    </h2>
+
+                    <span
+                      className={`text-xs font-semibold px-3 py-1 rounded-full ${
+                        donor.isAvailable
+                          ? "bg-green-100 text-green-600"
+                          : "bg-gray-200 text-gray-600"
+                      }`}
+                    >
+                      {donor.isAvailable ? "Available" : "Not Available"}
+                    </span>
+                  </div>
+
+                  {/* Grid Info */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 text-sm sm:text-base">
+
+                    <div className="bg-gray-50 p-4 rounded-xl shadow-sm hover:shadow-md transition">
+                      <p className="text-gray-400 text-xs">Blood Group</p>
+                      <p className="font-bold text-red-600 text-lg">
+                        {donor.bloodGroup}
+                      </p>
+                    </div>
+
+                    <div className="bg-gray-50 p-4  rounded-xl shadow-sm hover:shadow-md transition">
+                      <p className="text-gray-400 text-xs">Phone</p>
+                      <p className="font-medium text-gray-600">{donor.phone}</p>
+                    </div>
+
+                    <div className="bg-gray-50 p-4 rounded-xl shadow-sm hover:shadow-md transition">
+                      <p className="text-gray-400 text-xs">Upazila</p>
+                      <p className="font-medium text-gray-600">{donor.upazila}</p>
+                    </div>
+
+                    <div className="bg-gray-50 p-4 rounded-xl shadow-sm hover:shadow-md transition">
+                      <p className="text-gray-400 text-xs">Union</p>
+                      <p className="font-medium text-gray-600">{donor.union}</p>
+                    </div>
+
+                    <div className="bg-gray-50 p-4 rounded-xl shadow-sm hover:shadow-md transition">
+                      <p className="text-gray-400 text-xs">Last Donation</p>
+                      <p className="font-medium text-gray-600">
+                        {formatDateForInput(donor.lastDonationDate)}
+                      </p>
+                    </div>
+
+                    <div className="bg-gray-50 p-4 rounded-xl shadow-sm hover:shadow-md transition">
+                      <p className="text-gray-400 text-xs">Approved At</p>
+                      <p className="font-medium text-green-600">
+                        {formatDateForInput(donor.approvedAt)}
+                      </p>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          
+        </div>
       </div>
 
       {open && (
