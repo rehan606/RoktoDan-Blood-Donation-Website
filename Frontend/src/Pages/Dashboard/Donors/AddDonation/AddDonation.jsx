@@ -26,6 +26,7 @@ const AddDonation = () => {
         donorId: user?.uid, // অথবা তোমার donor _id
         bloodGroup: form.bloodGroup.value,
         patientName: form.patientName.value,
+        phone: form.phone.value,
         hospitalName: form.hospitalName.value,
         donationType: form.donationType.value,
         donatedAt: form.donatedAt.value,
@@ -123,60 +124,76 @@ const AddDonation = () => {
 
                 {/* Row 2 */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                    
-                    {/* Blood Group */}
+
+                    {/* Mobile Number */}
                     <div>
-                    <label className="block mb-1 text-sm font-medium text-gray-700">
-                        {language === "bn" ? "রক্তের গ্রুপ" : "Blood Group"}
-                    </label>
-                    <select
-                        name="bloodGroup"
-                        required
-                        className="w-full border border-gray-300 text-gray-600 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-red-400 outline-none transition"
-                    >
-                        <option value="">Select</option>
-                        {bloodGroups.map((bg) => (
-                        <option key={bg.lebel} value={bg.value}>
-                            {bg.value}
-                        </option>
-                        ))}
-                    </select>
+                        <label className="block mb-1 text-sm font-medium text-gray-700">
+                            {language === "bn" ? "মোবাইল নং " : "Mobile Number"}
+                        </label>
+                        <input
+                            type="number"
+                            name="phone"
+                            placeholder={
+                            language === "bn" ? "মোবাইল নং লিখুন" : "Enter Mobile Number"
+                            }
+                            required
+                            className="w-full border border-gray-300 text-gray-600 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-red-400 outline-none transition"
+                        />
                     </div>
 
                     {/* Donation Date */}
                     <div>
-                    <label className="block mb-1 text-sm font-medium text-gray-700">
-                        {language === "bn" ? "ডোনেশনের তারিখ" : "Donation Date"}
-                    </label>
-                    <input
-                        type="date"
-                        name="donatedAt"
-                        required
-                        className="w-full border border-gray-300 text-gray-600 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-red-400 outline-none transition"
-                    />
+                        <label className="block mb-1 text-sm font-medium text-gray-700">
+                            {language === "bn" ? "ডোনেশনের তারিখ" : "Donation Date"}
+                        </label>
+                        <input
+                            type="date"
+                            name="donatedAt"
+                            required
+                            className="w-full border border-gray-300 text-gray-600 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-red-400 outline-none transition"
+                        />
+                    </div>
+
+                    {/* Blood Group */}
+                    <div>
+                        <label className="block mb-1 text-sm font-medium text-gray-700">
+                            {language === "bn" ? "রক্তের গ্রুপ" : "Blood Group"}
+                        </label>
+                        <select
+                            name="bloodGroup"
+                            required
+                            className="w-full border border-gray-300 text-gray-600 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-red-400 outline-none transition"
+                        >
+                            <option value="">Select</option>
+                            {bloodGroups.map((bg) => (
+                            <option key={bg.lebel} value={bg.value}>
+                                {bg.value}
+                            </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {/* Donation Type */}
+                    <div>
+                        <label className="block mb-1 text-sm font-medium text-gray-700">
+                            {language === "bn" ? "ডোনেশন টাইপ" : "Donation Type"}
+                        </label>
+                        <select
+                            name="donationType"
+                            className="w-full border border-gray-300 text-gray-600 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-red-400 outline-none transition"
+                        >
+                            <option value="direct">
+                            {language === "bn" ? "ডাইরেক্ট কল" : "Direct Call"}
+                            </option>
+                            <option value="request">
+                            {language === "bn" ? "রিকোয়েস্ট ভিত্তিক" : "Request Based"}
+                            </option>
+                        </select>
                     </div>
                 </div>
 
                 {/* Row 3 */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-end">
-                    
-                    {/* Donation Type */}
-                    <div>
-                    <label className="block mb-1 text-sm font-medium text-gray-700">
-                        {language === "bn" ? "ডোনেশন টাইপ" : "Donation Type"}
-                    </label>
-                    <select
-                        name="donationType"
-                        className="w-full border border-gray-300 text-gray-600 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-red-400 outline-none transition"
-                    >
-                        <option value="direct">
-                        {language === "bn" ? "ডাইরেক্ট কল" : "Direct Call"}
-                        </option>
-                        <option value="request">
-                        {language === "bn" ? "রিকোয়েস্ট ভিত্তিক" : "Request Based"}
-                        </option>
-                    </select>
-                    </div>
+                <div className="grid grid-cols-1  gap-5 items-end">
 
                     {/* Submit Button */}
                     <button

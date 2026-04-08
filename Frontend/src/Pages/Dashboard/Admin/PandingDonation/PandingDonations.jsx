@@ -134,9 +134,9 @@ const PendingDonations = () => {
                   <th className="px-4 py-3">
                     {language === "bn" ? "রোগী" : "Patient"}
                   </th>
-                  {/* <th className="px-4 py-3">
-                    {language === "bn" ? "ফোন" : "Mobile No"}
-                  </th> */}
+                  <th className="px-4 py-3">
+                    {language === "bn" ? "মোবাইল নং" : "Mobile No"}
+                  </th>
                   <th className="px-4 py-3">
                     {language === "bn" ? "হাসপাতাল" : "Hospital"}
                   </th>
@@ -171,9 +171,9 @@ const PendingDonations = () => {
                       {donation.patientName}
                     </td>
 
-                    {/* <td className="px-4 py-3">
+                    <td className="px-4 py-3">
                       {donation.phone}
-                    </td> */}
+                    </td>
 
                     <td className="px-4 py-3">
                       {donation.hospitalName}
@@ -227,7 +227,7 @@ const PendingDonations = () => {
                 <div className="space-y-1 text-sm text-gray-600">
                   <p><b>👤 Donor:</b> {donation.donorEmail}</p>
                   <p><b>🏥 Hospital:</b> {donation.hospitalName}</p>
-                  {/* <p><b>📱 Mobile:</b> {donation.phone}</p> */}
+                  <p><b>📱 Mobile:</b> {donation.phone}</p>
                   <p className="text-xs text-gray-400">
                     🗓 {new Date(donation.donatedAt).toLocaleDateString()}
                   </p>
