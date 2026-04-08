@@ -133,7 +133,7 @@ const DonorDashboard = () => {
         <div className="p-4 md:p-8 space-y-10">
 
             {/* Title */}
-            <h2 className="text-2xl md:text-3xl font-bold text-white ">
+            <h2 className="text-2xl md:text-3xl font-bold text-[#7060E9] ">
                 {language === "bn"
                 ? "ডোনার ড্যাশবোর্ড"
                 : "Donor Dashboard"}

@@ -27,7 +27,7 @@ const MyDonations = () => {
 
   if (loading) {
     return (
-      <div className="text-center py-10">
+      <div className="text-center py-10 text-[#7060E9]">
         {language === "bn" ? "লোড হচ্ছে..." : "Loading..."}
       </div>
     );
@@ -37,7 +37,7 @@ const MyDonations = () => {
     <div className="p-4 md:p-8">
 
       {/* Title */}
-      <h2 className="text-2xl md:text-3xl font-bold mb-6 text-white">
+      <h2 className="text-2xl md:text-3xl font-bold mb-6 text-[#7060E9]">
         {language === "bn"
           ? "আমার ডোনেশন ইতিহাস"
           : "My Donation History"}
@@ -56,7 +56,7 @@ const MyDonations = () => {
           <div className="hidden lg:block overflow-x-auto rounded-2xl shadow-lg">
             <table className="min-w-full text-sm text-left bg-white">
               
-              <thead className="bg-gradient-to-r from-[#0C2349] to-[#1E3A8A] text-white">
+              <thead className="bg-gradient-to-r from-[#7060E9] to-[#1E3A8A] text-white">
                 <tr>
                   <th className="px-4 py-3">#</th>
                   <th className="px-4 py-3">{language === "bn" ? "রক্তের গ্রুপ " : "Blood Group"}</th>
