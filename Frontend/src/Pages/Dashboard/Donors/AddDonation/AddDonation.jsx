@@ -4,7 +4,7 @@ import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import useAuth from "../../../../Hooks/useAuth";
 import {useLanguage} from "../../../../context/LanguageContext";
 import useBloodGroups from "../../../../Hooks/useBloodGroups";
-// import { useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 
 const AddDonation = () => {
@@ -12,7 +12,7 @@ const AddDonation = () => {
     const { user } = useAuth();
     const { language } = useLanguage();
     const { bloodGroups } = useBloodGroups()
-    // const { navigate } = useNavigate()
+    const { navigate } = useNavigate()
 
     const [loading, setLoading] = useState(false);
 
@@ -51,7 +51,7 @@ const AddDonation = () => {
             });
 
             form.reset();
-            // navigate("/dashboard/profile");
+            navigate("/dashboard/profile");
             
         }
         } catch (error) {
@@ -182,7 +182,7 @@ const AddDonation = () => {
                     <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-gradient-to-r from-red-500 to-pink-500 text-white py-3 rounded-xl font-semibold hover:opacity-90 transition duration-300 disabled:opacity-60"
+                    className="w-full cursor-pointer bg-gradient-to-r from-red-500 to-pink-500 text-white py-3 rounded-xl font-semibold hover:opacity-90 transition duration-300 disabled:opacity-60"
                     >
                     {loading
                         ? language === "bn"

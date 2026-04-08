@@ -66,11 +66,11 @@ const DashboardLayout = () => {
         to: "/dashboard/all-donations",
         icon: <BiSolidDonateBlood />,
         },
-        {
-        name: language === "bn" ? "রিপোর্ট" : "Reports",
-        to: "/dashboard/reports",
-        icon: <FaChartBar />,
-        },
+        // {
+        // name: language === "bn" ? "রিপোর্ট" : "Reports",
+        // to: "/dashboard/reports",
+        // icon: <FaChartBar />,
+        // },
         // {
         // name: language === "bn" ? "সেটিংস" : "Settings",
         // to: "/dashboard/settings",

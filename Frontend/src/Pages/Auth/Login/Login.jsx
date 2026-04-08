@@ -18,6 +18,8 @@ const Login = () => {
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
+    const [loading, setLoading] = useState(false);
+
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -25,7 +27,11 @@ const Login = () => {
 
     // 🔐 Email/Password Login
     const onSubmit = (data) => {
+        setLoading(true)
         signInWithEmailAndPassword(auth, data.email, data.password)
+
+        
+        
         .then((result) => {
             Swal.fire({
             position: "center",
@@ -43,6 +49,8 @@ const Login = () => {
         .catch((error) => {
             console.error(error.message);
         });
+
+        setLoading(false);
     };
 
 
@@ -126,9 +134,17 @@ const Login = () => {
                     {/* Submit */}
                     <button
                         type="submit"
+                        disabled={loading}
                         className="w-full bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700 transition cursor-pointer"
                     >
-                        {t.loginBtn}
+                        {loading
+                        ? language === "bn"
+                        ? "অপেক্ষা করুন..."
+                        : "Please wait..."
+                        : language === "bn"
+                        ? "লগইন করুন"
+                        : "Login"}
+                        {/* {t.loginBtn} */}
                     </button>
                 </form>
 

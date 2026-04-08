@@ -119,7 +119,7 @@ const PendingDonations = () => {
         </div>
       ) : (
         <div>
-          <div className="hidden md:block overflow-x-auto bg-white shadow-xl rounded-2xl border border-gray-200">
+          <div className="hidden lg:block overflow-x-auto bg-white shadow-xl rounded-2xl border border-gray-200">
             <table className="min-w-full text-sm text-left">
 
               <thead className="bg-linear-to-r from-[#0C2349] to-[#1d4ed8] text-white">
@@ -134,6 +134,9 @@ const PendingDonations = () => {
                   <th className="px-4 py-3">
                     {language === "bn" ? "রোগী" : "Patient"}
                   </th>
+                  {/* <th className="px-4 py-3">
+                    {language === "bn" ? "ফোন" : "Mobile No"}
+                  </th> */}
                   <th className="px-4 py-3">
                     {language === "bn" ? "হাসপাতাল" : "Hospital"}
                   </th>
@@ -168,6 +171,10 @@ const PendingDonations = () => {
                       {donation.patientName}
                     </td>
 
+                    {/* <td className="px-4 py-3">
+                      {donation.phone}
+                    </td> */}
+
                     <td className="px-4 py-3">
                       {donation.hospitalName}
                     </td>
@@ -199,7 +206,7 @@ const PendingDonations = () => {
             </table>
           </div>
 
-          <div className="grid gap-4 md:hidden">
+          <div className="grid gap-4 lg:hidden">
             {donations.map((donation, index) => (
               <div
                 key={donation._id}
@@ -220,6 +227,7 @@ const PendingDonations = () => {
                 <div className="space-y-1 text-sm text-gray-600">
                   <p><b>👤 Donor:</b> {donation.donorEmail}</p>
                   <p><b>🏥 Hospital:</b> {donation.hospitalName}</p>
+                  {/* <p><b>📱 Mobile:</b> {donation.phone}</p> */}
                   <p className="text-xs text-gray-400">
                     🗓 {new Date(donation.donatedAt).toLocaleDateString()}
                   </p>
