@@ -221,7 +221,7 @@ const RequestBlood = () => {
                     {/* Message */}
                     <div>
                         <label className="text-sm font-semibold">
-                        {language === "bn" ? "অতিরিক্ত বার্তা (ঐচ্ছিক)" : "Additional Message"}
+                        {language === "bn" ? "বিবরণ (ঐচ্ছিক)" : "Additional Message"}
                         </label>
                         <textarea
                         name="message"
@@ -230,8 +230,8 @@ const RequestBlood = () => {
                         rows="3"
                         placeholder={
                             language === "bn"
-                            ? "হাসপাতাল / তারিখ / সময় লিখতে পারেন"
-                            : "Hospital / date / time (optional)"
+                            ? "রোগীর ধরন / হাসপাতাল / তারিখ / সময় লিখতে পারেন"
+                            : "Patient Type / Hospital / date / time (optional)"
                         }
                         className="w-full border rounded-lg px-4 py-2 mt-1 focus:ring-2 focus:ring-red-500 outline-none"
                         ></textarea>

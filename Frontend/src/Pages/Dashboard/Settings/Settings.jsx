@@ -36,7 +36,7 @@ const Settings = () => {
   return (
     <div className="p-6 text-white space-y-6">
 
-      <h2 className="text-2xl font-bold">
+      <h2 className="text-2xl font-bold text-[#7060E9]">
         {language === "bn" ? "সেটিংস" : "Settings"}
       </h2>
 
