@@ -16,6 +16,7 @@ const DashboardLayout = () => {
     const { language, setLanguage } = useLanguage('bn');
     const { role, roleLoading } = useUserRole();
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const profileImage = user?.photoURL || user?.image;
 
     if (roleLoading) {
         return (
@@ -153,14 +154,14 @@ const DashboardLayout = () => {
 
                     <div className="mx-auto">
                         <div className="flex flex-col items-center justify-center mt-3">
-                            {user?.photoURL ? (
+                            {profileImage ? (
                             <img
-                                src={user.photoURL}
+                                src={profileImage }
                                 alt="user"
-                                className="w-12 h-12 rounded-full object-cover border-4 border-gray-800"
+                                className="w-12 h-12 rounded-full object-cover border-4 border-gray-200"
                             />
                             ) : (
-                            <FaUserCircle className="text-3xl" />
+                            <FaUserCircle className="text-3xl w-12 h-12 rounded-full border-2 border-gray-200" />
                             )}
                             <div className="text-sm text-center">
                             <p className="font-semibold text-gray-800 uppercase">{user?.displayName || "Admin"}</p>
@@ -179,8 +180,8 @@ const DashboardLayout = () => {
                             className={({ isActive }) =>
                                 `flex items-center gap-3 px-4 py-2 text-gray-800 rounded-lg transition ${
                                 isActive
-                                    ? "bg-[#D7D9DB] text-gray-800"
-                                    : "hover:bg-[#0b1c2d] hover:text-white"
+                                    ? "bg-[#7060E9] text-white"
+                                    : "hover:bg-[#7060E9] hover:text-white"
                                 }`
                             }
                             >
@@ -207,7 +208,7 @@ const DashboardLayout = () => {
                 {/* Main area */}
                 <div className="flex-1 flex flex-col md:ml-64 h-screen">
                     {/* Top bar */}
-                    <header  className="fixed top-0 left-0 md:left-64 right-0 h-16 flex items-center justify-between px-4 md:px-10 bg-white z-30" > 
+                    <header  className="fixed top-0 left-0 md:left-64 shadow-md right-0 h-16 flex items-center justify-between px-4 md:px-10 bg-white z-30" > 
                         <div className="flex items-center gap-3">
                             <button
                             onClick={() => setSidebarOpen(!sidebarOpen)}

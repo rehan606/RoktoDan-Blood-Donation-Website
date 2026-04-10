@@ -83,7 +83,7 @@ const AllUsers = () => {
   return (
     <div className="p-4 md:p-8 text-white space-y-6">
 
-      <h2 className="text-2xl font-bold">
+      <h2 className="text-2xl font-bold text-[#7060E9]">
         {language === "bn" ? "সব ব্যবহারকারী" : "All Users"} : {users.length}
 
       </h2>
@@ -93,8 +93,8 @@ const AllUsers = () => {
         <div className="w-full ">
           <input
             type="text"
-            placeholder={language === "bn" ? "ইমেইল খুঁজুন..." : "Search email"}
-            className="px-4 py-2 rounded bg-[#112336] w-full  border-l-6 border-blue-500 focus:outline-none focus:border-white"
+            placeholder={language === "bn" ? "ইমেইল দিয়ে খুঁজুন..." : "Search by email"}
+            className="px-4 py-2 rounded bg-white text-gray-800 w-full  border-l-6 border-blue-400 focus:outline-none focus:border-[#7060E9]"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -104,7 +104,7 @@ const AllUsers = () => {
           <select
             value={role}
             onChange={(e) => setRole(e.target.value)}
-            className="px-4 py-2 rounded bg-[#112336]  w-full "
+            className="px-4 py-2 rounded bg-white text-gray-800  w-full focus:outline-none focus:border-[#7060E9] border-l-6 border-blue-400 cursor-pointer"
           >
             <option value="all">All</option>
             <option value="user">User</option>
@@ -140,7 +140,7 @@ const AllUsers = () => {
                         ? "bg-green-600"
                         : u.status === "suspended"
                         ? "bg-yellow-600"
-                        : "bg-red-600"
+                        : "bg-green-600"
                     }`}
                   >
                     {u.status || "active"}
@@ -153,37 +153,39 @@ const AllUsers = () => {
                   {new Date(u.created_at).toLocaleDateString()}
                 </td>
 
-                <td className="flex items-center justify-center gap-2">
-                  <button
-                    onClick={() =>
-                      statusMutation.mutate({
-                        id: u._id,
-                        status: "suspended",
-                      })
-                    }
-                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded text-xs"
-                  >
-                    Suspend
-                  </button>
+                <td >
+                  <div className="flex items-center justify-center gap-2 ">
+                    <button
+                      onClick={() =>
+                        statusMutation.mutate({
+                          id: u._id,
+                          status: "suspended",
+                        })
+                      }
+                      className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded text-xs"
+                    >
+                      Suspend
+                    </button>
 
-                  <button
-                    onClick={() =>
-                      statusMutation.mutate({
-                        id: u._id,
-                        status: "banned",
-                      })
-                    }
-                    className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs"
-                  >
-                    Ban
-                  </button>
+                    <button
+                      onClick={() =>
+                        statusMutation.mutate({
+                          id: u._id,
+                          status: "banned",
+                        })
+                      }
+                      className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs"
+                    >
+                      Ban
+                    </button>
 
-                  <button
-                    onClick={() => handleDelete(u._id, u.email)}
-                    className="bg-red-700 hover:bg-red-800 text-white px-2 py-1 rounded text-xs"
-                  >
-                    Delete
-                  </button>
+                    <button
+                      onClick={() => handleDelete(u._id, u.email)}
+                      className="bg-red-700 hover:bg-red-800 text-white px-2 py-1 rounded text-xs"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
