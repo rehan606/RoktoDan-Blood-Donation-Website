@@ -62,7 +62,7 @@ const MakeAdmin = () => {
     <div className="p-6">
 
       <div className="flex flex-col lg:flex-row items-center justify-between gap-6 pb-6 ">
-        <h2 className="text-2xl font-bold ">
+        <h2 className="text-2xl font-bold mb-4 text-[#7060E9] ">
           {language === "bn"
             ? "অ্যাডমিন ম্যানেজমেন্ট"
             : "Admin Management"}
@@ -78,7 +78,7 @@ const MakeAdmin = () => {
           }
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full lg:w-1/2 border p-2 rounded-lg bg-gray-100/30"
+          className="w-full lg:w-1/2 px-4 py-2 rounded bg-white text-gray-800  border-l-6 border-blue-400 focus:outline-none focus:border-[#7060E9]"
         />
       </div>
 
@@ -88,15 +88,15 @@ const MakeAdmin = () => {
 
       {/* ================= DESKTOP TABLE ================= */}
       {users.length > 0 && (
-        <div className="hidden lg:block overflow-x-auto">
-          <table className="min-w-full border rounded-xl overflow-hidden bg-white text-zinc-900">
+        <div className="hidden lg:block overflow-x-auto bg-white rounded-xl shadow">
+          <table className="min-w-full text-sm border">
             
-            <thead className="bg-gray-100">
+            <thead className="bg-[#1b6bc0] text-white">
               <tr>
                 <th className="p-3 border text-left">Email</th>
                 <th className="p-3 border">Created</th>
                 <th className="p-3 border">Role</th>
-                <th className="p-3 border text-center">Action</th>
+                <th className=" p-3 border text-center ">Action</th>
               </tr>
             </thead>
 
@@ -104,17 +104,17 @@ const MakeAdmin = () => {
               {users.map((user) => (
                 <tr
                   key={user._id}
-                  className="text-center hover:bg-gray-50 transition"
+                  className="text-center bg-white text-zinc-800 hover:bg-gray-50 transition"
                 >
-                  <td className="p-3 border text-left break-all">
+                  <td className="border-t border-gray-400 p-3 text-left font-medium">
                     {user.email}
                   </td>
 
-                  <td className="p-3 border">
+                  <td className="border-t border-gray-400 p-3 text-left font-medium">
                     {formatDate(user.created_at)}
                   </td>
 
-                  <td className="p-3 border">
+                  <td className="border-t border-gray-400 p-3 text-center font-medium">
                     <span
                       className={`text-xs font-semibold px-3 py-1 rounded-full ${
                         user.role === "admin"
@@ -126,10 +126,10 @@ const MakeAdmin = () => {
                     </span>
                   </td>
 
-                  <td className="p-3 border">
+                  <td className="border-t border-gray-400 p-3  font-medium">
                     <button
                       onClick={() => handleRoleChange(user)}
-                      className={`px-4 py-1.5 rounded-md text-white text-sm ${
+                      className={`px-4 py-1.5 rounded-md text-white text-sm cursor-pointer ${
                         user.role === "admin"
                           ? "bg-red-500 hover:bg-red-600"
                           : "bg-green-500 hover:bg-green-600"
