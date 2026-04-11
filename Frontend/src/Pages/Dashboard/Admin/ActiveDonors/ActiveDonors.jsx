@@ -81,12 +81,12 @@ const ActiveDonors = () => {
     });
 
     if (isPending) {
-        return <p className="text-center py-10">Loading...</p>;
+        return <p className="text-center py-10 text-gray-600">Loading...</p>;
     }
 
     return (
         <div className="p-4 md:p-6">
-            <h2 className="text-2xl font-bold mb-4">
+            <h2 className="text-2xl font-bold mb-4 text-[#7060E9]">
                 {language === "bn" ? "একটিভ ডোনার" : "Active Donors"} : ( { filteredDonors.length } )
             </h2>
 
@@ -96,7 +96,7 @@ const ActiveDonors = () => {
                     <select
                     value={selectedBlood}
                     onChange={(e) => setSelectedBlood(e.target.value)}
-                    className="border px-3 py-2 rounded w-full"
+                    className="px-4 py-2 rounded bg-white text-gray-800  w-full focus:outline-none focus:border-[#7060E9] border-l-6 border-blue-400 cursor-pointer"
                     >
                     <option value="">
                         {language === "bn"
@@ -120,7 +120,7 @@ const ActiveDonors = () => {
                     <select
                     value={selectedUnion}
                     onChange={(e) => setSelectedUnion(e.target.value)}
-                    className="border  px-3 py-2 rounded w-full"
+                    className="px-4 py-2 rounded bg-white text-gray-800  w-full focus:outline-none focus:border-[#7060E9] border-l-6 border-blue-400 cursor-pointer"
                     >
                     <option value="">
                         {language === "bn"
@@ -142,51 +142,10 @@ const ActiveDonors = () => {
             </div>
 
             {/* 📋 Table */}
-            {/* <div className="overflow-x-auto">
-                <table className="min-w-full border rounded-lg">
-                    <thead className="bg-gray-100 text-zinc-800 ">
-                        <tr>
-                            <th className="p-2 border">Name</th>
-                            <th className="p-2 border">Blood</th>
-                            <th className="p-2 border">Phone</th>
-                            <th className="p-2 border">Union</th>
-                            <th className="p-2 border">Action</th>
-                        </tr>
-                    </thead>
 
-                    <tbody>
-                        {filteredDonors.map((donor) => (
-                        <tr key={donor._id} className="text-center bg-white text-zinc-800 ">
-                            <td className="border p-2">{donor.name}</td>
-                            <td className="border p-2 text-red-500 font-semibold">{donor.bloodGroup}</td>
-                            <td className="border p-2">{donor.phone}</td>
-                            <td className="border p-2">{donor.union}</td>
-                            <td className="border p-2 ">
-                                <div className="flex justify-center gap-2">
-                                    <button
-                                        onClick={() => setSelectedDonor(donor)}
-                                        className="bg-blue-600 p-2 text-white rounded"
-                                    >
-                                        <FaEye />
-                                    </button>
-
-                                    <button
-                                        onClick={() => handleDeactivate(donor._id)}
-                                        className="bg-red-600 p-2 text-white rounded"
-                                    >
-                                        <FaUserSlash />
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div> */}
-
-            <div className="hidden lg:block overflow-x-auto">
-                <table className="min-w-full border rounded-xl overflow-hidden">
-                    <thead className="bg-gray-100 text-zinc-800">
+            <div className="hidden lg:block overflow-x-auto bg-white rounded-xl shadow">
+                <table className="min-w-full text-sm border">
+                    <thead className="bg-[#1b6bc0] text-white ">
                     <tr>
                         <th className="p-3 border text-left">Name</th>
                         <th className="p-3 border">Blood</th>
@@ -202,18 +161,18 @@ const ActiveDonors = () => {
                         key={donor._id}
                         className="text-center bg-white text-zinc-800 hover:bg-gray-50 transition"
                         >
-                        <td className="border p-3 text-left font-medium">
+                        <td className=" border-t border-gray-400 p-3 text-left font-medium">
                             {donor.name}
                         </td>
 
-                        <td className="border p-3 text-red-500 font-semibold">
+                        <td className="border-t border-gray-400 p-3 text-red-500 font-semibold">
                             {donor.bloodGroup}
                         </td>
 
-                        <td className="border p-3">{donor.phone}</td>
-                        <td className="border p-3">{donor.union}</td>
+                        <td className="border-t border-gray-400 p-3">{donor.phone}</td>
+                        <td className="border-t border-gray-400 p-3">{donor.union}</td>
 
-                        <td className="border p-3">
+                        <td className="border-t border-gray-400 p-3">
                             <div className="flex justify-center gap-2">
                             <button
                                 onClick={() => setSelectedDonor(donor)}
