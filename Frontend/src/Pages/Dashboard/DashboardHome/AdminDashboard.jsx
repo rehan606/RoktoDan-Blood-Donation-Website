@@ -38,7 +38,11 @@ const AdminDashboard = () => {
   });
 
   if (isLoading) {
-    return <div className="text-center py-20 text-white">Loading...</div>;
+    return (
+      <div className="text-center py-10 text-gray-600">
+          {language === "bn" ? "লোড হচ্ছে..." : "Loading..."}
+      </div>
+    )
   }
 
   const { overview, growth } = data;
@@ -67,16 +71,16 @@ const AdminDashboard = () => {
         {/* ================= KPI CARDS ================= */}
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-6 border border-gray-200 p-4 rounded-xl">
 
-            <Card
+            <Card 
             title={language === "bn" ? "মোট ব্যবহারকারী" : "Total Users"}
             value={overview.totalUsers}
-            icon={<FaUsers />}
+            icon={<FaUsers className="text-orange-500"/>}
             />
 
             <Card
             title={language === "bn" ? "মোট ডোনার" : "Total Donors"}
             value={overview.totalDonors}
-            icon={<FaUserCheck />}
+            icon={<FaUserCheck className="text-blue-500"/>}
             />
 
             <Card
@@ -88,13 +92,13 @@ const AdminDashboard = () => {
             <Card
             title={language === "bn" ? "মোট রিকোয়েস্ট" : "Total Requests"}
             value={overview.totalRequests}
-            icon={<FaHandHoldingMedical />}
+            icon={<FaHandHoldingMedical className="text-purple-500"/>}
             />
 
             <Card
             title={language === "bn" ? "মোট ডোনেশন" : "Total Donations"}
             value={overview.totalDonations}
-            icon={<FaTint />}
+            icon={<FaTint className="text-red-500"/>}
             // growth={growth?.donationGrowth}
             />
 
@@ -123,7 +127,7 @@ const AdminDashboard = () => {
             <div className="w-full lg:w-1/2 border border-gray-200 p-4 rounded-xl">
               <ChartBox title="Union Wise Donors">
               <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={unionData}>
+                  <BarChart  data={unionData}>
                   <XAxis dataKey="name" />
                   <YAxis />
                   <Tooltip />
@@ -180,7 +184,7 @@ const AdminDashboard = () => {
         {/* ================= TOP DONORS ================= */}
         <ChartBox title="Top Donors">
             {data.topDonors.map((donor, index) => (
-            <div key={index} className="flex justify-between py-2 border-b border-gray-500 text-green-600">
+            <div key={index} className="flex justify-between py-2 border-b border-gray-300 text-orange-600">
                 <span>{donor._id}</span>
                 <span>{donor.name}</span>
                 <span>{donor.totalDonations}</span>
@@ -195,10 +199,10 @@ const AdminDashboard = () => {
 const Card = ({ title, value, icon, growth }) => (
   <div className="bg-white p-6 rounded-xl shadow-lg">
     <div className="flex flex-col items-center justify-center">
-        <div className="text-3xl text-red-500">{icon}</div>
+        <div className="text-3xl text-green-500">{icon}</div>
         <div className="text-center mt-3">
             <p className="text-sm text-zinc-800">{title}</p>
-            <h2 className="text-2xl font-bold text-zinc-800 mt-2">{value}</h2>
+            <h2 className="text-2xl font-bold text-[#7060E9] mt-2">{value}</h2>
             {growth && (
             <span className={`text-xs ${growth >= 0 ? "text-green-400" : "text-red-400"}`}>
                 {growth}% from last month
@@ -212,7 +216,7 @@ const Card = ({ title, value, icon, growth }) => (
 
 const ChartBox = ({ title, children }) => (
   <div className="bg-white p-6 rounded-xl shadow-lg">
-    <h3 className="mb-4 font-semibold text-zinc-800">{title}</h3>
+    <h3 className="mb-4 font-semibold text-[#7060E9]">{title}</h3>
     {children}
   </div>
 );

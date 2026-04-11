@@ -96,7 +96,7 @@ const PendingDonations = () => {
 
   if (loading) {
     return (
-      <div className="text-center py-10">
+      <div className="text-center py-10 text-gray-600">
         {language === "bn" ? "লোড হচ্ছে..." : "Loading..."}
       </div>
     );

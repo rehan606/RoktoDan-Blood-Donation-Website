@@ -63,7 +63,7 @@ const PendingDonors = () => {
     };
 
     if (isPending) {
-        return <p className="text-center py-10">Loading pending donors...</p>;
+        return <p className="text-center py-20 text-gray-600 ">Loading pending donors...</p>;
     }
 
   return (

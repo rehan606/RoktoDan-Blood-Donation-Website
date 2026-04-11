@@ -81,7 +81,11 @@ const ActiveDonors = () => {
     });
 
     if (isPending) {
-        return <p className="text-center py-10 text-gray-600">Loading...</p>;
+        return (
+            <div className="text-center py-10 text-gray-600">
+            {language === "bn" ? "লোড হচ্ছে..." : "Loading..."}
+        </div>
+      )
     }
 
     return (
