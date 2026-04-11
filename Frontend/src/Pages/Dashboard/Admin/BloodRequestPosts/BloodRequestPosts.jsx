@@ -51,7 +51,7 @@ const BloodRequestPosts = () => {
   };
 
   if (isLoading) {
-    return <div className="text-center py-10">Loading...</div>;
+    return <div className="text-center py-10 text-gray-600">Loading...</div>;
   }
 
   const requests = data?.data || [];

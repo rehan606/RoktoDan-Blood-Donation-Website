@@ -104,46 +104,46 @@ const PendingDonations = () => {
 
   return (
     <div className="p-4 md:p-8">
-      <h2 className="text-2xl md:text-3xl font-bold mb-6 text-white">
+      <h2 className="text-2xl font-bold mb-4 text-[#7060E9]">
         {language === "bn"
-          ? "Pending ডোনেশন তালিকা"
+          ? "অপেক্ষামান  ডোনেশন তালিকা"
           : "Pending Donation List"} : 
           ({donations.length})
       </h2>
 
       {donations.length === 0 ? (
-        <div className="text-center text-gray-500">
+        <div className="text-center mt-20 text-gray-500">
           {language === "bn"
             ? "কোনো Pending ডোনেশন নেই"
             : "No pending donations found"} 
         </div>
       ) : (
         <div>
-          <div className="hidden lg:block overflow-x-auto bg-white shadow-xl rounded-2xl border border-gray-200">
-            <table className="min-w-full text-sm text-left">
+          <div className="hidden lg:block overflow-x-auto bg-white rounded-xl shadow">
+            <table className="min-w-full text-sm border">
 
               <thead className="bg-linear-to-r from-[#0C2349] to-[#1d4ed8] text-white">
                 <tr>
-                  <th className="px-4 py-3">#</th>
-                  <th className="px-4 py-3">
+                  <th className="p-3 border text-left">#</th>
+                  <th className="p-3 border">
                     {language === "bn" ? "ডোনার" : "Donor"}
                   </th>
-                  <th className="px-4 py-3">
+                  <th className="p-3 border">
                     {language === "bn" ? "রক্ত" : "Blood"}
                   </th>
-                  <th className="px-4 py-3">
+                  <th className="p-3 border">
                     {language === "bn" ? "রোগী" : "Patient"}
                   </th>
-                  <th className="px-4 py-3">
+                  <th className="p-3 border">
                     {language === "bn" ? "মোবাইল নং" : "Mobile No"}
                   </th>
-                  <th className="px-4 py-3">
+                  <th className="p-3 border">
                     {language === "bn" ? "হাসপাতাল" : "Hospital"}
                   </th>
-                  <th className="px-4 py-3">
+                  <th className="p-3 border">
                     {language === "bn" ? "তারিখ" : "Date"}
                   </th>
-                  <th className="px-4 py-3 text-center">
+                  <th className="p-3 border text-center">
                     {language === "bn" ? "একশন" : "Action"}
                   </th>
                 </tr>
@@ -153,37 +153,37 @@ const PendingDonations = () => {
                 {donations.map((donation, index) => (
                   <tr
                     key={donation._id}
-                    className="border-b hover:bg-gray-50 transition text-zinc-800"
+                    className="text-center bg-white text-zinc-800 hover:bg-gray-50 transition"
                   >
-                    <td className="px-4 py-3">{index + 1}</td>
+                    <td className="border-t border-gray-400 p-3 text-left font-medium">{index + 1}</td>
 
-                    <td className="px-4 py-3">
+                    <td className="border-t border-gray-400 p-3 text-left font-medium">
                       {donation.donorEmail}
                     </td>
 
-                    <td className="px-4 py-3">
+                    <td className="border-t border-gray-400 p-3 text-left font-medium">
                       <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs font-semibold">
                         {donation.bloodGroup}
                       </span>
                     </td>
 
-                    <td className="px-4 py-3">
+                    <td className="border-t border-gray-400 p-3 text-left font-medium">
                       {donation.patientName}
                     </td>
 
-                    <td className="px-4 py-3">
+                    <td className="border-t border-gray-400 p-3 text-center font-medium">
                       {donation.phone}
                     </td>
 
-                    <td className="px-4 py-3">
+                    <td className="border-t border-gray-400 p-3 text-center font-medium">
                       {donation.hospitalName}
                     </td>
 
-                    <td className="px-4 py-3 text-gray-600">
+                    <td className="border-t border-gray-400 p-3 text-center font-medium">
                       {new Date(donation.donatedAt).toLocaleDateString()}
                     </td>
 
-                    <td className="px-4 py-3">
+                    <td className="border-t border-gray-400 p-3 text-center font-medium">
                       <div className="flex justify-center gap-2">
                         <button
                           onClick={() => handleApprove(donation._id)}
