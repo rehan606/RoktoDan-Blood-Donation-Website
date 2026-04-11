@@ -3,12 +3,15 @@ import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { FaEye, FaTrash, FaPhoneAlt } from "react-icons/fa";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import { useLanguage } from "../../../../context/LanguageContext";
 
 const BloodRequestPosts = () => {
   const axiosSecure = useAxiosSecure();
   const [page, setPage] = useState(1);
   const [selected, setSelected] = useState(null);
   const limit = 10;
+
+  const {language} = useLanguage()
 
   // 🔥 React Query
   const {
@@ -64,15 +67,15 @@ const BloodRequestPosts = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-semibold mb-4">
-        Blood Request Posts
-      </h2>
+      <h2 className="text-2xl font-bold mb-4 text-[#7060E9]">
+                {language === "bn" ? "রক্তের অনুরোধ সমূহ " : "Blood Requests"} : ( { requests.length } )
+        </h2>
 
       {/* ================= DESKTOP TABLE VIEW =================   */}
-      <div className="hidden lg:block overflow-x-auto">
-        <table className="min-w-full border-collapse border border-gray-200 rounded-xl overflow-hidden shadow-sm bg-white text-zinc-900">
+      <div className="hidden lg:block overflow-x-auto bg-white rounded-xl shadow">
+        <table className="min-w-full text-sm border">
           
-          <thead className="bg-gray-100 text-zinc-800">
+          <thead className="bg-[#1b6bc0] text-white">
             <tr>
               <th className="p-3 border">Patient Name</th>
               <th className="p-3 border">Age</th>
@@ -85,22 +88,22 @@ const BloodRequestPosts = () => {
 
           <tbody>
             {requests.map((item) => (
-              <tr key={item._id} className="text-center hover:bg-gray-50 transition">
-                <td className="p-3 border">{item.name}</td>
-                <td className="p-3 border">{item.age}</td>
+              <tr key={item._id} className="text-center bg-white text-zinc-800 hover:bg-gray-50 transition">
+                <td className="border-t border-gray-400 p-3 text-left font-medium">{item.name}</td>
+                <td className="border-t border-gray-400 p-3  font-medium text-center">{item.age}</td>
 
-                <td className="p-3 border font-semibold text-red-600">
+                <td className="border-t border-gray-400 p-3 text-center font-medium text-red-600">
                   {item.bloodGroup}
                 </td>
 
-                <td className="p-3 border">{item.phone}</td>
+                <td className="border-t border-gray-400 p-3 text-center font-medium">{item.phone}</td>
 
                 {/* 🆕 Request Time */}
-                <td className="p-3 border text-sm text-gray-600">
+                <td className="border-t border-gray-400 p-3 text-center font-medium">
                   {formatDateTime(item.createdAt)}
                 </td>
 
-                <td className="p-3 border">
+                <td className="border-t border-gray-400 p-3 text-center font-medium">
                   <div className="flex justify-center gap-2">
                     <button
                       onClick={() => setSelected(item)}
