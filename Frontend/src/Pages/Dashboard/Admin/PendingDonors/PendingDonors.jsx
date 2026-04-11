@@ -68,14 +68,14 @@ const PendingDonors = () => {
 
   return (
     <div className="p-2 md:p-6">
-      <h2 className="text-2xl font-bold mb-6">Pending Donors : ( {pendingDonors.length} ) </h2>
+      <h2 className="text-2xl font-bold mb-4 text-[#7060E9]">Pending Donors : ( {pendingDonors.length} ) </h2>
 
       {/* ================= DESKTOP TABLE (lg+) =================  */}
 
-      <div className="hidden lg:block overflow-x-auto">
-        <table className="min-w-full border rounded-xl overflow-hidden bg-white text-zinc-900">
+      <div className="hidden lg:block overflow-x-auto bg-white rounded-xl shadow">
+        <table className="min-w-full text-sm border">
           
-          <thead className="bg-gray-100 text-red-500">
+          <thead className="bg-[#1b6bc0] text-white">
             <tr>
               <th className="p-3 border text-left">Name</th>
               <th className="p-3 border">Blood</th>
@@ -89,44 +89,44 @@ const PendingDonors = () => {
             {pendingDonors.map((donor) => (
               <tr
                 key={donor._id}
-                className="text-center hover:bg-gray-50 transition"
+                className="text-center bg-white text-zinc-800 hover:bg-gray-50 transition"
               >
-                <td className="p-3 border text-left font-medium">
+                <td className="p-3 border-t border-gray-400 text-left font-medium">
                   {donor.name}
                 </td>
 
-                <td className="p-3 border font-semibold text-red-500">
+                <td className="p-3 border-t border-gray-400 font-semibold text-red-500">
                   {donor.bloodGroup}
                 </td>
 
-                <td className="p-3 border">
+                <td className="p-3 border-t border-gray-400">
                   <a href={`tel:${donor.phone}`} className="text-blue-600">
                     {donor.phone}
                   </a>
                 </td>
 
-                <td className="p-3 border">{donor.union}</td>
+                <td className="p-3 border-t border-gray-400">{donor.union}</td>
 
-                <td className="p-3 border">
+                <td className="p-3 border-t border-gray-400">
                   <div className="flex justify-center gap-2">
                     
                     <button
                       onClick={() => setSelectedDonor(donor)}
-                      className="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
+                      className="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md cursor-pointer"
                     >
                       <FaEye />
                     </button>
 
                     <button
                       onClick={() => handleApprove(donor._id)}
-                      className="p-2 bg-green-600 hover:bg-green-700 text-white rounded-md"
+                      className="p-2 bg-green-600 hover:bg-green-700 text-white rounded-md cursor-pointer"
                     >
                       <BiSolidUserCheck />
                     </button>
 
                     <button
                       onClick={() => handleReject(donor._id)}
-                      className="p-2 bg-red-600 hover:bg-red-700 text-white rounded-md"
+                      className="p-2 bg-red-600 hover:bg-red-700 text-white rounded-md cursor-pointer"
                     >
                       <FaUserSlash />
                     </button>
