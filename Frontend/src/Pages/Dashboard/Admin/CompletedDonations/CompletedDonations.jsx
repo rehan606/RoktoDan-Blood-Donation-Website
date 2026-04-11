@@ -38,7 +38,7 @@ const CompletedDonations = () => {
 
   if (loading) {
     return (
-      <div className="text-center py-10">
+      <div className="text-center py-10 text-gray-600">
         {language === "bn" ? "লোড হচ্ছে..." : "Loading..."}
       </div>
     );
@@ -49,7 +49,7 @@ const CompletedDonations = () => {
 
       {/* Title */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4 ">
-        <h2 className="text-2xl md:text-3xl font-bold text-white">
+        <h2 className="text-2xl font-bold mb-4 text-[#7060E9]">
           {language === "bn"
             ? " ডোনেশন ইতিহাস"
             : "All Donation History"} : 
@@ -67,7 +67,7 @@ const CompletedDonations = () => {
           }
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="border px-4 py-2 rounded-lg w-full bg-gray-100/20 md:w-72 focus:ring-2 focus:ring-green-400 outline-none"
+          className="w-full md:w-72 px-4 py-2 rounded bg-white text-gray-800  focus:outline-none focus:border-[#7060E9] border-l-6 border-blue-400 cursor-pointer "
         />
       </div>
 
@@ -80,9 +80,9 @@ const CompletedDonations = () => {
         </div>
       ) : (
         <div>
-          <div className="overflow-x-auto hidden lg:block bg-white shadow-lg rounded-xl">
-            <table className="min-w-full text-sm text-left">
-              <thead className="bg-[#0C2349] text-white border ">
+          <div className="hidden lg:block overflow-x-auto bg-white rounded-xl shadow">
+            <table className="min-w-full text-sm border">
+              <thead className="bg-[#1b6bc0] text-white ">
                 <tr>
                   <th className="px-4 py-3">#</th>
                   <th className="px-4 py-3">
@@ -113,28 +113,28 @@ const CompletedDonations = () => {
                 {filtered.map((donation, index) => (
                   <tr
                     key={donation._id}
-                    className="border-b hover:bg-gray-50 transition text-gray-800 "
+                    className="text-center bg-white text-zinc-800 hover:bg-gray-50 transition "
                   >
-                    <td className="px-4 py-3">{index + 1}</td>
-                    <td className="px-4 py-3">
+                    <td className="px-4 py-3 border-t border-gray-400 text-center">{index + 1}</td>
+                    <td className="px-4 py-3 border-t border-gray-400 text-center">
                       {donation.donorEmail}
                     </td>
-                    <td className="px-4 py-3 font-semibold text-red-600">
+                    <td className="px-4 py-3 border-t border-gray-400 text-center font-semibold text-red-600">
                       {donation.bloodGroup}
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-4 py-3 border-t border-gray-400 text-center">
                       {donation.patientName}
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-4 py-3 border-t border-gray-400 text-center">
                       {donation.hospitalName}
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-4 py-3 border-t border-gray-400 text-center">
                       {new Date(donation.donatedAt).toLocaleDateString()}
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-4 py-3 border-t border-gray-400 text-center">
                       {new Date(donation.approvedAt).toLocaleDateString()}
                     </td>
-                    <td className="px-4 py-3 text-center">
+                    <td className="px-4 py-3 border-t border-gray-400  text-center">
                       <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">
                         {language === "bn" ? "অনুমোদিত" : "Approved"}
                       </span>
