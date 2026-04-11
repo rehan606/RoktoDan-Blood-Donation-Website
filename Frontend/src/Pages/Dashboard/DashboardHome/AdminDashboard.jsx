@@ -202,7 +202,7 @@ const Card = ({ title, value, icon, growth }) => (
         <div className="text-3xl text-green-500">{icon}</div>
         <div className="text-center mt-3">
             <p className="text-sm text-zinc-800">{title}</p>
-            <h2 className="text-2xl font-bold text-[#7060E9] mt-2">{value}</h2>
+            <h2 className="text-2xl font-bold text-red-500 mt-2">{value}</h2>
             {growth && (
             <span className={`text-xs ${growth >= 0 ? "text-green-400" : "text-red-400"}`}>
                 {growth}% from last month

@@ -114,7 +114,7 @@ const PendingDonations = () => {
       {donations.length === 0 ? (
         <div className="text-center mt-20 text-gray-500">
           {language === "bn"
-            ? "কোনো Pending ডোনেশন নেই"
+            ? "কোনো ডোনেশন নেই"
             : "No pending donations found"} 
         </div>
       ) : (
