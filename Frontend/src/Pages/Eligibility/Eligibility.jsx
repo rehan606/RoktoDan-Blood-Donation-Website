@@ -21,6 +21,8 @@ const Eligibility = () => {
       ],
       note:
         "⚠️ রক্তদান একটি মহান মানবিক কাজ, তবে নিজের ও গ্রহীতার নিরাপত্তাই সর্বাধিক গুরুত্বপূর্ণ।",
+
+      description: "রক্তদানের শর্তগুলো পূরণ হয়ে থাকলে যেকোনো সুস্থ ব্যক্তি তিন-চার মাস পর এক ব্যাগ (৪৫০ মিলিলিটার) রক্ত দিতে পারবেন। এক ব্যাগ রক্ত শরীরের মোট রক্তের মাত্র ২ থেকে ৩ শতাংশ। এই পরিমাণ রক্ত কাউকে দিলে কোনো ক্ষতির আশঙ্কা নেই। প্রত্যেক সুস্থ মানুষের শরীরের লোহিত রক্তকণিকাগুলো স্বাভাবিক প্রক্রিয়ায় ৮০ থেকে ১২০ দিন পরপর ধ্বংস হয় এবং প্রতিনিয়ত নতুন নতুন রক্তকণিকা তৈরি হতে থাকে।"
     },
     en: {
       title: "Blood Donation Eligibility",
@@ -38,6 +40,8 @@ const Eligibility = () => {
       ],
       note:
         "⚠️ Blood donation is a noble act, but safety of both donor and recipient comes first.",
+
+      description: "If the eligibility conditions are met, any healthy individual can donate one bag (450 ml) of blood every three to four months. One bag of blood constitutes only 2 to 3 percent of the total blood volume in the body. There is no risk of harm to anyone by donating this amount of blood. The red blood cells in a healthy person's body are naturally destroyed every 80 to 120 days, and new red blood cells are continuously produced."
     },
   };
 
@@ -67,6 +71,12 @@ const Eligibility = () => {
           ))}
         </ul>
 
+        
+        {/* description: */}
+        <div className="mt-8 bg-green-50 border-l-4 border-green-500 p-4 rounded">
+          <p className="text-sm text-gray-700">{t.description}</p>
+        </div>
+        
         {/* Note */}
         <div className="mt-8 bg-red-50 border-l-4 border-red-500 p-4 rounded">
           <p className="text-sm text-gray-700">{t.note}</p>
