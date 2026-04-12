@@ -1,56 +1,106 @@
 import React, { useEffect, useState } from "react";
 import { FaUsers, FaHeartbeat, FaTint } from "react-icons/fa";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const Statistics = ({ language }) => {
   const isBangla = language === "bn";
 
-  // Dummy counter values
+  // ==============================
+  // 🔥 TanStack Query Fetch
+  // ==============================
+  const { data, isLoading } = useQuery({
+    queryKey: ["statistics"],
+    queryFn: async () => {
+      const res = await axios.get("http://localhost:5000/statistics");
+      return res.data;
+    },
+  });
+
+  // ==============================
+  // Stats Data
+  // ==============================
   const stats = [
     {
       icon: <FaUsers className="text-red-600 w-12 h-12 mx-auto mb-3" />,
       label: isBangla ? "মোট রক্তদাতা" : "Total Donors",
-      value: 125,
+      value: data?.totalDonors || 0,
     },
     {
       icon: <FaTint className="text-red-600 w-12 h-12 mx-auto mb-3" />,
       label: isBangla ? "সংগৃহীত রক্ত (ml)" : "Blood Collected (ml)",
-      value: 78000,
+      value: data?.totalBloodML || 0,
     },
     {
       icon: <FaHeartbeat className="text-red-600 w-12 h-12 mx-auto mb-3" />,
       label: isBangla ? "জীবন বাঁচানো হয়েছে" : "Lives Saved",
-      value: 19,
+      value: data?.totalLivesSaved || 0,
     },
   ];
 
-  // Count-up animation
-  const [counts, setCounts] = useState(stats.map(() => 0));
+  // ==============================
+  // 🔥 Count Animation
+  // ==============================
+  const [counts, setCounts] = useState([0, 0, 0]);
 
   useEffect(() => {
+    if (!data) return;
+
     const interval = setInterval(() => {
       setCounts((prev) =>
-        prev.map((val, i) => (val < stats[i].value ? val + Math.ceil(stats[i].value / 200) : stats[i].value))
+        prev.map((val, i) =>
+          val < stats[i].value
+            ? val + Math.ceil(stats[i].value / 100)
+            : stats[i].value
+        )
       );
     }, 30);
-    return () => clearInterval(interval);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
+    return () => clearInterval(interval);
+  }, [data]);
+
+  // ==============================
+  // UI
+  // ==============================
   return (
     <section className="py-16 bg-red-50">
       <div className="max-w-7xl mx-auto px-4 text-center">
-        <h2 className={`text-3xl md:text-4xl font-bold mb-10 ${isBangla ? "font-bn" : "font-en"} text-red-600`}>
+        <h2
+          className={`text-3xl md:text-4xl font-bold mb-10 ${
+            isBangla ? "font-bn" : "font-en"
+          } text-red-600`}
+        >
           {isBangla ? "আমাদের কার্যক্রম" : "Our Impact"}
         </h2>
 
         <div className="grid md:grid-cols-3 gap-6 border border-gray-200 p-6 rounded-lg">
           {stats.map((stat, idx) => (
-            <div key={idx} className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+            <div
+              key={idx}
+              className="bg-white p-6 rounded-lg shadow hover:shadow-xl transition duration-300"
+            >
               {stat.icon}
-              <p className={`text-3xl font-bold text-red-600 mb-2 ${isBangla ? "font-bn" : "font-en"}`}>
-                {counts[idx].toLocaleString()}
+
+              {/* 🔥 Loading Skeleton */}
+              {isLoading ? (
+                <div className="h-8 w-24 bg-gray-200 mx-auto rounded animate-pulse mb-2"></div>
+              ) : (
+                <p
+                  className={`text-3xl font-bold text-red-600 mb-2 ${
+                    isBangla ? "font-bn" : "font-en"
+                  }`}
+                >
+                  {counts[idx].toLocaleString()}
+                </p>
+              )}
+
+              <p
+                className={`text-gray-700 ${
+                  isBangla ? "font-bn" : "font-en"
+                }`}
+              >
+                {stat.label}
               </p>
-              <p className={`text-gray-700 ${isBangla ? "font-bn" : "font-en"}`}>{stat.label}</p>
             </div>
           ))}
         </div>

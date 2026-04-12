@@ -1325,8 +1325,58 @@ async function run() {
         console.error("Dashboard Error:", error);
         res.status(500).json({ message: "Dashboard stats failed" });
     }
-});
+    });
 
+
+    // ==============================
+    // Homepage Statisttic
+    // ==============================
+
+    app.get("/statistics", async (req, res) => {
+      try {
+
+        // ==============================
+        // 1️⃣ Total Active Donors
+        // ==============================
+        const totalDonors = await donorsCollection.countDocuments({
+          status: "active"
+        });
+
+        // ==============================
+        // 2️⃣ Total Approved Donations
+        // ==============================
+        const totalDonations = await bloodDonations.countDocuments({
+          status: "approved"
+        });
+
+        // ==============================
+        // 3️⃣ Calculate Blood (400ml per donation)
+        // ==============================
+        const totalBloodML = totalDonations * 400;
+
+        // ==============================
+        // 4️⃣ Lives Saved (same as donations)
+        // ==============================
+        const totalLivesSaved = totalDonations;
+
+        // ==============================
+        // Response
+        // ==============================
+        res.send({
+          success: true,
+          totalDonors,
+          totalBloodML,
+          totalLivesSaved
+        });
+
+      } catch (error) {
+        console.error("❌ Statistics Error:", error);
+        res.status(500).send({
+          success: false,
+          message: "Failed to fetch statistics"
+        });
+      }
+    });
 
 
 
