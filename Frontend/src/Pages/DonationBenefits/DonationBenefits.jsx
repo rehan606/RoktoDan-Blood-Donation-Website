@@ -50,9 +50,15 @@ const DonationBenefits = () => {
                     </li>
                 </ul>
 
-                <p className="mt-8 font-semibold text-red-500">
-                    “আপনার এক ফোঁটা রক্ত, কারো নতুন জীবন।”
-                </p>
+                <div className="mt-8 bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                    <p className="text-sm text-gray-700">“আপনার এক ফোঁটা রক্ত, দিতে পারে কারো নতুন জীবন।”</p>
+                </div>
+
+                <div className="mt-4 bg-green-50 border-l-4 border-green-500 p-4 rounded">
+                    <p className="text-sm text-gray-700">নিয়মিত রক্তদানে অভ্যস্ত মানুষের উচ্চ রক্তচাপ, ডায়াবেটিস, উচ্চ কোলেস্টেরল, হার্টের রোগের ঝুঁকি কমে।</p>
+                </div>
+
+                <p></p>
                 </>
             ) : (
                 <>
@@ -93,9 +99,13 @@ const DonationBenefits = () => {
                     </li>
                 </ul>
 
-                <p className="mt-8 font-semibold text-red-500">
-                    “Donate blood, save lives.”
-                </p>
+                <div className="mt-8 bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                    <p className="text-sm text-gray-700">“A drop of your blood can give someone a new life.”</p>
+                </div>
+
+                <div className="mt-4 bg-green-50 border-l-4 border-green-500 p-4 rounded">
+                    <p className="text-sm text-gray-700">"People who regularly donate blood have a reduced risk of high blood pressure, diabetes, high cholesterol, and heart disease."</p>
+                </div>
                 </>
             )}
         </div>
