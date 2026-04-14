@@ -1,7 +1,3 @@
-import React, { useRef } from 'react';
-import emailjs from '@emailjs/browser';
-import Swal from "sweetalert2";
-
 import {
   FaPhoneAlt,
   FaEnvelope,
@@ -9,13 +5,9 @@ import {
   FaHeart,
 } from "react-icons/fa";
 import { useLanguage } from "../../context/LanguageContext";
-import { useNavigate } from 'react-router';
-import { useState } from 'react';
 
 const Contact = () => {
   const { language } = useLanguage();
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
 
   const text = {
     bn: {
@@ -60,36 +52,6 @@ const Contact = () => {
   };
 
   const t = text[language];
-
-  const form = useRef();
-
-  const sendEmail = (e) => {
-    setLoading(true);
-    e.preventDefault();
-
-    emailjs
-      .sendForm(import.meta.env.VITE_emailjs_service_id, import.meta.env.VITE_emailjs_template_id, form.current, {
-        publicKey: import.meta.env.VITE_emailjs_public_key,
-      })
-      .then(() => {
-          Swal.fire({
-            icon: "success",
-            title: "Message Sent!",
-            text: "We will contact you soon 😊",
-          });
-          navigate('/');
-        }, (error) => {
-          console.log('FAILED...', error.text);
-          Swal.fire({
-            icon: "error",
-            title: "Message Failed!",
-            text: "Sorry, something went wrong. Please try again.",
-          });
-        },
-      );
-
-      setLoading(false);
-  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4">
@@ -142,15 +104,13 @@ const Contact = () => {
               {t.messageTitle}
             </h2>
 
-            <form className="space-y-4" ref={form} onSubmit={sendEmail}>
+            <form className="space-y-4">
               <div>
                 <label className="block mb-1 text-sm font-medium">
                   {t.name}
                 </label>
                 <input
-                
                   type="text"
-                  name="name"
                   placeholder={t.namePlaceholder}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-red-400"
                 />
@@ -162,7 +122,6 @@ const Contact = () => {
                 </label>
                 <input
                   type="number"
-                  name="phone"
                   placeholder={t.phonePlaceholder}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-red-400"
                 />
@@ -174,7 +133,6 @@ const Contact = () => {
                 </label>
                 <input
                   type="email"
-                  name="email"
                   placeholder={t.emailPlaceholder}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-red-400"
                 />
@@ -186,7 +144,6 @@ const Contact = () => {
                 </label>
                 <textarea
                   rows="4"
-                  name="message"
                   placeholder={t.messagePlaceholder}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-red-400"
                 ></textarea>
@@ -194,18 +151,9 @@ const Contact = () => {
 
               <button
                 type="submit"
-                disabled={loading}
                 className="w-full bg-purple-600 hover:bg-purple-800 text-white py-2 rounded-lg font-semibold flex items-center justify-center gap-2 cursor-pointer"
               >
-                {loading
-                  ? language === "bn"
-                    ? "অপেক্ষা করুন..."
-                    : "Please wait..."
-                  : (
-                    <>
-                      {t.send} <FaHeart />
-                    </>
-                  )}
+                {t.send} <FaHeart />
               </button>
             </form>
           </div>

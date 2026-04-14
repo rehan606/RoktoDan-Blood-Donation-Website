@@ -46,9 +46,7 @@ const DonorCard = ({ donor }) => {
             <p className="text-gray-700">
               <strong>Union:</strong> {donor.union}
             </p>
-            <p className="text-gray-700">
-              <strong>Phone:</strong> {donor.phone}
-            </p>
+            
           </div>
 
           <div className='flex items-center justify-center  bg-gray-200 rounded-lg w-20 h-20 shadow-lg'>
