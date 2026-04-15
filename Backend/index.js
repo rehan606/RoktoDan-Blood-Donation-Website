@@ -1032,6 +1032,61 @@ async function run() {
       }
     );
 
+
+    // ===============================
+// Approve Donation (Admin)
+// ===============================
+
+      // app.patch(
+      //   "/blood-donations/:id",
+      //   verifyToken,
+      //   verifyAdmin,
+      //   async (req, res) => {
+      //     try {
+      //       const id = req.params.id;
+
+      //       const filter = { _id: new ObjectId(id) };
+
+      //       // 🔥 1. First get the donation data
+      //       const donation = await bloodDonations.findOne(filter);
+
+      //       if (!donation) {
+      //         return res.status(404).send({ message: "Donation not found" });
+      //       }
+
+      //       // 🔥 2. Update donation status
+      //       const updateDoc = {
+      //         $set: {
+      //           status: "approved",
+      //           approvedAt: new Date(),
+      //         },
+      //       };
+
+      //       await bloodDonations.updateOne(filter, updateDoc);
+
+      //       // 🔥 3. Update donor's last donation date
+      //       await donorsCollection.updateOne(
+      //         { email: donation.donorEmail }, // better: donorId use kora
+      //         {
+      //           $set: {
+      //             lastDonationDate: donation.donatedAt,
+      //             isAvailable: false, // optional 
+      //           },
+      //         }
+      //       );
+
+      //       res.send({
+      //         success: true,
+      //         message: "Donation approved & donor updated successfully",
+      //       });
+
+      //     } catch (error) {
+      //       console.error(error);
+      //       res.status(500).send({ message: "Internal Server Error" });
+      //     }
+      //   }
+      // );
+
     // ===============================
     // Delete Donation (Admin)
     // ===============================

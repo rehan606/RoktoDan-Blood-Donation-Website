@@ -21,6 +21,7 @@ const AddDonation = () => {
         setLoading(true);
 
         const form = e.target;
+        
 
         const donationData = {
         donorId: user?.uid, // অথবা তোমার donor _id
@@ -29,7 +30,7 @@ const AddDonation = () => {
         phone: form.phone.value,
         hospitalName: form.hospitalName.value,
         donationType: form.donationType.value,
-        donatedAt: form.donatedAt.value,
+        donatedAt: new Date(form.donatedAt.value)
         };
 
         try {
@@ -38,7 +39,7 @@ const AddDonation = () => {
             donationData
         );
 
-        if (res.data.success) {
+        if (res.data.insertedId || res.data.success) {
             Swal.fire({
             icon: "success",
             title:
