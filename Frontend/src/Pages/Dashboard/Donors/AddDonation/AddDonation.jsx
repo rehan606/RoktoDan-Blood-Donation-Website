@@ -11,8 +11,8 @@ const AddDonation = () => {
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
     const { language } = useLanguage();
-    const { bloodGroups } = useBloodGroups()
-    const { navigate } = useNavigate()
+    const { bloodGroups } = useBloodGroups();
+    const  navigate  = useNavigate();
 
     const [loading, setLoading] = useState(false);
 
@@ -30,45 +30,52 @@ const AddDonation = () => {
         phone: form.phone.value,
         hospitalName: form.hospitalName.value,
         donationType: form.donationType.value,
-        donatedAt: new Date(form.donatedAt.value)
+        // donatedAt: form.donatedAt.value,
+        donatedAt: new Date(form.donatedAt.value),
+
         };
 
         try {
-        const res = await axiosSecure.post(
-            "/blood-donations",
-            donationData
-        );
-
-        if (res.data.insertedId || res.data.success) {
-            Swal.fire({
-            icon: "success",
-            title:
-                language === "bn"
-                ? "সফলভাবে সাবমিট হয়েছে!"
-                : "Submitted Successfully!",
-            text:
-                language === "bn"
-                ? "আপনার ডোনেশন রিকোয়েস্ট এডমিন অনুমোদনের জন্য পাঠানো হয়েছে।"
-                : "Your donation is sent for admin approval.",
-            });
-
-            form.reset();
-            navigate("/dashboard/profile");
+            const res = await axiosSecure.post(
+                "/blood-donations",
+                donationData
+            );
             
-        }
+
+            if (res.data.insertedId || res.data.success) {
+                Swal.fire({
+                icon: "success",
+                title:
+                    language === "bn"
+                    ? "সফলভাবে সাবমিট হয়েছে!"
+                    : "Submitted Successfully!",
+                text:
+                    language === "bn"
+                    ? "আপনার ডোনেশন রিকোয়েস্ট এডমিন অনুমোদনের জন্য পাঠানো হয়েছে।"
+                    : "Your donation is sent for admin approval.",
+                });
+
+                form.reset();
+                navigate("/dashboard/profile");
+                
+            }
         } catch (error) {
-        Swal.fire({
-            icon: "error",
-            title:
-            language === "bn"
-                ? "ত্রুটি হয়েছে!"
-                : "Error!",
-            text:
-            error?.response?.data?.message ||
-            (language === "bn"
-                ? "কিছু ভুল হয়েছে"
-                : "Something went wrong"),
-        });
+            console.log("FULL ERROR:", error);
+            console.log("ERROR RESPONSE:", error?.response);
+            console.log("ERROR DATA:", error?.response?.data);
+
+            Swal.fire({
+                icon: "error",
+                title:
+                language === "bn"
+                    ? "ত্রুটি হয়েছে!"
+                    : "Error!",
+                text:
+                error?.response?.data?.message ||
+                (language === "bn"
+                    ? "কিছু ভুল হয়েছে"
+                    : "Something went wrong"),
+            });
         }
 
         setLoading(false);
