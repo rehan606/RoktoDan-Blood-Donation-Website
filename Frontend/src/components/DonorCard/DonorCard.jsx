@@ -53,6 +53,21 @@ const DonorCard = ({ donor }) => {
             <p className="text-gray-700">
               <strong>Union:</strong> {donor.union}
             </p>
+
+            <p className="text-gray-700"><strong>Last Donation: </strong>  
+                  {donor?.lastDonationDate ? (
+                    new Date(donor.lastDonationDate).toLocaleDateString(
+                      language === "bn" ? "bn-BD" : "en-GB",
+                      {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      }
+                    )
+                  ) : (
+                    language === "bn" ? "এখনও রক্ত দেয়নি। " : "No donation yet"
+                  )}
+            </p>
             
           </div>
 
@@ -87,10 +102,11 @@ const DonorCard = ({ donor }) => {
       {/* Modal */}
       {open && details && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-6 w-full max-w-md relative">
+          <div className="bg-white rounded-xl p-6 w-full max-w-md relative ">
+            <div className="border-1 border-gray-200 p-4 rounded-lg mt-6">
             <button
               onClick={() => setOpen(false)}
-              className="absolute top-2 right-3 text-xl"
+              className="absolute top-2 right-5 text-xl bg-red-500 text-white rounded-md w-8 h-8 flex items-center justify-center hover:bg-red-600 transition cursor-pointer"
             >
               ✕
             </button>
@@ -99,7 +115,7 @@ const DonorCard = ({ donor }) => {
               Donor Details
             </h3>
 
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center justify-between gap-4 ">
               <div>
                 <p><strong>Name:</strong> {donor.name}</p>
                 <p><strong>Email:</strong> {donor.email}</p>
@@ -149,8 +165,8 @@ const DonorCard = ({ donor }) => {
               
               
               {donor.isAvailable
-                ? <span>{ language === "bn" ?  "এই মুহূর্তে রক্ত দিতে পারবেন " : "He can donate blood right now." }</span>
-                : <span>{ language === "bn" ?  "এখনো রক্ত দেওয়ার সময় হয়নি " : "It's not time to donate blood yet." } </span> }
+                ? <span className="bg-green-100 px-4 py-2 rounded-full border-l-4 border-l-green-500">{ language === "bn" ?  "এই মুহূর্তে রক্ত দিতে পারবেন " : "He can donate blood right now." }</span>
+                : <span className="bg-red-100 px-4 py-2 rounded-full border-l-4 border-l-red-500">{ language === "bn" ?  "এখনো রক্ত দেওয়ার সময় হয়নি " : "It's not time to donate blood yet." } </span> }
             </p>
 
             {donor.isAvailable && (
@@ -162,6 +178,7 @@ const DonorCard = ({ donor }) => {
                 
               </a>
             )}
+            </div>
           </div>
         </div>
       )}
