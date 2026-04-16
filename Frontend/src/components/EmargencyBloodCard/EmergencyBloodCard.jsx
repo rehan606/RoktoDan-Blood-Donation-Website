@@ -26,10 +26,10 @@ const EmergencyBloodCard = ({ post, language }) => {
           {post.union}
         </p>
 
-        <p>
+        {/* <p>
           <strong>{language === "bn" ? "যোগাযোগ" : "Contact"}:</strong>{" "}
           {post.phone}
-        </p>
+        </p> */}
 
         <button
           onClick={() => setOpen(true)}
@@ -47,17 +47,17 @@ const EmergencyBloodCard = ({ post, language }) => {
             {/* Close */}
             <button
               onClick={() => setOpen(false)}
-              className="absolute top-3 right-3 text-gray-500 hover:text-red-600 text-xl"
+              className="absolute top-3 right-5 text-gray-500 hover:text-red-600 text-xl"
             >
               ✕
             </button>
 
             {/* Header */}
-            <h3 className="text-2xl font-bold text-red-600 mb-1">
+            <h3 className="text-2xl font-bold text-red-600  mb-1 ">
               {post.bloodGroup}
             </h3>
 
-            <div className="flex items-start justify-between">
+            <div className="flex items-start justify-between mt-4 border border-gray-200 rounded-lg p-4">
                 {/* Details */}
                 <div className="space-y-2 text-gray-700">
                 <p>

@@ -10,12 +10,6 @@ const DonorCard = ({ donor }) => {
   const [details, setDetails] = useState(null);
   const {language} = useLanguage();
 
-  // Last Donation Date Formate 
-  const formattedDate = new Date(donor.lastDonationDate).toLocaleDateString('en-GB', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  });
 
   const handleOpenModal = async () => {
     const res = await axios.get(
@@ -133,7 +127,7 @@ const DonorCard = ({ donor }) => {
                       }
                     )
                   ) : (
-                    language === "bn" ? "এখনও রক্তদান করা হয়নি" : "No donation yet"
+                    language === "bn" ? "এখনও রক্ত দেয়নি।" : "No donation yet"
                   )}
                 </p>
               </div>

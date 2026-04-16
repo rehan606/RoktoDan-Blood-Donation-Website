@@ -83,7 +83,7 @@ const Login = () => {
                         <input
                         type="email"
                         placeholder={t.emailPlaceholder}
-                        className="mt-1 w-full px-4 py-2 border rounded-lg "
+                        className="mt-1 w-full px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-red-500 focus:outline-none rounded-lg "
                         {...register("email", {
                             required: t.errors.emailRequired,
                             pattern: {
@@ -109,7 +109,7 @@ const Login = () => {
                         <input
                             type={showPassword ? "text" : "password"}
                             placeholder={t.passwordPlaceholder}
-                            className="mt-1 w-full px-4 py-2 border rounded-lg pr-10 "
+                            className="mt-1 w-full px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-red-500 focus:outline-none rounded-lg  pr-10 "
                             {...register("password", {
                             required: t.errors.passwordRequired,
                             })}
@@ -118,7 +118,7 @@ const Login = () => {
                         <button
                             type="button"
                             onClick={() => setShowPassword(!showPassword)}
-                            className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-500"
+                            className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-500 cursor-pointer"
                         >
                             {showPassword ? <FaEyeSlash /> : <FaEye />}
                         </button>
@@ -135,7 +135,7 @@ const Login = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700 transition cursor-pointer"
+                        className="w-full bg-red-600 text-white py-2 rounded-lg font-md hover:bg-red-700 transition cursor-pointer"
                     >
                         {loading
                         ? language === "bn"

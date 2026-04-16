@@ -132,7 +132,7 @@ const Register = () => {
           <div>
             <label className="block text-sm font-medium">{t.nameLabel}</label>
             <input
-              className="mt-1 w-full px-4 py-2 border rounded-lg"
+              className="mt-1 w-full px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-red-500 focus:outline-none rounded-lg"
               placeholder={t.namePlaceholder}
               {...register("name", { required: t.errors.nameRequired })}
             />
@@ -148,7 +148,7 @@ const Register = () => {
             <label className="block text-sm font-medium">{t.emailLabel}</label>
             <input
               type="email"
-              className="mt-1 w-full px-4 py-2 border rounded-lg"
+              className="mt-1 w-full px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-red-500 focus:outline-none rounded-lg"
               placeholder={t.emailPlaceholder}
               {...register("email", {
                 required: t.errors.emailRequired,
@@ -172,7 +172,7 @@ const Register = () => {
             </label>
             <input
               type="password"
-              className="mt-1 w-full px-4 py-2 border rounded-lg"
+              className="mt-1 w-full px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-red-500 focus:outline-none rounded-lg"
               placeholder={t.passwordPlaceholder}
               {...register("password", {
                 required: t.errors.passwordRequired,
@@ -202,7 +202,7 @@ const Register = () => {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700"
+            className="w-full bg-red-600 text-white py-2 rounded-lg font-md hover:bg-red-700"
           >
             {t.registerBtn}
           </button>

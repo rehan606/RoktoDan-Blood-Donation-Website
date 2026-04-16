@@ -74,7 +74,7 @@ const BloodSearch = () => {
                 {language === "bn" ? "রক্তের গ্রুপ" : "Blood Group"}
               </label>
               <select
-                className="w-full border rounded-lg px-3 py-3"
+                className="w-full border border-gray-400 focus:ring-1 focus:ring-red-500 focus:outline-none rounded-lg px-3 py-3"
                 value={bloodGroup}
                 onChange={(e) => setBloodGroup(e.target.value)}
               >
@@ -97,7 +97,7 @@ const BloodSearch = () => {
                 {language === "bn" ? "ইউনিয়ন" : "Union"}
               </label>
               <select
-                className="w-full border rounded-lg px-3 py-3"
+                className="w-full border border-gray-400 focus:ring-1 focus:ring-red-500 focus:outline-none rounded-lg px-3 py-3"
                 value={union}
                 onChange={(e) => setUnion(e.target.value)}
               >
