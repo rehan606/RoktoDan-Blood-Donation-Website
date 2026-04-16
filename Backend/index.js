@@ -1001,91 +1001,91 @@ async function run() {
     // ===============================
     // Approve Donation (Admin)
     // ===============================
-    app.patch(
-      "/blood-donations/:id",
-      verifyToken,
-      verifyAdmin,
-      async (req, res) => {
-        try {
-          const id = req.params.id;
+    // app.patch(
+    //   "/blood-donations/:id",
+    //   verifyToken,
+    //   verifyAdmin,
+    //   async (req, res) => {
+    //     try {
+    //       const id = req.params.id;
 
-          const filter = { _id: new ObjectId(id) };
+    //       const filter = { _id: new ObjectId(id) };
 
-          const updateDoc = {
-            $set: {
-              status: "approved", // status approved
-              approvedAt: new Date(), // approval time
-            },
-          };
+    //       const updateDoc = {
+    //         $set: {
+    //           status: "approved", // status approved
+    //           approvedAt: new Date(), // approval time
+    //         },
+    //       };
 
-          const result = await bloodDonations.updateOne(filter, updateDoc);
+    //       const result = await bloodDonations.updateOne(filter, updateDoc);
 
-          res.send({
-            success: true,
-            message: "Donation approved successfully",
-          });
+    //       res.send({
+    //         success: true,
+    //         message: "Donation approved successfully",
+    //       });
 
-        } catch (error) {
-          console.error(error);
-          res.status(500).send({ message: "Internal Server Error" });
-        }
-      }
-    );
+    //     } catch (error) {
+    //       console.error(error);
+    //       res.status(500).send({ message: "Internal Server Error" });
+    //     }
+    //   }
+    // );
 
 
     // ===============================
-// Approve Donation (Admin)
-// ===============================
+    // Approve Donation (Admin)
+    // ===============================
 
-      // app.patch(
-      //   "/blood-donations/:id",
-      //   verifyToken,
-      //   verifyAdmin,
-      //   async (req, res) => {
-      //     try {
-      //       const id = req.params.id;
+      app.patch(
+        "/blood-donations/:id",
+        verifyToken,
+        verifyAdmin,
+        async (req, res) => {
+          try {
+            const id = req.params.id;
 
-      //       const filter = { _id: new ObjectId(id) };
+            const filter = { _id: new ObjectId(id) };
 
-      //       // 🔥 1. First get the donation data
-      //       const donation = await bloodDonations.findOne(filter);
+            // 🔥 1. First get the donation data
+            const donation = await bloodDonations.findOne(filter);
 
-      //       if (!donation) {
-      //         return res.status(404).send({ message: "Donation not found" });
-      //       }
+            if (!donation) {
+              return res.status(404).send({ message: "Donation not found" });
+            }
 
-      //       // 🔥 2. Update donation status
-      //       const updateDoc = {
-      //         $set: {
-      //           status: "approved",
-      //           approvedAt: new Date(),
-      //         },
-      //       };
+            // 🔥 2. Update donation status
+            const updateDoc = {
+              $set: {
+                status: "approved",
+                approvedAt: new Date(),
+              },
+            };
 
-      //       await bloodDonations.updateOne(filter, updateDoc);
+            await bloodDonations.updateOne(filter, updateDoc);
 
-      //       // 🔥 3. Update donor's last donation date
-      //       await donorsCollection.updateOne(
-      //         { email: donation.donorEmail }, // better: donorId use kora
-      //         {
-      //           $set: {
-      //             lastDonationDate: donation.donatedAt,
-      //             isAvailable: false, // optional 
-      //           },
-      //         }
-      //       );
+            // 🔥 3. Update donor's last donation date
+            await donorsCollection.updateOne(
+              { email: donation.donorEmail }, // better: donorId use kora
+              {
+                $set: {
+                  lastDonationDate: donation.donatedAt,
+                  isAvailable: false, // optional 
+                },
+              }
+            );
 
-      //       res.send({
-      //         success: true,
-      //         message: "Donation approved & donor updated successfully",
-      //       });
+            res.send({
+              success: true,
+              message: "Donation approved & donor updated successfully",
+            });
 
-      //     } catch (error) {
-      //       console.error(error);
-      //       res.status(500).send({ message: "Internal Server Error" });
-      //     }
-      //   }
-      // );
+          } catch (error) {
+            console.error(error);
+            res.status(500).send({ message: "Internal Server Error" });
+          }
+        }
+      );
 
     // ===============================
     // Delete Donation (Admin)
