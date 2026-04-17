@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router';
-import HeroImage from '../../assets/images/Blood-collect-image.png';
+import HeroImage from '../../assets/images/blood-people.webp';
 
 
 
@@ -55,7 +55,7 @@ const Hero = ({ language, }) => {
           <img
             src={HeroImage}
             alt="Blood Donation"
-            className="max-w-full h-auto rounded-3xl animate-pulse  transition-all duration-300 border-10 border-red-500/20 shadow"
+            className="max-w-full h-auto rounded-3xl   transition-all duration-300 border-4 border-red-500/20 shadow"
           />
         </div>
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useLanguage } from "../../context/LanguageContext";
-import bgImage from "../../assets/images/bgImage.jpg";
+import bgImage from "../../assets/images/bgImage.webp";
 import useBloodGroups from "../../Hooks/useBloodGroups";
 import useUnions from "../../Hooks/useUnions";
 import DonorCard from "../DonorCard/DonorCard";
