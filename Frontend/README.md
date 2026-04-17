@@ -1,16 +1,97 @@
-# React + Vite
+# 🩸 Roktodan - Blood Donation Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Roktodan Banner](https://i.ibb.co.com/placeholder-banner.png)
 
-Currently, two official plugins are available:
+## 🚀 Live Website
+🔗 https://your-live-link.com
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 📌 Project Overview
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Roktodan** is a modern blood donation platform that connects blood donors with patients in need.  
+It helps users find donors easily, manage donation records, and raise awareness about blood donation.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## ✨ Features
+
+- 🔍 Search blood donors by blood group & location
+- 🧑‍🤝‍🧑 User registration & authentication
+- 📅 Track last donation date
+- ❤️ Donor profile management
+- 📊 Dashboard with statistics
+- 🌙 Dark mode support
+- 📱 Fully responsive design
+- 🔔 Real-time updates
+
+---
+
+## 🛠️ Tech Stack
+
+### 💻 Frontend
+- React.js
+- Tailwind CSS
+- DaisyUI
+- React Icons
+
+### ⚙️ Backend
+- Node.js
+- Express.js
+
+### 🗄️ Database
+- MongoDB
+
+### 🔐 Authentication
+- Firebase Authentication
+
+### 📡 API Handling
+- Axios
+- TanStack Query (React Query)
+
+---
+
+## 📂 Folder Structure
+
+```bash
+Roktodan/
+│── client/
+│ ├── components/
+│ ├── pages/
+│ ├── hooks/
+│ └── assets/
+│
+│── server/
+│ ├── routes/
+│ ├── controllers/
+│ └── models/
+│
+└── README.md
+
+```
+
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone the repository
+```bash
+git clone https://github.com/your-username/roktodan.git
+
+2️⃣ Go to project folder
+
+
+🔐 Environment Variables
+Create a .env file and add:
+
+```bash
+VITE_API_URL=your_api_url
+VITE_FIREBASE_API_KEY=your_key
+VITE_FIREBASE_AUTH_DOMAIN=your_domain
+```
+
+📸 Screenshots
+| Home Page                          | Dashboard                               | Donor List                          |
+| ---------------------------------- | --------------------------------------- | ----------------------------------- |
+| ![](https://i.ibb.co.com/8LGFG1H8/Home-EN.png) | ![]https://i.ibb.co.com/ksjPMLd6/Dashboard-Home.png) | ![](https://i.ibb.co.com/hJhPdML0/Donor-Profile.png) |

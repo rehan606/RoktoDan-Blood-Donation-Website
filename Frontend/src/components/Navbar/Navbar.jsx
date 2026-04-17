@@ -89,7 +89,7 @@ const Navbar = ({ language, setLanguage }) => {
 
                         {/* Profile Button  */}
                         
-                        { !user? ( <Link to={'/login'} className="bg-red-500 text-white py-2 px-4 rounded-md border hover:bg-white hover:text-red-500 hover:border-red-500 transition-all duration-300  "> {language === "bn" ? "লগইন" : "Login"}</Link> ) : (<UserButton />) }
+                        { !user? ( <Link to={'/register'} className="bg-red-500 text-white py-2 px-4 rounded-md border hover:bg-white hover:text-red-500 hover:border-red-500 transition-all duration-300  "> {language === "bn" ? "সাইন আপ " : "Sign Up"}</Link> ) : (<UserButton />) }
                         
                         {/* Language Toggle */}
                         <button
