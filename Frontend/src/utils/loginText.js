@@ -1,7 +1,7 @@
 export const loginText = {
   bn: {
-    title: "রক্তদান",
-    subtitle: "আপনার একাউন্টে প্রবেশ করুন",
+    title: "অ্যাকাউন্টে প্রবেশ করুন",
+    subtitle: "রক্তদানে আপনাকে স্বাগতম",
     emailLabel: "ইমেইল",
     emailPlaceholder: "আপনার ইমেইল লিখুন",
     passwordLabel: "পাসওয়ার্ড",
@@ -18,8 +18,8 @@ export const loginText = {
   },
 
   en: {
-    title: "RoktoDaan",
-    subtitle: "Login to your account",
+    title: "Login to your account",
+    subtitle: "Welcome to Blood Donation",
     emailLabel: "Email Address",
     emailPlaceholder: "Enter your email",
     passwordLabel: "Password",

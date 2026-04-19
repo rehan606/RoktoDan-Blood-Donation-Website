@@ -207,7 +207,7 @@ const Register = () => {
             to="/login"
             className="text-red-600 font-medium hover:underline"
           >
-            {t.login} করুন
+            {t.login} 
           </Link>
           
         </p>

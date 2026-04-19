@@ -57,7 +57,7 @@ const Login = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-red-50 px-4">
-            <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+            <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 border-t-4 border-red-600">
 
                 {/* Header */}
                 <div className="text-center mb-6">
@@ -78,7 +78,7 @@ const Login = () => {
                     {/* Email */}
                     <div>
                         <label className="block text-sm font-medium">
-                        {t.emailLabel}
+                        {t.emailLabel} <span className="text-red-600">*</span> 
                         </label>
                         <input
                         type="email"
@@ -102,7 +102,7 @@ const Login = () => {
                     {/* Password with Eye Icon */}
                     <div>
                         <label className="block text-sm font-medium">
-                        {t.passwordLabel}
+                        {t.passwordLabel}  <span className="text-red-600">*</span> 
                         </label>
 
                         <div className="relative">

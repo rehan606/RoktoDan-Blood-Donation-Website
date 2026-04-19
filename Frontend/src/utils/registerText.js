@@ -1,7 +1,7 @@
 export const registerText = {
   bn: {
-    title: "নতুন অ্যাকাউন্ট তৈরি করুন",
-    subtitle: " আপনার রক্তদান একটি জীবন বাঁচাতে পারে।",
+    title: "অ্যাকাউন্ট তৈরি করুন",
+    subtitle: " রক্তদান করুন, জীবন বাঁচান।",
     nameLabel: "পূর্ণ নাম",
     namePlaceholder: "আপনার নাম লিখুন",
     emailLabel: "ইমেইল",
@@ -24,8 +24,8 @@ export const registerText = {
   },
 
   en: {
-    title: "RoktoDan",
-    subtitle: "Save a Life",
+    title: "Create a account",
+    subtitle: "Donate blood, Save a Life",
     nameLabel: "Full Name",
     namePlaceholder: "Enter your name",
     emailLabel: "Email Address",
