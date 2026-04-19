@@ -79,12 +79,12 @@ const UserButton = () => {
       to: "/dashboard",
       icon: <FaTachometerAlt />,
     },
-    {
-      id: 2,
-      label: language === "bn" ? "প্রোফাইল" : "Profile",
-      to: "/profile",
-      icon: <FaUser />,
-    },
+    // {
+    //   id: 2,
+    //   label: language === "bn" ? "প্রোফাইল" : "Profile",
+    //   to: "/profile",
+    //   icon: <FaUser />,
+    // },
     {
       id: 3,
       label: language === "bn" ? "লগ আউট" : "Logout",

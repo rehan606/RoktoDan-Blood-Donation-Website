@@ -46,7 +46,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
     const db = client.db('roktoDan');
     const userCollection = db.collection('users');
@@ -241,15 +241,6 @@ async function run() {
     };
 
 
-    // const isEligibleAfter90Days = (lastDonationDate) => {
-    //   const today = new Date();
-    //   const lastDate = new Date(lastDonationDate);
-
-    //   const diffTime = today - lastDate;
-    //   const diffDays = diffTime / (1000 * 60 * 60 * 24);
-
-    //   return diffDays >= 90;
-    // };
 
     // ---------------- /donors POST API ----------------
     app.post("/donors", async (req, res) => {
@@ -541,56 +532,6 @@ async function run() {
 
     // ------------------------- Display Donors in Frontend Donors page --------------------------
 
-    // app.get('/donors', async (req, res) => {
-    //   try {
-    //     const { bloodGroup, union } = req.query;
-
-    //     const query = {
-    //       status: "active",
-    //     };
-
-    //     if (bloodGroup) {
-    //       query.bloodGroup = bloodGroup;
-    //     }
-
-    //     if (union) {
-    //       query.union = union;
-    //     }
-
-    //     let donors = await donorsCollection.find(query).toArray();
-
-    //     const today = new Date();
-
-    //     for (let donor of donors) {
-    //       if (donor.lastDonationDate) {
-    //         const lastDate = new Date(donor.lastDonationDate);
-    //         const diffInMonths =
-    //           (today.getFullYear() - lastDate.getFullYear()) * 12 +
-    //           (today.getMonth() - lastDate.getMonth());
-
-    //         const shouldBeAvailable = diffInMonths >= 3;
-
-    //         // 🔁 Auto update database if needed
-    //         if (donor.isAvailable !== shouldBeAvailable) {
-    //           await donorsCollection.updateOne(
-    //             { _id: donor._id },
-    //             {
-    //               $set: {
-    //                 isAvailable: shouldBeAvailable,
-    //               },
-    //             }
-    //           );
-    //           donor.isAvailable = shouldBeAvailable;
-    //         }
-    //       }
-    //     }
-
-    //     res.send(donors);
-    //   } catch (error) {
-    //     console.error("❌ Donor fetch error:", error);
-    //     res.status(500).send({ message: "Internal Server Error" });
-    //   }
-    // });
 
     app.get("/donors", async (req, res) => {
       try {
@@ -1001,41 +942,6 @@ async function run() {
     // ===============================
     // Approve Donation (Admin)
     // ===============================
-    // app.patch(
-    //   "/blood-donations/:id",
-    //   verifyToken,
-    //   verifyAdmin,
-    //   async (req, res) => {
-    //     try {
-    //       const id = req.params.id;
-
-    //       const filter = { _id: new ObjectId(id) };
-
-    //       const updateDoc = {
-    //         $set: {
-    //           status: "approved", // status approved
-    //           approvedAt: new Date(), // approval time
-    //         },
-    //       };
-
-    //       const result = await bloodDonations.updateOne(filter, updateDoc);
-
-    //       res.send({
-    //         success: true,
-    //         message: "Donation approved successfully",
-    //       });
-
-    //     } catch (error) {
-    //       console.error(error);
-    //       res.status(500).send({ message: "Internal Server Error" });
-    //     }
-    //   }
-    // );
-
-
-    // ===============================
-    // Approve Donation (Admin)
-    // ===============================
 
       app.patch(
         "/blood-donations/:id",
@@ -1440,8 +1346,8 @@ async function run() {
 
 
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    // await client.db("admin").command({ ping: 1 });
+    // console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();

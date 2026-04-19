@@ -13,7 +13,7 @@ const Navbar = ({ language, setLanguage }) => {
 
 
     return (
-        <nav className="bg-white text-zinc-800 sticky top-0 z-50 border-b shadow-md border-red-200">
+        <nav className="bg-white text-gray-800 sticky top-0 z-50 border-b shadow-md border-red-200">
             <div className="max-w-7xl mx-auto px-4 ">
                 <div className="flex justify-between  items-center h-20 ">
 
@@ -46,12 +46,23 @@ const Navbar = ({ language, setLanguage }) => {
                     {/* <MdBloodtype className="text-red-600 text-3xl " /> */}
                     <FaTint className="text-red-600 w-8 h-8 mx-auto " />
                     <div>
-                        {language === "bn" ?
+                        <div>
+                            {language === "bn" ?
                             <h1 className="text-xl md:text-2xl text-zinc-700 font-bold tracking-wide">রক্ত<span className="text-red-600">দান</span>
                             </h1> :
                             <h1 className="text-xl text-zinc-800 uppercase font-bold tracking-wide ">Rokto<span className="text-red-600">Dan</span>
                             </h1>
                         }
+                        </div>
+                        <div className="-mt-2">
+                            {language === "bn" ?
+                            <h1 className="text-sm md:text-md text-zinc-700  tracking-wide">মানবতার সেবায় 
+                            </h1> :
+                            <h1 className="text-xl text-zinc-800 uppercase font-bold tracking-wide ">   Serving Humanity
+                            </h1>
+                        }
+                        </div>
+                        
                     </div>
                 </Link>
                     {/* Desktop Menu */}
@@ -62,17 +73,24 @@ const Navbar = ({ language, setLanguage }) => {
                         }>
                             {language === "bn" ? "হোম" : "Home"}
                         </NavLink>
+                        <NavLink to={'/register-donor'} className={({ isActive }) => isActive
+                            ? "text-red-500 font-semibold"
+                            : "text-gray-700 hover:text-red-600 cursor-pointer"
+                        }>
+                            {language === "bn" ? "রক্তদাতা হোন  " : "Register Donor"}
+                        </NavLink>
+
                         <NavLink to={'/all-donors'} className={({ isActive }) => isActive
                             ? "text-red-500 font-semibold"
                             : "text-gray-700 hover:text-red-600 cursor-pointer"
                         }>
-                            {language === "bn" ? "রক্তদাতা" : "All Donors"}
+                            {language === "bn" ? "রক্তদাতা খুঁজুন " : "Search Donors"}
                         </NavLink>
                         <NavLink to={'/request-blood'} className={({ isActive }) => isActive
                             ? "text-red-500 font-semibold"
                             : "text-gray-700 hover:text-red-600 cursor-pointer"
                         }>
-                            {language === "bn" ? "রক্ত অনুরোধ" : "Request Blood"}
+                            {language === "bn" ? "রক্তের অনুরোধ" : "Request Blood"}
                         </NavLink>
                         <NavLink to={'/contact'} className={({ isActive }) => isActive
                             ? "text-red-500 font-semibold"
@@ -120,7 +138,7 @@ const Navbar = ({ language, setLanguage }) => {
                         ? "text-red-500 font-semibold"
                         : "text-gray-700 hover:text-red-600 cursor-pointer"
                     }>
-                        {language === "bn" ? "রক্তদাতা" : "Donors"}
+                        {language === "bn" ? "রক্তদাতা খুঁজুন " : "Search Donors"}
                     </NavLink>
                     <NavLink to={'/request-blood'} className={({ isActive }) => isActive
                         ? "text-red-500 font-semibold"
