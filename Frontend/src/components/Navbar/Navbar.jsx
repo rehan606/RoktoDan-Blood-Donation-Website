@@ -58,7 +58,7 @@ const Navbar = ({ language, setLanguage }) => {
                             {language === "bn" ?
                             <h1 className="text-sm md:text-md text-zinc-700  tracking-wide">মানবতার সেবায় 
                             </h1> :
-                            <h1 className="text-xl text-zinc-800 uppercase font-bold tracking-wide ">   Serving Humanity
+                            <h1 className="text-sm md:text-md text-zinc-700  tracking-wide">Serving Humanity
                             </h1>
                         }
                         </div>

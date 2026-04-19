@@ -1,7 +1,7 @@
 export const registerText = {
   bn: {
-    title: "রক্তদান",
-    subtitle: "একটি জীবন বাঁচান",
+    title: "নতুন অ্যাকাউন্ট তৈরি করুন",
+    subtitle: " আপনার রক্তদান একটি জীবন বাঁচাতে পারে।",
     nameLabel: "পূর্ণ নাম",
     namePlaceholder: "আপনার নাম লিখুন",
     emailLabel: "ইমেইল",
@@ -10,9 +10,9 @@ export const registerText = {
     passwordPlaceholder: "পাসওয়ার্ড লিখুন",
     imageLabel: "ছবি আপলোড করুন ",
     imagePlaceholder: "ছবি আপলোড করুন ",
-    registerBtn: "নিবন্ধন করুন",
-    loginText: "আগেই একাউন্ট আছে?",
-    login: "লগইন",
+    registerBtn: "অ্যাকাউন্ট তৈরি করুন",
+    loginText: "ইতিমধ্যে অ্যাকাউন্ট আছে?",
+    login: "লগ ইন  ",
 
     errors: {
       nameRequired: "নাম দেওয়া আবশ্যক",
@@ -34,7 +34,7 @@ export const registerText = {
     passwordPlaceholder: "Enter password",
     imageLabel: "Upload Image",
     imagePlaceholder: "Upload Image",
-    registerBtn: "Register",
+    registerBtn: "Register Account",
     loginText: "Already have an account?",
     login: "Login",
 

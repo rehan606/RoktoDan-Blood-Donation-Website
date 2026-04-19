@@ -23,7 +23,7 @@ const Register = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-
+ 
   // Submit Form
   const onSubmit = (data) => {
     console.log("Register Data:", data);
@@ -34,14 +34,6 @@ const Register = () => {
 
         // 🔐 Firebase ID Token নাও
         const token = await result.user.getIdToken();
-
-        // ======= User Info for MongoDB =======
-        // const userInfo = {
-        //   email: data.email,
-        //   role: "user",
-        //   created_at: new Date().toISOString(),
-        //   last_log_in: new Date().toISOString(),
-        // };
 
         const userInfo = {
           name: data.name,
@@ -115,12 +107,12 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-red-50 px-4 py-10">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+    <div className="min-h-screen flex items-center justify-center bg-red-50 px-4 py-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 border-t-4 border-red-600">
         {/* Header */}
         <div className="text-center mb-6">
           <h1 className="text-3xl font-bold text-red-600">{t.title}</h1>
-          <p className="text-sm text-gray-600">{t.subtitle}</p>
+          <p className="text-sm text-gray-600 md:px-10">{t.subtitle}</p>
         </div>
 
         {/* Google Login */}
@@ -130,7 +122,7 @@ const Register = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Name */}
           <div>
-            <label className="block text-sm font-medium">{t.nameLabel}</label>
+            <label className="block text-sm font-medium">{t.nameLabel} <span className="text-red-600">*</span> </label>
             <input
               className="mt-1 w-full px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-red-500 focus:outline-none rounded-lg"
               placeholder={t.namePlaceholder}
@@ -145,7 +137,7 @@ const Register = () => {
 
           {/* Email */}
           <div>
-            <label className="block text-sm font-medium">{t.emailLabel}</label>
+            <label className="block text-sm font-medium">{t.emailLabel} <span className="text-red-600">*</span> </label>
             <input
               type="email"
               className="mt-1 w-full px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-red-500 focus:outline-none rounded-lg"
@@ -168,7 +160,7 @@ const Register = () => {
           {/* Password */}
           <div>
             <label className="block text-sm font-medium">
-              {t.passwordLabel}
+              {t.passwordLabel} <span className="text-red-600">*</span>
             </label>
             <input
               type="password"
@@ -202,7 +194,7 @@ const Register = () => {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-red-600 text-white py-2 rounded-lg font-md hover:bg-red-700"
+            className="w-full bg-[#FB2C36] text-white py-2 rounded-lg font-md hover:bg-red-700"
           >
             {t.registerBtn}
           </button>
@@ -215,8 +207,9 @@ const Register = () => {
             to="/login"
             className="text-red-600 font-medium hover:underline"
           >
-            {t.login}
+            {t.login} করুন
           </Link>
+          
         </p>
       </div>
     </div>
