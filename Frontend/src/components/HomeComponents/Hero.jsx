@@ -1,6 +1,7 @@
 
 import { Link } from 'react-router';
 import HeroImage from '../../assets/images/banner-image.webp';
+import BloodSearch from "../../components/HomeComponents/BloodSearch";
 
 
 
@@ -60,6 +61,9 @@ const Hero = ({ language, }) => {
         </div>
 
       </div>
+
+
+      
     </section>
   );
 };

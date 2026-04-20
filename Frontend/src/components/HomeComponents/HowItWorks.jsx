@@ -1,5 +1,6 @@
 import React from "react";
-import { FaUserPlus, FaCalendarAlt, FaSyringe, FaHeartbeat } from "react-icons/fa";
+import { FaUserPlus,  FaSyringe, FaHeartbeat } from "react-icons/fa";
+import { MdPostAdd } from "react-icons/md";
 
 const HowItWorks = ({ language }) => {
   const isBangla = language === "bn";
@@ -9,15 +10,15 @@ const HowItWorks = ({ language }) => {
       icon: <FaUserPlus className="text-red-600 w-10 h-10 mb-4 mx-auto" />,
       title: isBangla ? "ডোনার রেজিস্ট্রেশন" : "Register as Donor",
       desc: isBangla
-        ? "সরাসরি প্ল্যাটফর্মে রেজিস্ট্রেশন করুন। আপনার তথ্য নিরাপদ থাকবে।"
-        : "Sign up on the platform. Your details are safe.",
+        ? "কয়েকটি সহজ ধাপে রক্তদাতা হিসাবে নিবন্ধন করুন। আপনার রক্তের গ্রুপ, অবস্থান এবং যোগাযোগের তথ্য প্রদান করুন। "
+        : "Register as a blood donor in a few simple steps. Provide your blood type, location, and contact information.",
     },
     {
-      icon: <FaCalendarAlt className="text-red-600 w-10 h-10 mb-4 mx-auto" />,
-      title: isBangla ? "অ্যাপয়েন্টমেন্ট বুকিং" : "Book an Appointment",
+      icon: <MdPostAdd className="text-red-600 w-10 h-10 mb-4 mx-auto" />,
+      title: isBangla ? "রক্তের অনুরোধ" : "Request Blood",
       desc: isBangla
-        ? "রক্তদানের জন্য একটি সুবিধাজনক সময় বুক করুন।"
-        : "Book a convenient time for your blood donation.",
+        ? "আপনার প্রয়োজনীয় রক্তের জন্য একটি অনুরোধ পোস্ট করুন এবং ডোনারদের সাথে সংযোগ করুন।"
+        : "Post a request for the blood you need and connect with donors.",
     },
     {
       icon: <FaSyringe className="text-red-600 w-10 h-10 mb-4 mx-auto" />,
@@ -30,7 +31,7 @@ const HowItWorks = ({ language }) => {
       icon: <FaHeartbeat className="text-red-600 w-10 h-10 mb-4 mx-auto" />,
       title: isBangla ? "জীবন বাঁচান" : "Save Lives",
       desc: isBangla
-        ? "আপনার রক্তদান কারো জীবন বাঁচাতে সহায়তা করবে।"
+        ? "আপনার রক্তদান কারো জীবন বাঁচাতে সহায়তা করবে। "
         : "Your donation helps save someone's life.",
     },
   ];
@@ -38,9 +39,14 @@ const HowItWorks = ({ language }) => {
   return (
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 text-center">
-        <h2 className={`text-3xl md:text-4xl font-bold mb-10 ${isBangla ? "font-bn" : "font-en"} text-red-600`}>
+        <h2 className={`text-3xl md:text-4xl font-bold mb-3 ${isBangla ? "font-bn" : "font-en"} text-red-600`}>
           {isBangla ? "কিভাবে কাজ করে" : "How It Works"}
         </h2>
+        <p className={`text-gray-700 ${isBangla ? "font-bn" : "font-en"} mb-10`}>
+          {isBangla
+            ? "রক্তদান একটি সহজ প্রক্রিয়া যা জীবন বাঁচাতে সাহায্য করতে পারে।"
+            : "Blood donation is a simple process that can help save lives."}
+        </p>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 border border-gray-200 p-6 rounded-lg">
           {steps.map((step, idx) => (
