@@ -22,7 +22,7 @@ const DonorCard = ({ donor }) => {
   return (
     <>
       {/* Card */}
-      <div className="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-red-500">
+      <div className="bg-white rounded-2xl shadow-lg p-6 border-t-4  border-red-500">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-2xl font-bold text-red-600">
             {donor.bloodGroup}
@@ -97,7 +97,7 @@ const DonorCard = ({ donor }) => {
       {open && details && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl p-6 w-full max-w-md relative ">
-            <div className="border-1 border-gray-200 p-4 rounded-lg mt-6">
+            <div className="border border-gray-200 p-4 rounded-lg mt-6">
             <button
               onClick={() => setOpen(false)}
               className="absolute top-2 right-5 text-xl bg-red-500 text-white rounded-md w-8 h-8 flex items-center justify-center hover:bg-red-600 transition cursor-pointer"
@@ -112,8 +112,8 @@ const DonorCard = ({ donor }) => {
             <div className="flex items-center justify-between gap-4 ">
               <div>
                 <p><strong>Name:</strong> {donor.name}</p>
-                <p><strong>Email:</strong> {donor.email}</p>
-                <p><strong>Phone:</strong> {donor.phone}</p>
+                {/* <p><strong>Email:</strong> {donor.email}</p> */}
+                {/* <p><strong>Phone:</strong> {donor.phone}</p> */}
                 <p><strong>Blood Group:</strong> {donor.bloodGroup}</p>
                 <p><strong>Union:</strong> {donor.union}</p>
                 <p><strong>Last Donation: </strong>  
