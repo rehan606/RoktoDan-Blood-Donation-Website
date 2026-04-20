@@ -29,7 +29,7 @@ const DevSupportSection = ({ language }) => {
   };
 
   return (
-    <section className="w-full py-14 md:py-20 bg-linear-to-br from-red-50 via-white to-red-100">
+    <section className="w-full py-14 md:py-20 bg-[#F9FAFB]">
       <div className="max-w-6xl mx-auto px-4">
 
         {/* Header */}

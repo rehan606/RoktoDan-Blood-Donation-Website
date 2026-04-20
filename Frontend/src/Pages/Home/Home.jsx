@@ -18,8 +18,8 @@ const Home = () => {
             <Hero language={language} />
             <BloodSearch />
             <WhyDonateBlood language={language} />
-            <DonorRegistration language={language} />
             <HowItWorks language={language} />
+            <DonorRegistration language={language} />
             <Statistics language={language} />
             <UrgentBloodRequests language={language} />
             <Testimonials language={language} />

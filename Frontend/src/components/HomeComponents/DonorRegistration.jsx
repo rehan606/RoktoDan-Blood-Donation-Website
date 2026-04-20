@@ -7,7 +7,7 @@ const DonorRegistration = () => {
 
 
   return (
-    <section className="py-20 bg-linear-to-br from-red-50 via-white to-red-100">
+    <section className="py-20 bg-linear-to-br from-[#F9FAFB]  to-[#F9FAFB]">
       <div className="max-w-4xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">

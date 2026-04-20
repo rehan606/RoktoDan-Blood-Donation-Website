@@ -63,15 +63,20 @@ const Statistics = ({ language }) => {
   // UI
   // ==============================
   return (
-    <section className="py-16 bg-red-50">
+    <section className="py-16 bg-[#E7000B]">
       <div className="max-w-7xl mx-auto px-4 text-center">
         <h2
-          className={`text-3xl md:text-4xl font-bold mb-10 ${
+          className={`text-3xl md:text-4xl font-bold mb-3 ${
             isBangla ? "font-bn" : "font-en"
-          } text-red-600`}
+          } text-white`}
         >
           {isBangla ? "আমাদের কার্যক্রম" : "Our Impact"}
         </h2>
+        <p className={`text-white ${isBangla ? "font-bn" : "font-en"} mb-10`}>
+          {isBangla
+            ? "আমাদের কার্যক্রমের ফলাফল দেখুন"
+            : "See the impact of our work"}
+        </p>
 
         <div className="grid md:grid-cols-3 gap-6 border border-gray-200 p-6 rounded-lg">
           {stats.map((stat, idx) => (

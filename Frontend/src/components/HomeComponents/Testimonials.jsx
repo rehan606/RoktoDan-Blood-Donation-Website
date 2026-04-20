@@ -46,7 +46,7 @@ const Testimonials = ({ language = "bn" }) => {
   ];
 
   return (
-    <section className="py-20 bg-linear-to-br from-red-50 via-white to-red-100">
+    <section className="py-20 bg-white">
       <div className="max-w-6xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">

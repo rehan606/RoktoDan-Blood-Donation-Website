@@ -61,9 +61,15 @@ const BloodSearch = () => {
       style={{ backgroundImage: `url(${bgImage})` }}
     >
       <div className="max-w-5xl mx-auto px-4">
-        <h2 className="text-3xl text-white font-bold text-center mb-6">
+        <h2 className="text-3xl text-white font-bold text-center mb-2">
           {language === "bn" ? "রক্ত অনুসন্ধান করুন" : "Search Blood Donor"}
         </h2>
+
+        <p className="text-center text-white mb-6">
+          {language === "bn"
+            ? "রক্তের গ্রুপ অথবা ইউনিয়ন দিয়ে খুঁজুন "
+            : " Search by blood group or union"}
+        </p>
 
         {/* 🔍 Search Box */}
         <div className="bg-white rounded-2xl shadow-lg p-6">
