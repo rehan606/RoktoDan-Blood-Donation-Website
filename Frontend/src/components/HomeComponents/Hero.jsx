@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router';
-import HeroImage from '../../assets/images/blood-people.webp';
+import HeroImage from '../../assets/images/banner-image.webp';
 
 
 
@@ -9,7 +9,7 @@ const Hero = ({ language, }) => {
 
   return (
     <section
-      className={`min-h-[90vh] flex items-center px-6 md:px-10 bg-linear-to-br from-red-600/50 via-white to-red-600/40
+      className={`min-h-[80vh] flex items-center px-6 md:px-10 bg-linear-to-br from-red-600/50 via-white to-red-600/40
       ${isBangla ? "font-bn" : "font-en"}`}
     >
       <div className="max-w-7xl mx-auto px-4 py-10 md:py-0 grid md:grid-cols-2 gap-10 items-center">
@@ -41,11 +41,11 @@ const Hero = ({ language, }) => {
           {/* Buttons */} 
           <div className="mt-6 flex flex-wrap gap-4 justify-center md:justify-start">
             <Link to={'/register-donor'} className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded transition">
-              {isBangla ? "রক্তদাতা হন" : "Become a Donor"}
+              {isBangla ? "রক্তদাতা হোন " : "Become a Donor"}
             </Link>
 
             <Link to={'/request-blood'} className="border border-red-600 text-red-600 hover:bg-red-50 px-6 py-3 rounded transition">
-              {isBangla ? "রক্তের অনুরোধ" : "Request Blood"}
+              {isBangla ? "রক্তের অনুরোধ করুন " : "Request Blood"}
             </Link>
           </div>
         </div>
@@ -55,7 +55,7 @@ const Hero = ({ language, }) => {
           <img
             src={HeroImage}
             alt="Blood Donation"
-            className="max-w-full h-auto rounded-3xl   transition-all duration-300 border-4 border-red-500/20 shadow"
+            className="max-w-full h-auto   transition-all duration-300   "
           />
         </div>
 
